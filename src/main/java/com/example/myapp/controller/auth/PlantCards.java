@@ -51,7 +51,6 @@ public class PlantCards {
             - 처음 만난 날
             - 물 주기
          */
-
         int uid = param.getUid();
         String name = param.getName();
         String nickName = param.getNickname();

@@ -143,7 +143,6 @@ public class User {
             sb.append( charaters[ rn.nextInt( charaters.length ) ] );
         }
         String token = sb.toString();
-
         // 이메일을 보냄
         MimeMessage msg = emailSender.createMimeMessage();
         MimeMessageHelper helper;

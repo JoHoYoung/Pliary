@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private String[] exclude = new String[]{"/auth/signup","/auth/signin", "/api/*", "/static/*"};
+    private String[] exclude = new String[]{"/auth/signup","/auth/signin", "/api/test", "/static/*"};
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor())
