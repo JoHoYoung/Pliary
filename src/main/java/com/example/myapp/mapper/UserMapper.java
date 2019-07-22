@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
 
     // 회원가입
-    @Insert("INSERT INTO USER(email, password, token) VALUES(#{email},#{password}, #{token})")
-    public int userSignup(@Param("email")String email,
-                          @Param("password")String password,
+    @Insert("INSERT INTO USER(uid, email, token) VALUES(#{uid},#{email}, #{token})")
+    public int userSignup(@Param("uid")String email,
+                          @Param("email")String password,
                           @Param("token")String token);
 
     // 로그인

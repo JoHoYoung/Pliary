@@ -13,12 +13,12 @@ public class Signup {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("password")
-    private String password;
+    @JsonProperty("uid")
+    private String uid;
 
-    public Signup(String email, String password) {
+    public Signup(String uid, String email) {
+        this.uid = uid;
         this.email = email;
-        this.password = password;
     }
 
 }

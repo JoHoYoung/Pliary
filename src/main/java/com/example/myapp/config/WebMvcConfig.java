@@ -12,12 +12,14 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private String[] exclude = new String[]{"/auth/signup","/auth/signin", "/api/test", "/static/*"};
+    private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api/test", "/static/*", "/error"};
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtInterceptor())
                 .excludePathPatterns(Arrays.asList(exclude));
     }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
