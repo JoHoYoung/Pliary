@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class GroupModel {
 
-    private int uid;
+    private String uid;
     private String email;
     private String password;
     private char state;

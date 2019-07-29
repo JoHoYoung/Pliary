@@ -1,2 +1,7 @@
+# mvn package spring-boot:repackage -Dmaven.test.skip=true
+# java -jar ./target/myapp-0.0.1.jar
 mvn package spring-boot:repackage -Dmaven.test.skip=true
-java -jar -Dspring.profiles.active=${ENV} ./target/myapp-0.0.1.jar
+docker rm -f groot
+docker image rm groot
+docker build -t groot:0.1 .
+docker run -p 8080:8080 -d --name groot grssoot:0.1

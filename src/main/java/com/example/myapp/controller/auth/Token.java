@@ -22,7 +22,6 @@ public class Token {
 
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
     public JSONObject refreshToken(@RequestParam("token") String token) {
-
         String decodeSubject = jwtService.decode(token); // decodeSubject = userEmail (?)
         JSONObject JSON = new JSONObject();
         JSON.put("statusCode", HttpStatus.OK);
