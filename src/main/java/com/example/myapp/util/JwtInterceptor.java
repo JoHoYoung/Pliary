@@ -45,6 +45,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(JWT.decode(token));
         JSONObject jsonObj = (JSONObject) obj;
+        System.out.println(jsonObj);
         req.setAttribute("session",jsonObj);
         return true;
     }
