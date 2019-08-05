@@ -1,8 +1,8 @@
-package com.example.myapp.model;
+package com.example.myapp.controller.test;
 
 
+import com.example.myapp.controller.test.TestModel;
 import lombok.Data;
-import org.apache.ibatis.annotations.Many;
 
 import java.util.Date;
 import java.util.List;

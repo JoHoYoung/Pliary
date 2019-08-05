@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.myapp.context.CreateCard;
+import com.example.myapp.context.card.CreateCard;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.CardModel;
+import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class Crud {
     @Autowired
     UserMapper userMapper;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
 
     // 유저 id, 식물 이름, 애칭, 시작 날짜, 주기
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -65,17 +65,11 @@ public class Crud {
         String nickName = param.getNickname();
         int init_period = param.getInit_period();
         // update
-        int result = cardMapper.updateCard(uid, name, nickName, init_period);
+        cardMapper.updateCard(uid, name, nickName, init_period, init_period);
 
         JSONObject JSON = new JSONObject();
-        if (result == 1) {
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            return JSON;
-        }
-
-        JSON.put("statusCode", "");
-        JSON.put("statusMsg", "");
+        JSON.put("statusCode", 200);
+        JSON.put("statusMsg", "success");
         return JSON;
     }
 

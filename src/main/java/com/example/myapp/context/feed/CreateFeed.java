@@ -1,4 +1,4 @@
-package com.example.myapp.context;
+package com.example.myapp.context.feed;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,18 +6,14 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateCard {
+public class CreateFeed {
 
     @JsonProperty("uid")
     private String uid;
 
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("card_id")
+    private String card_id;
 
-    @JsonProperty("nickname")
-    private String nickname;
-
-    @JsonProperty("init_period")
-    private int init_period;
-
+    @JsonProperty("over_degree")
+    private int over_degree;
 }

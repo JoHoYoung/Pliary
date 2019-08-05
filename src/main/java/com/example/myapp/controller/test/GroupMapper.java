@@ -1,6 +1,5 @@
-package com.example.myapp.mapper;
+package com.example.myapp.controller.test;
 
-import com.example.myapp.model.GroupModel;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +10,7 @@ public interface GroupMapper {
 
     @Select("SELECT * FROM USER WHERE uid=#{user_id}")
     @Results({@Result(property = "list", javaType = List.class, column = "uid",
-                    many = @Many(select = "com.example.myapp.mapper.TestMapper.getTest"))})
+                    many = @Many(select = "com.example.myapp.controller.test.TestMapper.getTest"))})
     public GroupModel test(@Param("user_id")int user_id);
 
 }

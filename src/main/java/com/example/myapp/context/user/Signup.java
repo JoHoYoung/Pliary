@@ -1,4 +1,4 @@
-package com.example.myapp.context;
+package com.example.myapp.context.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,12 +8,17 @@ import lombok.NoArgsConstructor;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class Signin {
+public class Signup {
 
     @JsonProperty("email")
     private String email;
 
-    public Signin(String email, String password) {
+    @JsonProperty("uid")
+    private String uid;
+
+    public Signup(String uid, String email) {
+        this.uid = uid;
         this.email = email;
     }
+
 }

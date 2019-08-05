@@ -1,8 +1,8 @@
 package com.example.myapp.controller.auth;
 
-import com.example.myapp.context.ChangePassword;
-import com.example.myapp.context.Signin;
-import com.example.myapp.context.Signup;
+import com.example.myapp.context.user.ChangePassword;
+import com.example.myapp.context.user.Signin;
+import com.example.myapp.context.user.Signup;
 import com.example.myapp.jwt.JwtServiceImpl;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.UserModel;

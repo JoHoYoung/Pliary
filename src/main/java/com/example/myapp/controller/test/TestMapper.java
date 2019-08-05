@@ -1,6 +1,5 @@
-package com.example.myapp.mapper;
+package com.example.myapp.controller.test;
 
-import com.example.myapp.model.TestModel;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
