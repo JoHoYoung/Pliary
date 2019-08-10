@@ -1,13 +1,16 @@
 package com.example.myapp.jwt;
 
+import com.example.myapp.util.JwtInterceptor;
 import io.jsonwebtoken.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 
 @Service("jwtService")
 public class JwtServiceImpl {
 
+    private static final Logger LOG = LogManager.getLogger(JwtInterceptor.class);
     private static final String SALT = "grootsecret";
 
     public String accessToken(String subject) {
@@ -36,9 +39,11 @@ public class JwtServiceImpl {
         try{
             Jwts.parser().setSigningKey(SALT).parseClaimsJws(token).getBody();
             return 200;
-        }catch (ExpiredJwtException exception) {
+        }catch (ExpiredJwtException e) {
+            LOG.error("유효기간이 지난 token을 사용했습니다.", e);
             return 700;
-        } catch (JwtException exception) {
+        } catch (JwtException e) {
+            LOG.error("jwt error..", e);
             return 701;
         }
     }

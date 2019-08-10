@@ -3,10 +3,13 @@ package com.example.myapp.controller.auth;
 import com.example.myapp.context.user.ChangePassword;
 import com.example.myapp.context.user.Signin;
 import com.example.myapp.context.user.Signup;
+import com.example.myapp.controller.test.LogTestController;
 import com.example.myapp.jwt.JwtServiceImpl;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.UserModel;
 import com.example.myapp.util.AES256Util;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +28,8 @@ import java.util.Random;
 @RestController
 @RequestMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class User {
+
+    private static final Logger LOG = LogManager.getLogger(LogTestController.class);
 
     @Autowired
     private JwtServiceImpl jwtService;
@@ -45,6 +50,7 @@ public class User {
         if(user != null){
             JSON.put("statusCode", 700);
             JSON.put("statusMsg", "Email exist");
+            LOG.warn("Email exist");
             return JSON;
         }
         // 회원 가입시 랜덤 토큰 생성, 부여 - > 이메일 인증을 위함.
