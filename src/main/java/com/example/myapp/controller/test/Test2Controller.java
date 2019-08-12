@@ -1,11 +1,16 @@
 package com.example.myapp.controller.test;
 
 import com.example.myapp.mapper.UserMapper;
+import com.example.myapp.util.AwsS3Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.IIOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api2")
@@ -13,6 +18,9 @@ public class Test2Controller {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    AwsS3Util a;
 
     // 이메일 인증
     @RequestMapping(value="/auth/cert", method = RequestMethod.GET)
@@ -25,5 +33,14 @@ public class Test2Controller {
         String success = "http://localhost:8080/static/certCompletion.html";
         if(result == 1) return "redirect:" + success;
         else return "redirect:" + fail;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public String test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
+    {
+        byte [] byteArr=files.getBytes();
+        a.fileUpload("groot.devdogs.kr","aaq123",byteArr);
+        System.out.println("KK");
+        return "GOOD";
     }
 }

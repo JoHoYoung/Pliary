@@ -17,8 +17,8 @@ public interface CardMapper {
     @Select("SELECT * FROM CARD WHERE user_id = #{user_id} AND state = 'C'")
     List<CardModel> readAllCard(@Param("user_id")String user_id);
 
-    @Select("SELECT * FROM CARD WHERE user_id = #{user_id} AND state = 'C' AND uid=#{uid}")
-    CardModel readCard(@Param("user_id")String user_id, @Param("uid")String uid);
+    @Select("SELECT * FROM CARD WHERE state = 'C' AND uid=#{uid}")
+    CardModel readCard(@Param("uid")String uid);
     // 식물 카드 개수 제한을 위한 user_id count (user_id가 6이상이면 CreateCard 가 제한됨)
     @Select("SELECT COUNT(*) from CARD WHERE user_id = #{user_id}")
     int countCard(@Param("user_id")String user_id);

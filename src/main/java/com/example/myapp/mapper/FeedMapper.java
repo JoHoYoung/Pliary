@@ -10,7 +10,7 @@ import java.util.List;
 public interface FeedMapper {
 
     @Insert("INSERT INTO FEED(uid, card_id, over_degree, created_at, updated_at)" +
-            "VALUES(#{uid},#{card_id},#{over_degree},now(),now()")
+            "VALUES(#{uid},#{card_id},#{over_degree},now(),now())")
     void createFeed(@Param("uid")String uid, @Param("card_id")String card_id, @Param("over_degree")int over_degree);
 
     @Select("SELECT * FROM FEED WHERE card_id=#{card_id}")

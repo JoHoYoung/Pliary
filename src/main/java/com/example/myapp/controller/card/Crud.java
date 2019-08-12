@@ -58,7 +58,7 @@ public class Crud {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public JSONObject updateCard(HttpServletRequest req, @RequestBody CreateCard param) {
-        JSONObject session = (JSONObject) req.getAttribute("sesson");
+        JSONObject session = (JSONObject) req.getAttribute("session");
         String user_id = userMapper.getUser((String) session.get("email")).getUid();
         String uid = param.getUid();
         String name = param.getName();
@@ -66,7 +66,6 @@ public class Crud {
         int init_period = param.getInit_period();
         // update
         cardMapper.updateCard(uid, name, nickName, init_period, init_period);
-
         JSONObject JSON = new JSONObject();
         JSON.put("statusCode", 200);
         JSON.put("statusMsg", "success");
@@ -111,7 +110,7 @@ public class Crud {
             JSONObject session = (JSONObject) req.getAttribute("session");
             String user_id = userMapper.getUser((String) session.get("email")).getUid();
             // Get user's All card
-            CardModel Card = cardMapper.readCard(user_id, card_id);
+            CardModel Card = cardMapper.readCard(card_id);
             if (Card == null) {
                 JSON.put("stautsCode", 500);
                 JSON.put("statusMsg", "No data");

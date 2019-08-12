@@ -1,7 +1,9 @@
 package com.example.myapp.controller.feed;
 
 import com.example.myapp.context.feed.CreateFeed;
+import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.FeedMapper;
+import com.example.myapp.model.CardModel;
 import com.example.myapp.model.FeedModel;
 import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,19 +22,31 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/feed") // (?)
-public class Feed {
+public class Crud {
 
     @Autowired
     FeedMapper feedMapper;
+
+    @Autowired
+    CardMapper cardMapper;
 
     ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public JSONObject createFeed(HttpServletRequest req, @RequestBody CreateFeed param) {
         JSONObject JSON = new JSONObject();
-        String uid = UUID.randomUUID().toString();
-        feedMapper.createFeed(uid, param.getCard_id(), param.getOver_degree());
-        return JSON;
+        try{
+            String uid = UUID.randomUUID().toString();
+            CardModel cardInfo = cardMapper.readCard(param.getCard_id());
+            feedMapper.createFeed(uid, param.getCard_id(), cardInfo.getNow_period());
+            JSON.put("statusCode", 200);
+            JSON.put("statusMsg", "success");
+            return JSON;
+        }catch(Exception e){
+            JSON.put("statusCode", 500);
+            JSON.put("statusMsg", "Internal Server Error");
+            return JSON;
+        }
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.POST)
@@ -46,7 +60,7 @@ public class Feed {
             }
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
-            JSON.put("data",objectMapper.writeValueAsString(data));
+            JSON.put("data",data);
             return JSON;
         } catch (Exception e) {
             System.out.println(e);
