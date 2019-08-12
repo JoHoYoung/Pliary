@@ -62,6 +62,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -108,22 +114,28 @@
             <version>1.4</version>
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>1.9.2</version>
         </dependency>
+=======
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+>>>>>>> fe4e6b82ea21bc12febb0ad8c8ac31de41283752
         <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-config</artifactId>-->
-            <!--<version>5.1.0.RELEASE</version>-->
+        <!--<groupId>org.springframework.security</groupId>-->
+        <!--<artifactId>spring-security-config</artifactId>-->
+        <!--<version>5.1.0.RELEASE</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-config</artifactId>-->
-            <!--<version>5.1.0.RELEASE</version>-->
+        <!--<groupId>org.springframework.security</groupId>-->
+        <!--<artifactId>spring-security-config</artifactId>-->
+        <!--<version>5.1.0.RELEASE</version>-->
         <!--</dependency>-->
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -132,5 +144,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

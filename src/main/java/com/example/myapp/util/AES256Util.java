@@ -9,6 +9,8 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.websocket.server.ServerEndpoint;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
  */
 @Service("Encoder")
 public class AES256Util {
+    private static final Logger LOG = LogManager.getLogger(JwtInterceptor.class);
+
     private String iv;
     private Key keySpec;
     private static AES256Util instance;
@@ -29,7 +33,7 @@ public class AES256Util {
      */
     final static String key = "grootsecrethihihiqweqdsasdadsweqwe";
 
-     public AES256Util(){
+    public AES256Util(){
         try{
             this.iv = key.substring(0, 16);
             byte[] keyBytes = new byte[16];
@@ -43,7 +47,7 @@ public class AES256Util {
 
             this.keySpec = keySpec;
         }catch (UnsupportedEncodingException e){
-
+            LOG.error("AES256Util", e);
         }
     }
 
@@ -65,6 +69,7 @@ public class AES256Util {
             String enStr = new String(Base64.encodeBase64(encrypted));
             return enStr;
         }catch(Exception e){
+            LOG.error(e);
             return "err";
         }
     }
@@ -85,6 +90,7 @@ public class AES256Util {
             byte[] byteStr = Base64.decodeBase64(str.getBytes());
             return new String(c.doFinal(byteStr), "UTF-8");
         }catch(Exception e) {
+            LOG.error("decrypt", e);
             return "err";
         }
     }
