@@ -22,14 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/feed") // (?)
-public class Crud {
+public class FeedCrud {
 
     @Autowired
     FeedMapper feedMapper;
-
     @Autowired
     CardMapper cardMapper;
-
     ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

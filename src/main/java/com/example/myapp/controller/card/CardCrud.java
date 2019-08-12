@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/card") // (?)
-public class Crud {
+public class CardCrud {
 
     @Autowired
     CardMapper cardMapper;
