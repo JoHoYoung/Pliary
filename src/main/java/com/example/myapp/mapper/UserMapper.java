@@ -22,24 +22,26 @@ public interface UserMapper {
 
     // 이메일 인증 완료 state = 'T' 변경
     @Update("UPDATE USER SET state = 'T' WHERE token = #{token}")
-    public int emailCertification(String token);
+    public int emailCertification(@Param("token") String token);
 
     // temp_password 저장
     @Update("UPDATE USER SET temp_password = #{temp_password} WHERE email = #{email}")
-    public int temp_passwordUpdate(String email, String temp_password);
+    public int temp_passwordUpdate(@Param("email")String email, @Param("temp_password") String temp_password);
 
     // state = 'C' 변경
     @Update("UPDATE USER SET state = 'C' WHERE email = #{email}")
-    public int stateUpdate(String email);
+    public int stateUpdate(@Param("email") String email);
 
     // 비밀번호 변경
     @Update("UPDATE USER SET password = temp_password WHERE token = #{token}")
-    public int passwordUpdate(String token);
+    public int passwordUpdate(@Param("token") String token);
 
     // 비밀번호 변경을 위한 토큰 변경
     @Update("UPDATE USER SET token = #{token} WHERE email = #{email}")
-    public int tokenUpdate(String email, String token);
+    public int tokenUpdate(@Param("email")String email, @Param("token")String token);
 
+    @Update("UPDATE USER SET state ='D' WHERE uid = #{uid}")
+    public void deleteUser(@Param("uid")String uid);
     // 중복 체크
     @Select("SELECT email FROM member where email = #{email}")
     public String emailDuplicate(UserModel user);

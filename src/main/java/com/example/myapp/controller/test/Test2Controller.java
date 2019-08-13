@@ -37,7 +37,7 @@ public class Test2Controller {
     public String test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
     {
         byte [] byteArr=files.getBytes();
-        a.fileUpload("groot.devdogs.kr","aaq123",byteArr);
+        a.fileUpload("groot.devdogs.kr","aaq23",byteArr);
         System.out.println("KK");
         return "GOOD";
     }

@@ -1,7 +1,6 @@
 package com.example.myapp.mapper;
 import com.example.myapp.model.CardModel;
 import org.apache.ibatis.annotations.*;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

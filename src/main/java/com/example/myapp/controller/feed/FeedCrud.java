@@ -28,6 +28,7 @@ public class FeedCrud {
     FeedMapper feedMapper;
     @Autowired
     CardMapper cardMapper;
+
     ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

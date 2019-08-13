@@ -21,4 +21,7 @@ public interface FeedMapper {
 
     @Delete("DELETE FROM FEED WHERE uid=#{feed_id}")
     void deleteFeed(@Param("feed_id")String feed_id);
+
+    @Delete("DELETE FROM FEED WHERE card_id=#{card_id}")
+    void deleteFeedFromCardId(@Param("card_id")String card_id);
 }
