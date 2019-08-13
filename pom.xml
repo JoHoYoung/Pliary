@@ -114,17 +114,14 @@
             <version>1.4</version>
         </dependency>
         <dependency>
-<<<<<<< HEAD
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>1.9.2</version>
         </dependency>
-=======
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
-
->>>>>>> fe4e6b82ea21bc12febb0ad8c8ac31de41283752
         <!--<dependency>-->
         <!--<groupId>org.springframework.security</groupId>-->
         <!--<artifactId>spring-security-config</artifactId>-->

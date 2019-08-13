@@ -3,7 +3,6 @@ package com.example.myapp.controller.auth;
 import com.example.myapp.context.user.ChangePassword;
 import com.example.myapp.context.user.Signin;
 import com.example.myapp.context.user.Signup;
-import com.example.myapp.controller.test.LogTestController;
 import com.example.myapp.jwt.JwtServiceImpl;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.UserModel;
@@ -29,7 +28,7 @@ import java.util.Random;
 @RequestMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class User {
 
-    private static final Logger LOG = LogManager.getLogger(LogTestController.class);
+    private static final Logger LOG = LogManager.getLogger(User.class);
 
     @Autowired
     private JwtServiceImpl jwtService;
@@ -78,7 +77,7 @@ public class User {
         } catch (MessagingException e) {
             JSON.put("statusCode", 500);
             JSON.put("statusMsg","Internal server Error");
-            e.printStackTrace();
+            LOG.error("Internal server Error", e);
         }
         JSON.put("statusCode",200);
         JSON.put("statusMsg", "success");
@@ -94,6 +93,7 @@ public class User {
         if(userInfo == null){
             JSON.put("statusCode", 700);
             JSON.put("statusMsg", "Invalid Email");
+            LOG.warn("Invalid Email");
             return JSON;
         }
         JSONObject Session = new JSONObject();
@@ -123,6 +123,7 @@ public class User {
         if(user == null){
             JSON.put("statusCode", HttpStatus.BAD_REQUEST);
             JSON.put("statusMsg", "Email exist");
+            LOG.warn("Email exist");
             return JSON;
         }
         // DB에 temp_password 저장, state = 'C'
@@ -156,7 +157,7 @@ public class User {
         }catch (MessagingException e) {
             JSON.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
             JSON.put("statusMsg", "Internal server Error");
-            e.printStackTrace();
+            LOG.error("Internal server Error", e);
         }
         JSON.put("statusCode", HttpStatus.NO_CONTENT);
         JSON.put("statusMsg", "success");

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("Encoder")
 public class AES256Util {
-    private static final Logger LOG = LogManager.getLogger(JwtInterceptor.class);
+    private static final Logger LOG = LogManager.getLogger(AES256Util.class);
 
     private String iv;
     private Key keySpec;

@@ -10,6 +10,8 @@ import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.CardModel;
 import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
-@RequestMapping(value = "/card") // (?)
+@RequestMapping(value = "/card")
 public class CardCrud {
+
+    private static final Logger LOG = LogManager.getLogger(CardCrud.class);
 
     @Autowired
     CardMapper cardMapper;
@@ -46,6 +50,7 @@ public class CardCrud {
         if (count > 5) {
             JSON.put("statusCode", "");
             JSON.put("statusMsg", "Over..");
+            LOG.info("사용자가 더 많은 식물 등록을 원합니다.");
             return JSON;
         }
         // 카드 생성
@@ -83,6 +88,7 @@ public class CardCrud {
             if (Cards.size() == 0) {
                 JSON.put("stautsCode", 500);
                 JSON.put("statusMsg", "No data");
+                LOG.info("/readAll : No data");
                 return JSON;
             }
             List<String> data = new ArrayList<>();
@@ -96,9 +102,9 @@ public class CardCrud {
             // Get user's one card(card_id)
 
         } catch (Exception e) {
-            System.out.println(e);
             JSON.put("stautsCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.warn("Internal Server Error", e);
             return JSON;
         }
     }
@@ -114,6 +120,7 @@ public class CardCrud {
             if (Card == null) {
                 JSON.put("stautsCode", 500);
                 JSON.put("statusMsg", "No data");
+                LOG.info("/read : No data");
                 return JSON;
             }
             JSON.put("stautsCode", 200);
@@ -124,6 +131,7 @@ public class CardCrud {
         } catch (Exception e) {
             JSON.put("stautsCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.error("Internal Server Error", e);
             return JSON;
         }
     }
@@ -142,6 +150,7 @@ public class CardCrud {
         } catch (Exception e) {
             JSON.put("stautsCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.error("Internal Server Error", e);
             return JSON;
         }
     }

@@ -18,7 +18,7 @@ public class Test2Controller {
     private UserMapper userMapper;
 
     @Autowired
-    AwsS3Util a;
+    AwsS3Util awsS3Util;
 
     // 이메일 인증
     @RequestMapping(value="/auth/cert", method = RequestMethod.GET)
@@ -34,10 +34,10 @@ public class Test2Controller {
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public String test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
-    {
+    public String test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException {
+        AwsS3Util awsS3Util = new AwsS3Util();
         byte [] byteArr=files.getBytes();
-        a.fileUpload("groot.devdogs.kr","aaq123",byteArr);
+        awsS3Util.fileUpload("groot.devdogs.kr","a", byteArr);
         System.out.println("KK");
         return "GOOD";
     }
