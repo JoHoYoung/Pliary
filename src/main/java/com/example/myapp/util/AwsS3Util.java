@@ -14,12 +14,17 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class AwsS3Util {
+import javax.annotation.PostConstruct;
 
+@Component
+public class AwsS3Util {
+    
 
     private AmazonS3 conn;
 
@@ -55,7 +60,9 @@ public class AwsS3Util {
         metaData.setContentLength(fileData.length);   //메타데이터 설정 -->원래는 128kB까지 업로드 가능했으나 파일크기만큼 버퍼를 설정시켰다.
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //파일 넣음
         conn.putObject(bucketName, filePath, byteArrayInputStream, metaData);
-        return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, fileName)).toString();
+        String imgName = (fileName).replace(File.separatorChar, '/');
+        System.out.println(getFileURL(bucketName,fileName));
+        return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
     }
 
     // 파일 삭제
@@ -63,6 +70,7 @@ public class AwsS3Util {
         String imgName = (fileName).replace(File.separatorChar, '/');
         conn.deleteObject(bucketName, imgName);
         System.out.println("삭제성공");
+
     }
 
     // 파일 URL

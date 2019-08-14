@@ -10,7 +10,7 @@ import java.util.Date;
 public class UserModel {
     private String uid;
     private String email;
-    private char state;
+    private String state;
     private String name;
     private String nickname;
     private String birth;

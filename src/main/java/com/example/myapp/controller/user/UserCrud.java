@@ -56,7 +56,6 @@ public class UserCrud {
             UserModel user = userMapper.getUser(sesssion.get("email").toString());
             List<CardModel> cards = cardMapper.readAllCard(user.getUid());
             for(int i=0;i<cards.size();i++){
-
                 feedMapper.deleteFeedFromCardId(cards.get(i).getUid());
                 cardMapper.deleteCard(cards.get(i).getUid());
             }

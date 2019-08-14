@@ -2,6 +2,7 @@ package com.example.myapp.controller.test;
 
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.util.AwsS3Util;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +35,14 @@ public class Test2Controller {
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public String test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
+    public JSONObject test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
     {
+        JSONObject JSON = new JSONObject();
         byte [] byteArr=files.getBytes();
-        a.fileUpload("groot.devdogs.kr","aaq23",byteArr);
+        a.fileUpload("groot.devdogs.kr","aaq2223",byteArr);
         System.out.println("KK");
-        return "GOOD";
+        JSON.put("statusCode", 200);
+        JSON.put("statusMsg", "success");
+        return JSON;
     }
 }

@@ -10,7 +10,7 @@ public class CardModel {
     private String user_id;
     private String name;
     private String nickname;
-    private String start_date;
+    private String state;
     int init_period;
     int now_period; // count 필요?
     private Date created_at;
