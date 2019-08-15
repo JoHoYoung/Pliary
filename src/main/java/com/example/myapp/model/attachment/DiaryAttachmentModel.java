@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class DiaryAttachmentModel implements AttachmentModel {
+public class DiaryAttachmentModel extends AttachmentModel {
     private String uid;
     private String diary_id;
     private String url;

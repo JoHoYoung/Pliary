@@ -34,7 +34,6 @@ public class JwtServiceImpl {
                 .compact();
         return jwt;
     }
-
     public int verifyToken(String token) {
         try{
             Jwts.parser().setSigningKey(SALT).parseClaimsJws(token).getBody();
@@ -47,7 +46,6 @@ public class JwtServiceImpl {
             return 701;
         }
     }
-
     // Token 해독 및 객체 생성
     public String decode(String token) {
         Claims Claim = Jwts.parser().setSigningKey(SALT).parseClaimsJws(token).getBody();

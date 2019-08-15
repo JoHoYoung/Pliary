@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CardAttachmentModel implements AttachmentModel {
+public class CardAttachmentModel extends AttachmentModel {
     private String uid;
     private String card_id;
     private String url;
