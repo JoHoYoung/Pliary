@@ -18,8 +18,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class AwsS3Util {
-    private String accessKey = "AKIA6N6ZH6WXI4XYGKPA";
-    private String secretKey = "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";
+    private String accessKey = "";
+    private String secretKey = "";
     private AmazonS3 conn;
 
     public AwsS3Util() {
