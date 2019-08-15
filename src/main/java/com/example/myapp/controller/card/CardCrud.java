@@ -116,7 +116,7 @@ public class CardCrud {
             JSONObject session = (JSONObject) req.getAttribute("session");
             String user_id = userMapper.getUser((String) session.get("email")).getUid();
             // Get user's All card
-            CardModel Card = cardMapper.readCard(card_id);
+            CardModel Card = cardMapper.readCard(user_id, card_id);
             if (Card == null) {
                 JSON.put("stautsCode", 500);
                 JSON.put("statusMsg", "No data");

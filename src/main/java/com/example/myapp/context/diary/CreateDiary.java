@@ -13,6 +13,12 @@ public class CreateDiary {
     @JsonProperty("card_id")
     private String card_id;
 
-    @JsonProperty("maintext")
-    private String maintext;
+    @JsonProperty("title")
+    private String title;
+
+    @JsonProperty("body")
+    private String body;
+
+    @JsonProperty("state")
+    private char state;
 }

@@ -17,11 +17,11 @@
         일단 30일 마다 로그 파일 자동 삭제
         용량 - 10 KB, 10개까지 생성
         -->
-        <RollingFile name="File" fileName="${BASE_DIR}/today_logfile/today.log"
+        <RollingFile name="File" fileName="${BASE_DIR}/today.log"
                      filePattern="${BASE_DIR}/${DATE}/${DATE}-(%i).log">
             <PatternLayout pattern="${LOG_FORMAT}"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10 KB"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="10">
                 <Delete basePath="${BASE_DIR}">

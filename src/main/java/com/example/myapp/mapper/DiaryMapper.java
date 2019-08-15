@@ -1,28 +1,34 @@
 package com.example.myapp.mapper;
 
-import com.example.myapp.model.CardModel;
+import com.example.myapp.model.DiaryModel;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Repository
 public interface DiaryMapper {
 
     // 다이어리 등록
-    @Insert("")
-     int createDiary();
+    @Insert("INSERT INTO DIARY(uid, card_id, title, body, created_at, updated_at, state) " +
+            "VALUES(#{uid}, #{card_id}, #{title}, #{body}, now(), now(), 'C')")
+     int createDiary(String uid, String card_id, String title, String body);
 
     // 특정 카드(식물) 다이어리 읽기
-    @Select("")
-    List<CardModel> readAllDiary();
+    @Select("SELECT * FROM DIARY WHERE card_id = #{card_id}")
+    ArrayList<DiaryModel> readAllDiary(String card_id);
 
-    // 다이어리 삭제 (1개 지정)
-    @Delete("")
-    int deleteDiary();
+    // 하나의 다이어리(선택) 읽기
+    @Select("SELECT * FROM DIARY WHERE uid = #{uid}")
+    DiaryModel readDiary(String uid);
+
+    // 다이어리 삭제 (1개 지정) - state = 'D' 로 update
+    @Update("UPDATE DIARY SET state = 'D' WHERE uid = #{uid}")
+    int deleteDiary(String uid);
 
     // 다이어리 수정
-    @Update("")
-    int updateDiary();
+    @Update("UPDATE DIARY SET(title = #{title}, body = #{body}, updated_at = #{updated_at}) " +
+            "WHERE uid = #{uid}")
+    int updateDiary(String uid, String title, String body);
 
 }
