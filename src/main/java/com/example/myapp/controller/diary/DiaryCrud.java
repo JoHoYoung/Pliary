@@ -32,7 +32,7 @@ public class DiaryCrud {
             String body = param.getBody();
             diaryMapper.createDiary(uid, card_id, title, body);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success create");
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode", 500);
@@ -48,13 +48,14 @@ public class DiaryCrud {
         try{
             String uid = param.getUid();
             if(uid == null){
+                LOG.warn("diary/update : Empty uid");
                 throw new Error("Empty uid");
             }
             String title = param.getTitle();
             String body = param.getBody();
             diaryMapper.updateDiary(uid, title, body);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success update");
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode",500);
@@ -71,7 +72,7 @@ public class DiaryCrud {
         try{
             DiaryModel diary = diaryMapper.readDiary(id);
             JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success read");
             JSON.put("data", diary);
             return JSON;
         }catch(Exception e){
@@ -89,7 +90,7 @@ public class DiaryCrud {
         try{
             ArrayList<DiaryModel> diaries = diaryMapper.readAllDiary(id);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success readAll");
             JSON.put("data", diaries);
             return JSON;
         }catch(Exception e){
@@ -100,13 +101,13 @@ public class DiaryCrud {
         }
     }
 
-    @RequestMapping(value ="/delete", method = RequestMethod.POST)
-    public JSONObject deleteDiary(HttpServletRequest req, @RequestBody CreateDiary param){
+    @RequestMapping(value ="/delete", method = RequestMethod.GET)
+    public JSONObject deleteDiary(HttpServletRequest req, @RequestParam("id") String id){
         JSONObject JSON = new JSONObject();
         try{
-            diaryMapper.deleteDiary(param.getUid());
+            diaryMapper.deleteDiary(id);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success delete");
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode",500);

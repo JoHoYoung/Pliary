@@ -12,8 +12,7 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api2/test",
-            "/static/*", "/error"};
+    private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api2/test", "/static/*", "/error"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

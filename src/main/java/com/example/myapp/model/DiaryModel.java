@@ -9,6 +9,7 @@ public class DiaryModel {
     private String uid;
     private String card_id;
     private char state;
+    private String title;
     private String body;
     private Date created_at;
     private Date updated_at;
