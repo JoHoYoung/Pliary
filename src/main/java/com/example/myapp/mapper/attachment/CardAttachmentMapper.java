@@ -16,6 +16,6 @@ public interface CardAttachmentMapper extends AttachmentMapper{
     @Update("UPDATE CARDATTACHMENT SET state = 'D' WHERE  uid = #{uid}")
     void deleteAttachment(@Param("uid")String uid);
 
-    @Select("SELECT * FROM CARDATTACHMENT WHERE card_id = #{card_id}")
+    @Select("SELECT * FROM CARDATTACHMENT WHERE card_id = #{card_id} AND state='C'")
     List<AttachmentModel> readAttachment(@Param("card_id")String card_id);
 }

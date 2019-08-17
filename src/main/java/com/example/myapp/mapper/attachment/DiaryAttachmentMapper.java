@@ -21,6 +21,6 @@ public interface DiaryAttachmentMapper extends AttachmentMapper {
     @Update("UPDATE DIARYATTACHMENT SET state = 'D' WHERE  uid = #{uid}")
     void deleteAttachment(@Param("uid")String uid);
 
-    @Select("SELECT * FROM DIARYATTACHMENT WHERE diary_id = #{diary_id}")
+    @Select("SELECT * FROM DIARYATTACHMENT WHERE diary_id = #{diary_id} AND state='C'")
     List<AttachmentModel> readAttachment(@Param("diary_id")String diary_id);
 }

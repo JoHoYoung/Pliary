@@ -40,16 +40,16 @@ public class AttachmentCrud {
         String type = req.getParameter("type");
         String upperId = req.getParameter("uid");
         AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
-        JSONObject images = new JSONObject();
+        ArrayList<String> images = new ArrayList<>();
         try{
             for(int i = 0;i<files.size();i++){
                 System.out.println("upperId");
 
                 String uid = UUID.randomUUID().toString();
                 byte [] byteArr=files.get(i).getBytes();
-                String url = awsS3Util.fileUpload("groot.devdogs.kr",uid, byteArr);
                 String filename = email + uid.substring(0,5);
-                images.put(uid,url);
+                String url = awsS3Util.fileUpload("dailyissue",filename, byteArr);
+                images.add(url);
                 attachmentMapper.createAttachment(uid, upperId, url, filename);
             }
             JSON.put("statusCode", 200);
@@ -98,11 +98,12 @@ public class AttachmentCrud {
             String filename = param.getFilename();
             AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
             attachmentMapper.deleteAttachment(uid);
-            awsS3Util.fileDelete("groot.devdogs.kr",filename);
+            awsS3Util.fileDelete("dailyissue",filename);
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;
         }catch(Exception e){
+            System.out.println(e);
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;
