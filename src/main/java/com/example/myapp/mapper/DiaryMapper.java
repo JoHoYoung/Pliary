@@ -1,34 +1,28 @@
 package com.example.myapp.mapper;
 
 import com.example.myapp.model.DiaryModel;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Repository
-public interface DiaryMapper {
+public interface DiaryMapper{
+    @Insert("INSERT INTO DIARY(uid, title, card_id, state, body, created_at updated_at) VALUES(#{uid},#{title},#{card_id},'C',#{body},now(),now())")
+    void createDiary(@Param("uid")String uid, @Param("title")String title, @Param("card_id")String card_id, @Param("body")String body);
 
-    // 다이어리 등록
-    @Insert("INSERT INTO DIARY(uid, card_id, title, body, created_at, updated_at, state) " +
-            "VALUES(#{uid}, #{card_id}, #{title}, #{body}, now(), now(), 'C')")
-     int createDiary(String uid, String card_id, String title, String body);
+    @Update("UPDATE DIARY SET title =#{title}, body=#{body}, updated_date = now() WHERE uid=#{uid} AND state='C'")
+    void updateDiary(@Param("title")String title, @Param("body")String body, @Param("uid")String uid);
 
-    // 특정 카드(식물) 다이어리 읽기
-    @Select("SELECT * FROM DIARY WHERE card_id = #{card_id}")
-    ArrayList<DiaryModel> readAllDiary(String card_id);
-
-    // 하나의 다이어리(선택) 읽기
     @Select("SELECT * FROM DIARY WHERE uid = #{uid}")
-    DiaryModel readDiary(String uid);
+    DiaryModel readDiary(@Param("uid")String uid);
 
-    // 다이어리 삭제 (1개 지정) - state = 'D' 로 update
-    @Update("UPDATE DIARY SET state = 'D' WHERE uid = #{uid}")
-    int deleteDiary(String uid);
+    @Select("SELECT * FROM DIARY WHERE card_id = #{card_id} ORDER BY create_at DESC")
+    List<DiaryModel> readAllDiary(@Param("card_id")String card_id);
 
-    // 다이어리 수정
-    @Update("UPDATE DIARY SET(title = #{title}, body = #{body}, updated_at = #{updated_at}) " +
-            "WHERE uid = #{uid}")
-    int updateDiary(String uid, String title, String body);
-
+    @Update("UPDATE DIARY set state='C' WHERE uid = #{uid}")
+    List<DiaryModel> deleteDiary(@Param("uid")String uid);
 }

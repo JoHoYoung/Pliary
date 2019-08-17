@@ -38,40 +38,39 @@ public class CardCrud {
     public JSONObject createCard(HttpServletRequest req, @RequestBody CreateCard param) {
 
         JSONObject session = (JSONObject) req.getAttribute("session");
+        JSONObject JSON = new JSONObject();
         System.out.println(session);
         String user_id = userMapper.getUser((String) session.get("email")).getUid();
-
-        int init_period = param.getInit_period();
-        String name = param.getName();
-        String nickName = param.getNickname();
         int count = cardMapper.countCard(user_id);
 
-        JSONObject JSON = new JSONObject();
         if (count > 5) {
-            JSON.put("statusCode", "");
-            JSON.put("statusMsg", "Over..");
-            LOG.info("사용자가 더 많은 식물 등록을 원합니다.");
+            JSON.put("statusCode", 400);
+            JSON.put("statusMsg", "Cannot make card");
             return JSON;
         }
+
         // 카드 생성
         String uid = UUID.randomUUID().toString();
-        cardMapper.createCard(uid, user_id, name, nickName, init_period);
+        cardMapper.createCard(uid, user_id, null, null, 0);
+
+        JSONObject data = new JSONObject();
+        data.put("uid", uid);
+
         JSON.put("statusCode", 200);
         JSON.put("statusMsg", "success");
+        JSON.put("data",data);
         return JSON;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public JSONObject updateCard(HttpServletRequest req, @RequestBody CreateCard param) {
-        JSONObject session = (JSONObject) req.getAttribute("session");
-        String user_id = userMapper.getUser((String) session.get("email")).getUid();
+        JSONObject JSON = new JSONObject();
         String uid = param.getUid();
         String name = param.getName();
         String nickName = param.getNickname();
         int init_period = param.getInit_period();
         // update
         cardMapper.updateCard(uid, name, nickName, init_period, init_period);
-        JSONObject JSON = new JSONObject();
         JSON.put("statusCode", 200);
         JSON.put("statusMsg", "success");
         return JSON;
