@@ -88,7 +88,6 @@ public class User {
     public JSONObject signIn(@RequestBody Signin param) {
         JSONObject JSON = new JSONObject();
         String email = param.getEmail();
-        System.out.println(email);
         UserModel userInfo = userMapper.getUser(email);
         if(userInfo == null){
             JSON.put("statusCode", 700);
@@ -97,10 +96,8 @@ public class User {
             return JSON;
         }
         JSONObject Session = new JSONObject();
-        System.out.println(userInfo.toString());
        // Session.put("uid", userInfo.getUid());
         Session.put("email",email);
-        System.out.println(Session.toString());
         JSON.put("statusCode", 200);
         JSON.put("statusMsg", 200);
         JSON.put("accessToken", jwtService.accessToken(Session.toString()));

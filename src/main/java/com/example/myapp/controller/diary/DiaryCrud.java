@@ -3,6 +3,7 @@ package com.example.myapp.controller.diary;
 import com.example.myapp.context.diary.CreateDiary;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.model.DiaryModel;
+import com.example.myapp.model.attachment.DiaryAttachmentModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -72,7 +73,7 @@ public class DiaryCrud {
         try{
             DiaryModel diary = diaryMapper.readDiary(id);
             JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success read");
+            JSON.put("statusMsg", "success");
             JSON.put("data", diary);
             return JSON;
         }catch(Exception e){
@@ -90,7 +91,7 @@ public class DiaryCrud {
         try{
             ArrayList<DiaryModel> diaries = diaryMapper.readAllDiary(id);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success readAll");
+            JSON.put("statusMsg", "success");
             JSON.put("data", diaries);
             return JSON;
         }catch(Exception e){

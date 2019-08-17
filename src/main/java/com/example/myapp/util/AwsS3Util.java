@@ -27,7 +27,6 @@ import javax.annotation.PostConstruct;
 public class AwsS3Util {
     private AmazonS3 conn;
 
-    
     public AwsS3Util() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         ClientConfiguration clientConfig = new ClientConfiguration();
@@ -61,7 +60,6 @@ public class AwsS3Util {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //파일 넣음
         conn.putObject(bucketName, filePath, byteArrayInputStream, metaData);
         String imgName = (fileName).replace(File.separatorChar, '/');
-        System.out.println(getFileURL(bucketName,fileName));
         return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
     }
 
@@ -69,13 +67,11 @@ public class AwsS3Util {
     public void fileDelete(String bucketName, String fileName) {
         String imgName = (fileName).replace(File.separatorChar, '/');
         conn.deleteObject(bucketName, imgName);
-        System.out.println("삭제성공");
 
     }
 
     // 파일 URL
     public String getFileURL(String bucketName, String fileName) {
-        System.out.println("넘어오는 파일명 : "+fileName);
         String imgName = (fileName).replace(File.separatorChar, '/');
         return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
     }

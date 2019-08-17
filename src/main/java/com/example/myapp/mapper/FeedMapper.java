@@ -16,7 +16,7 @@ public interface FeedMapper {
     @Select("SELECT * FROM FEED WHERE card_id=#{card_id} AND state='C'")
     List<FeedModel> readAllFeed(@Param("card_id")String card_id);
 
-    @Update("UPDATE FEED SET updated_date = now(), over_degree = #{over_degree} WHERE uid = #{feed_id} AND state = 'C'")
+    @Update("UPDATE FEED SET updated_at = now(), over_degree = #{over_degree} WHERE uid = #{feed_id} AND state = 'C'")
     void updateFeed(@Param("feed_id")String feed_id);
 
     @Delete("UPDATE FEED SET state = 'D' WHERE uid=#{feed_id} AND state ='C'")

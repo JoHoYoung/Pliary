@@ -1,8 +1,10 @@
 package com.example.myapp.model;
 
+import com.example.myapp.model.attachment.CardAttachmentModel;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class CardModel {
@@ -15,4 +17,6 @@ public class CardModel {
     int now_period;
     private Date created_at;
     private Date updated_at;
+    List<CardAttachmentModel> images;
+
 }

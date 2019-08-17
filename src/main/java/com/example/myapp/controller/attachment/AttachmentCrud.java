@@ -41,9 +41,8 @@ public class AttachmentCrud {
         String upperId = req.getParameter("uid");
         AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
         ArrayList<String> images = new ArrayList<>();
-        try{
+        try {
             for(int i = 0;i<files.size();i++){
-                System.out.println("upperId");
 
                 String uid = UUID.randomUUID().toString();
                 byte [] byteArr=files.get(i).getBytes();
@@ -56,8 +55,7 @@ public class AttachmentCrud {
             JSON.put("statusMsg", "success");
             JSON.put("data", images);
             return JSON;
-        }catch(Exception e){
-            System.out.println(e);
+        } catch (Exception e) {
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;
@@ -82,7 +80,6 @@ public class AttachmentCrud {
             JSON.put("data",data);
             return JSON;
         }catch(Exception e){
-            System.out.println(e);
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;
@@ -103,7 +100,6 @@ public class AttachmentCrud {
             JSON.put("statusMsg", "success");
             return JSON;
         }catch(Exception e){
-            System.out.println(e);
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;

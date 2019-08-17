@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
 
@@ -18,6 +20,8 @@ public interface UserMapper {
 
     // 로그인
     @Select("SELECT * FROM USER where email = #{email}" )
+    @Results({@Result(property = "images", javaType = List.class, column = "uid",
+            many = @Many(select = "com.example.myapp.mapper.attachment.ProfileAttachmentMapper.readAttachment")),@Result(property="uid",column = "uid")})
     UserModel getUser(@Param("email") String email);
 
     // 이메일 인증 완료 state = 'T' 변경

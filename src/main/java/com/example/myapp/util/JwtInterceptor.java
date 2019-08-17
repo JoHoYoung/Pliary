@@ -21,9 +21,17 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
+        JSONObject JSON = new JSONObject();
+
+        if(req.getHeader("Authorization") == null){
+            res.setContentType("application/json");
+            JSON.put("statusCode", 701);
+            JSON.put("statusMsg", "Empty Token");
+            return false;
+        }
+
         String[] authHeader = req.getHeader("Authorization").split(" ");
         String token = authHeader[1];
-        JSONObject JSON = new JSONObject();
         // 테스트용
         int code = JWT.verifyToken(token);
         System.out.println(code);

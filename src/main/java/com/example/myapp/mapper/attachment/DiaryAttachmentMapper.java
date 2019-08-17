@@ -4,10 +4,7 @@ import com.example.myapp.mapper.attachment.AttachmentMapper;
 import com.example.myapp.model.attachment.AttachmentModel;
 import com.example.myapp.model.attachment.CardAttachmentModel;
 import com.example.myapp.model.attachment.DiaryAttachmentModel;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,5 +19,6 @@ public interface DiaryAttachmentMapper extends AttachmentMapper {
     void deleteAttachment(@Param("uid")String uid);
 
     @Select("SELECT * FROM DIARYATTACHMENT WHERE diary_id = #{diary_id} AND state='C'")
+    @Results({@Result(property = "diary_id", column = "diary_id")})
     List<AttachmentModel> readAttachment(@Param("diary_id")String diary_id);
 }

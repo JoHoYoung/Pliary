@@ -39,7 +39,6 @@ public class CardCrud {
 
         JSONObject session = (JSONObject) req.getAttribute("session");
         JSONObject JSON = new JSONObject();
-        System.out.println(session);
         String user_id = userMapper.getUser((String) session.get("email")).getUid();
         int count = cardMapper.countCard(user_id);
 
@@ -50,10 +49,14 @@ public class CardCrud {
         }
         // 카드 생성
         String uid = UUID.randomUUID().toString();
-        cardMapper.createCard(uid, user_id, null, null, 0);
-        JSONObject data = new JSONObject();
-        data.put("uid", uid);
+        String name = param.getName();
+        String nickName = param.getNickname();
+        int initPeriod = param.getInit_period();
+        cardMapper.createCard(uid, user_id, name, nickName, initPeriod);
 
+        JSONObject data = new JSONObject();
+
+        data.put("uid", uid);
         JSON.put("statusCode", 200);
         JSON.put("statusMsg", "success");
         JSON.put("data",data);
@@ -82,12 +85,6 @@ public class CardCrud {
             String user_id = userMapper.getUser((String) session.get("email")).getUid();
             // Get user's All card
             List<CardModel> Cards = cardMapper.readAllCard(user_id);
-            if (Cards.size() == 0) {
-                JSON.put("stautsCode", 500);
-                JSON.put("statusMsg", "No data");
-                LOG.info("/readAll : No data");
-                return JSON;
-            }
             List<String> data = new ArrayList<>();
             for (int i = 0; i < Cards.size(); i++) {
                 data.add(objectMapper.writeValueAsString(Cards.get(i)));

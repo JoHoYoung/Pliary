@@ -5,6 +5,7 @@
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/controller/feed/FeedCrud.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/factory/AttachmentMapperFactory.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/context/card/CreateCard.java
+/Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/model/attachment/ProfileAttachmentModel.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/model/attachment/AttachmentModel.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/context/feed/CreateFeed.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/util/JwtInterceptor.java
@@ -29,6 +30,7 @@
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/config/DatabaseConfig.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/controller/auth/Cert.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/mapper/attachment/CardAttachmentMapper.java
+/Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/mapper/attachment/ProfileAttachmentMapper.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/jwt/JwtServiceImpl.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/controller/diary/DiaryCrud.java
 /Users/HY/IdeaProjects/myapp/src/main/java/com/example/myapp/controller/auth/Token.java

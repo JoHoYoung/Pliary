@@ -27,7 +27,6 @@ public class Test2Controller {
         // 사용자가 이메일 인증을 했을 때, get으로 받은 token이 DB에 있는지 확인하고
         // 그 token을 갖고있는 사용자의 state를 인증이 완료된 상태로 변경해준다.
         int result = userMapper.emailCertification(token);
-        System.out.println(result);
         String fail = "http://localhost:8080/static/certFail.html";
         String success = "http://localhost:8080/static/certCompletion.html";
         if(result == 1) return "redirect:" + success;

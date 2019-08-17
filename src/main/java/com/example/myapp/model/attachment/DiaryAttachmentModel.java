@@ -1,8 +1,6 @@
 package com.example.myapp.model.attachment;
 
-import com.example.myapp.model.attachment.AttachmentModel;
 import lombok.Data;
-
 import java.util.Date;
 
 @Data
