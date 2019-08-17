@@ -3,10 +3,6 @@ package com.example.myapp.controller.diary;
 import com.example.myapp.context.diary.CreateDiary;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.model.DiaryModel;
-import com.example.myapp.util.ObjectMapperSingleTon;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-import org.apache.http.HttpRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -15,32 +11,31 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/diary") // (?)
+@RequestMapping(value = "/diary")
 public class DiaryCrud {
 
     private static final Logger LOG = LogManager.getLogger(DiaryCrud.class);
+
     @Autowired
     DiaryMapper diaryMapper;
 
-    ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public JSONObject createDiary(HttpServletRequest req, @RequestBody CreateDiary param){
         JSONObject JSON = new JSONObject();
         try{
-            String uid = UUID.randomUUID().toString() ;
-            String title = param.getTitle();
+            String uid = UUID.randomUUID().toString();
             String card_id = param.getCard_id();
+            String title = param.getTitle();
             String body = param.getBody();
-            diaryMapper.createDiary(uid, title, card_id, body);
+            diaryMapper.createDiary(uid, card_id, title, body);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success create");
             return JSON;
         }catch(Exception e){
-            JSON.put("statusCode",500);
+            JSON.put("statusCode", 500);
             JSON.put("statusMsg", "Internal server error");
             LOG.error("Internal server error", e);
             return JSON;
@@ -58,9 +53,9 @@ public class DiaryCrud {
             }
             String title = param.getTitle();
             String body = param.getBody();
-            diaryMapper.updateDiary(title, body, uid);
+            diaryMapper.updateDiary(uid, title, body);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success update");
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode",500);
@@ -71,13 +66,14 @@ public class DiaryCrud {
     }
 
     @RequestMapping(value ="/read", method = RequestMethod.GET)
-    public JSONObject readDiary(HttpServletRequest req, @RequestParam("id")String id){
+    // id = Diary.uid
+    public JSONObject readDiary(HttpServletRequest req, @RequestParam("id") String id){
         JSONObject JSON = new JSONObject();
         try{
             DiaryModel diary = diaryMapper.readDiary(id);
-            JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
-            JSON.put("data",objectMapper.writeValueAsString(diary));
+            JSON.put("statusCode", 200);
+            JSON.put("statusMsg", "success read");
+            JSON.put("data", diary);
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode",500);
@@ -88,18 +84,14 @@ public class DiaryCrud {
     }
 
     @RequestMapping(value ="/readAll", method = RequestMethod.GET)
-    public JSONObject readAllDiary(HttpServletRequest req, @RequestParam("id")String id){
+    // id = cardId
+    public JSONObject readAllDiary(HttpServletRequest req, @RequestParam("id") String id){
         JSONObject JSON = new JSONObject();
         try{
-            ArrayList<String> data = new ArrayList<>();
-            List<DiaryModel> diaries = diaryMapper.readAllDiary(id);
-
-            for(int i =0;i<diaries.size();i++){
-                data.add(objectMapper.writeValueAsString(diaries.get(i)));
-            }
+            ArrayList<DiaryModel> diaries = diaryMapper.readAllDiary(id);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
-            JSON.put("data",data);
+            JSON.put("statusMsg", "success readAll");
+            JSON.put("data", diaries);
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode",500);
@@ -108,13 +100,14 @@ public class DiaryCrud {
             return JSON;
         }
     }
-    @RequestMapping(value ="/delete", method = RequestMethod.POST)
-    public JSONObject deleteDiary(HttpServletRequest req, @RequestBody CreateDiary param){
+
+    @RequestMapping(value ="/delete", method = RequestMethod.GET)
+    public JSONObject deleteDiary(HttpServletRequest req, @RequestParam("id") String id){
         JSONObject JSON = new JSONObject();
         try{
-            diaryMapper.deleteDiary(param.getUid());
+            diaryMapper.deleteDiary(id);
             JSON.put("statusCode",200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusMsg", "success delete");
             return JSON;
         }catch(Exception e){
             JSON.put("statusCode",500);
