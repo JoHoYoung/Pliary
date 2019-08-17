@@ -18,8 +18,8 @@ public interface DiaryAttachmentMapper extends AttachmentMapper {
     @Insert("INSERT INTO DIARYATTACHMENT(uid, diary_id, url, filename, state, created_at, updated_at) VALUES(#{uid},#{diary_id},#{url}, #{filename},'C', now(),now())")
     void createAttachment(@Param("uid")String uid, @Param("diary_id")String diary_id, @Param("url")String url, @Param("filename")String filename);
 
-    @Update("UPDATE DIARYATTACHMENT SET state = 'D' WHERE  uid = #{uid}")
-    void deleteAttachment(@Param("uid")String uid);
+    @Update("UPDATE DIARYATTACHMENT SET state = 'D', updated_at = now() WHERE  diary_id=#{diary_id}")
+    void deleteAttachment(@Param("diary_id")String diary_id);
 
     @Select("SELECT * FROM DIARYATTACHMENT WHERE diary_id = #{diary_id} AND state='C'")
     List<AttachmentModel> readAttachment(@Param("diary_id")String diary_id);

@@ -11,12 +11,12 @@ public class UserModel {
     private String uid;
     private String email;
     private String state;
-    private String name;
-    private String nickname;
-    private String birth;
-    private String phone;
+    //private String name;
+    //private String nickname;
+    //private String birth;
+    //private String phone;
     private String token;
-    private int provider;
+    //private int provider;
     private Date created_at;
     private Date updated_at;
 }

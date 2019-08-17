@@ -67,7 +67,7 @@ public class User {
         try {
             helper = new MimeMessageHelper(msg, false, "UTF-8");
             String text = "<html><body><p>인증을 위해 아래 링크를 클릭해 주세요</p>" +
-                    "<a href='http://15.164.169.58:8080/api/cert/?&token=" + token + "'>여기를 눌러 인증해주세요</a></body></html>";
+                    "<a href='http://groot.devdogs.kr:8080/api/cert/?&token=" + token + "'>여기를 눌러 인증해주세요</a></body></html>";
             helper.setTo(email);
             helper.setSubject("Team Groot - 이메일 인증");
             helper.setText(text,true);
@@ -107,11 +107,7 @@ public class User {
         JSON.put("refreshToken", jwtService.refereshToken(Session.toString()));
         return JSON;
     }
-    /* 비밀번호 변경을 위한 이메일 전송
-    사용자가에게 다시 이메일을 전송하고 임시로 디비에 저장해두었던 temp_password를 password로 update 해준다.
-    사용자가 새로운 비밀번호를 입력하고 확인을 눌렀을 때, 이메일을 발송하고 사용자 상태를 다시'C'로 변경
-    사용자가 이메일 인증에 성공하면 상태를 'T'로 변경하고 새로운 비밀번호로 update 해준다.
-     */
+
     @RequestMapping(value="/changePassword", method=RequestMethod.POST)
     public JSONObject changePassword(@RequestBody ChangePassword param){
         JSONObject JSON = new JSONObject();
@@ -147,7 +143,7 @@ public class User {
             helper = new MimeMessageHelper(msg, false, "UTF-8");
             // 링크 클릭 시, 새 창이 열리고 인증이 완료되고 확인을 클릭하면 자동으로 창이 없어지게.. (사용자가 사용하던 이메일 창을 그대로 남아있게)
             String text = "<html><body><p>인증을 위해 아래 링크를 클릭해 주세요</p>" +
-                    "<a target='_blank' href='http://localhost:8080/api/cert2?&token=" + token + "'>여기를 눌러 인증해주세요</a></body></html>";
+                    "<a target='_blank' href='http://groot.devdogs.kr:8080/api/cert2?&token=" + token + "'>여기를 눌러 인증해주세요</a></body></html>";
             helper.setTo(email);
             helper.setSubject("Team Groot - 이메일 인증");
             helper.setText(text,true);

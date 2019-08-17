@@ -1,7 +1,6 @@
 package com.example.myapp.mapper.attachment;
 
 import com.example.myapp.model.attachment.AttachmentModel;
-import com.example.myapp.model.attachment.CardAttachmentModel;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +12,8 @@ public interface CardAttachmentMapper extends AttachmentMapper{
     @Insert("INSERT INTO CARDATTACHMENT(uid, card_id, url, filename, state, created_at, updated_at) VALUES(#{uid}, #{card_id}, #{url}, #{filename}, 'C', now(),now())")
     void createAttachment(@Param("uid")String uid, @Param("card_id")String card_id, @Param("url")String url, @Param("filename")String filename);
 
-    @Update("UPDATE CARDATTACHMENT SET state = 'D' WHERE  uid = #{uid}")
-    void deleteAttachment(@Param("uid")String uid);
+    @Update("UPDATE CARDATTACHMENT SET state = 'D', updated_at = now() WHERE card_id = #{card_id}")
+    void deleteAttachment(@Param("card_id")String card_id);
 
     @Select("SELECT * FROM CARDATTACHMENT WHERE card_id = #{card_id} AND state='C'")
     List<AttachmentModel> readAttachment(@Param("card_id")String card_id);

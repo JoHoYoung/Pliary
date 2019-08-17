@@ -19,8 +19,8 @@ public class Cert {
     @RequestMapping(value="/cert", method = RequestMethod.GET)
     public String emailCertification(@RequestParam("token") String token){
         int result = userMapper.emailCertification(token);
-        String fail = "http://localhost:8080/static/certFail.html";
-        String success = "http://localhost:8080/static/certCompletion.html";
+        String fail = "http://groot.devdogs.kr:8080/static/certFail.html";
+        String success = "http://groot.devdogs.kr:8080/static/certCompletion.html";
         if(result == 1) return "redirect:" + success;
         else return "redirect:" + fail;
     }
@@ -30,8 +30,8 @@ public class Cert {
     public String emailCertification2(@RequestParam("token") String token){
         int result1 = userMapper.passwordUpdate(token);
         int result2 = userMapper.emailCertification(token);
-        String fail = "http://localhost:8080/static/certFail.html";
-        String success = "http://localhost:8080/static/pwCertCompletion.html";
+        String fail = "http://groot.devdogs.kr:8080/static/certFail.html";
+        String success = "http://groot.devdogs.kr:8080/static/pwCertCompletion.html";
         if(result1 + result2 == 2) return "redirect:" + success;
         else return "redirect:" + fail;
     }

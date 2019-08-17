@@ -31,7 +31,7 @@ public class DiaryCrud {
             String title = param.getTitle();
             String body = param.getBody();
             diaryMapper.createDiary(uid, card_id, title, body);
-            JSON.put("statusCode",200);
+            JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success create");
             return JSON;
         }catch(Exception e){
@@ -54,11 +54,11 @@ public class DiaryCrud {
             String title = param.getTitle();
             String body = param.getBody();
             diaryMapper.updateDiary(uid, title, body);
-            JSON.put("statusCode",200);
+            JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success update");
             return JSON;
         }catch(Exception e){
-            JSON.put("statusCode",500);
+            JSON.put("statusCode", 500);
             JSON.put("statusMsg", "Internal server error");
             LOG.error("Internal server error", e);
             return JSON;
@@ -76,7 +76,7 @@ public class DiaryCrud {
             JSON.put("data", diary);
             return JSON;
         }catch(Exception e){
-            JSON.put("statusCode",500);
+            JSON.put("statusCode", 500);
             JSON.put("statusMsg", "Internal server error");
             LOG.error("Internal server error", e);
             return JSON;
@@ -106,11 +106,11 @@ public class DiaryCrud {
         JSONObject JSON = new JSONObject();
         try{
             diaryMapper.deleteDiary(id);
-            JSON.put("statusCode",200);
+            JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success delete");
             return JSON;
         }catch(Exception e){
-            JSON.put("statusCode",500);
+            JSON.put("statusCode", 500);
             JSON.put("statusMsg", "Internal server error");
             LOG.error("Internal server error", e);
             return JSON;

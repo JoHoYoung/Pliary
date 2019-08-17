@@ -2,16 +2,16 @@ package com.example.myapp.controller.attachment;
 
 import com.example.myapp.context.attachment.Attachment;
 import com.example.myapp.factory.AttachmentMapperFactory;
-import com.example.myapp.factory.AttachmentModelFactory;
 import com.example.myapp.mapper.attachment.AttachmentMapper;
 import com.example.myapp.model.attachment.AttachmentModel;
 import com.example.myapp.util.AwsS3Util;
 import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +23,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/attachment")
 public class AttachmentCrud {
+
+    private static final Logger LOG = LogManager.getLogger(AttachmentCrud.class);
 
     @Autowired
     AwsS3Util awsS3Util;
@@ -57,9 +59,9 @@ public class AttachmentCrud {
             JSON.put("data", images);
             return JSON;
         }catch(Exception e){
-            System.out.println(e);
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
+            JSON.put("statusMsg", "INTERNAL_SERVER_ERROR");
+            LOG.error("INTERNAL_SERVER_ERROR", e);
             return JSON;
         }
     }
@@ -79,12 +81,12 @@ public class AttachmentCrud {
             }
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
-            JSON.put("data",data);
+            JSON.put("data", data);
             return JSON;
         }catch(Exception e){
-            System.out.println(e);
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
+            JSON.put("statusMsg", "INTERNAL_SERVER_ERROR");
+            LOG.error("INTERNAL_SERVER_ERROR", e);
             return JSON;
         }
     }
@@ -103,12 +105,11 @@ public class AttachmentCrud {
             JSON.put("statusMsg", "success");
             return JSON;
         }catch(Exception e){
-            System.out.println(e);
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
+            JSON.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
+            JSON.put("statusMsg", "INTERNAL_SERVER_ERROR");
+            LOG.error("INTERNAL_SERVER_ERROR", e);
             return JSON;
         }
     }
-
 
 }
