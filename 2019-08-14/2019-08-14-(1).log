@@ -1,0 +1,117 @@
+2019-08-14 22:17:40 | INFO | Starting MyappApplication on MacBook-Pro-2.local with PID 36632 (/Users/HY/IdeaProjects/myapp/target/classes started by HY in /Users/HY/IdeaProjects/myapp)
+2019-08-14 22:17:40 | INFO | No active profile set, falling back to default profiles: default
+2019-08-14 22:17:41 | INFO | Tomcat initialized with port(s): 8080 (http)
+2019-08-14 22:17:41 | INFO | Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-14 22:17:41 | INFO | Starting service [Tomcat]
+2019-08-14 22:17:41 | INFO | Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-08-14 22:17:41 | INFO | Initializing Spring embedded WebApplicationContext
+2019-08-14 22:17:41 | INFO | Root WebApplicationContext: initialization completed in 807 ms
+2019-08-14 22:17:41 | INFO | Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-14 22:17:41 | INFO | Starting ProtocolHandler ["http-nio-8080"]
+2019-08-14 22:17:42 | INFO | Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-14 22:17:42 | INFO | Started MyappApplication in 1.868 seconds (JVM running for 2.83)
+2019-08-14 22:17:44 | INFO | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-14 22:17:44 | INFO | Initializing Servlet 'dispatcherServlet'
+2019-08-14 22:17:44 | INFO | Completed initialization in 6 ms
+2019-08-14 22:17:45 | INFO | HikariPool-1 - Starting...
+2019-08-14 22:17:45 | INFO | HikariPool-1 - Start completed.
+2019-08-14 22:20:27 | INFO | Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-14 22:20:27 | INFO | HikariPool-1 - Shutdown initiated...
+2019-08-14 22:20:27 | INFO | HikariPool-1 - Shutdown completed.
+2019-08-15 13:45:56 | INFO | Starting MyappApplication on MacBook-Pro-2.local with PID 1797 (/Users/HY/IdeaProjects/myapp/target/classes started by HY in /Users/HY/IdeaProjects/myapp)
+2019-08-15 13:45:56 | INFO | No active profile set, falling back to default profiles: default
+2019-08-15 13:45:57 | INFO | Tomcat initialized with port(s): 8080 (http)
+2019-08-15 13:45:57 | INFO | Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-15 13:45:57 | INFO | Starting service [Tomcat]
+2019-08-15 13:45:57 | INFO | Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-08-15 13:45:57 | INFO | Initializing Spring embedded WebApplicationContext
+2019-08-15 13:45:57 | INFO | Root WebApplicationContext: initialization completed in 1102 ms
+2019-08-15 13:45:58 | INFO | Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-15 13:45:58 | INFO | Starting ProtocolHandler ["http-nio-8080"]
+2019-08-15 13:45:58 | INFO | Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-15 13:45:58 | INFO | Started MyappApplication in 2.402 seconds (JVM running for 3.807)
+2019-08-15 13:46:29 | INFO | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-15 13:46:29 | INFO | Initializing Servlet 'dispatcherServlet'
+2019-08-15 13:46:29 | INFO | Completed initialization in 8 ms
+2019-08-15 13:46:30 | INFO | HikariPool-1 - Starting...
+2019-08-15 13:46:30 | INFO | HikariPool-1 - Start completed.
+2019-08-15 15:10:13 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m12s248ms).
+2019-08-15 15:47:58 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=37m15s37ms).
+2019-08-15 15:57:29 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m93ms).
+2019-08-15 16:42:00 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m787ms).
+2019-08-15 17:35:29 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=52m59s757ms).
+2019-08-15 17:53:00 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m30s766ms).
+2019-08-15 19:08:38 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h15m7s818ms).
+2019-08-15 21:09:07 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h29s162ms).
+2019-08-15 21:23:13 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m35s618ms).
+2019-08-15 21:27:14 | WARN | HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m1s425ms).
+2019-08-15 21:29:18 | INFO | Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-15 21:29:18 | INFO | HikariPool-1 - Shutdown initiated...
+2019-08-15 21:29:18 | INFO | HikariPool-1 - Shutdown completed.
+2019-08-15 21:29:22 | INFO | Starting MyappApplication on MacBook-Pro-2.local with PID 13077 (/Users/HY/IdeaProjects/myapp/target/classes started by HY in /Users/HY/IdeaProjects/myapp)
+2019-08-15 21:29:22 | INFO | No active profile set, falling back to default profiles: default
+2019-08-15 21:29:23 | INFO | Tomcat initialized with port(s): 8080 (http)
+2019-08-15 21:29:23 | INFO | Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-15 21:29:23 | INFO | Starting service [Tomcat]
+2019-08-15 21:29:23 | INFO | Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-08-15 21:29:23 | INFO | Initializing Spring embedded WebApplicationContext
+2019-08-15 21:29:23 | INFO | Root WebApplicationContext: initialization completed in 836 ms
+2019-08-15 21:29:24 | INFO | Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-15 21:29:24 | INFO | Starting ProtocolHandler ["http-nio-8080"]
+2019-08-15 21:29:24 | INFO | Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-15 21:29:24 | INFO | Started MyappApplication in 1.906 seconds (JVM running for 2.8)
+2019-08-15 21:30:27 | INFO | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-15 21:30:27 | INFO | Initializing Servlet 'dispatcherServlet'
+2019-08-15 21:30:27 | INFO | Completed initialization in 5 ms
+2019-08-15 21:30:27 | ERROR | 유효기간이 지난 token을 사용했습니다.
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2019-08-15T16:40:34Z. Current time: 2019-08-15T21:30:27Z, a difference of 17393120 milliseconds.  Allowed clock skew: 0 milliseconds.
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:385) ~[jjwt-0.9.1.jar:0.9.1]
+	at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:481) ~[jjwt-0.9.1.jar:0.9.1]
+	at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:541) ~[jjwt-0.9.1.jar:0.9.1]
+	at com.example.myapp.jwt.JwtServiceImpl.verifyToken(JwtServiceImpl.java:39) [classes/:?]
+	at com.example.myapp.util.JwtInterceptor.preHandle(JwtInterceptor.java:27) [classes/:?]
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPreHandle(HandlerExecutionChain.java:136) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1034) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:908) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882) [spring-webmvc-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109) [spring-web-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:853) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1587) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_131]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_131]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.21.jar:9.0.21]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_131]

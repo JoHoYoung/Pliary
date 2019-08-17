@@ -1,6 +1,5 @@
 *.properties
 .DS_Store
-target/
 
 ### STS ###
 .apt_generated

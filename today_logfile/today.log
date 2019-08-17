@@ -1,0 +1,28 @@
+2019-08-15 21:49:56 | INFO | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-15 21:49:56 | INFO | Initializing Servlet 'dispatcherServlet'
+2019-08-15 21:49:56 | INFO | Completed initialization in 5 ms
+2019-08-15 21:49:56 | INFO | HikariPool-1 - Starting...
+2019-08-15 21:49:57 | INFO | HikariPool-1 - Start completed.
+2019-08-15 21:50:09 | INFO | Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-15 21:50:09 | INFO | HikariPool-1 - Shutdown initiated...
+2019-08-15 21:50:09 | INFO | HikariPool-1 - Shutdown completed.
+2019-08-15 21:50:13 | INFO | Starting MyappApplication on MacBook-Pro-2.local with PID 14673 (/Users/HY/IdeaProjects/myapp/target/classes started by HY in /Users/HY/IdeaProjects/myapp)
+2019-08-15 21:50:13 | INFO | No active profile set, falling back to default profiles: default
+2019-08-15 21:50:14 | INFO | Tomcat initialized with port(s): 8080 (http)
+2019-08-15 21:50:14 | INFO | Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-15 21:50:14 | INFO | Starting service [Tomcat]
+2019-08-15 21:50:14 | INFO | Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-08-15 21:50:14 | INFO | Initializing Spring embedded WebApplicationContext
+2019-08-15 21:50:14 | INFO | Root WebApplicationContext: initialization completed in 941 ms
+2019-08-15 21:50:15 | INFO | Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-15 21:50:15 | INFO | Starting ProtocolHandler ["http-nio-8080"]
+2019-08-15 21:50:15 | INFO | Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-15 21:50:15 | INFO | Started MyappApplication in 2.104 seconds (JVM running for 3.055)
+2019-08-15 21:50:24 | INFO | Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-15 21:50:24 | INFO | Initializing Servlet 'dispatcherServlet'
+2019-08-15 21:50:24 | INFO | Completed initialization in 6 ms
+2019-08-15 21:50:24 | INFO | HikariPool-1 - Starting...
+2019-08-15 21:50:24 | INFO | HikariPool-1 - Start completed.
+2019-08-15 21:56:24 | INFO | Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-15 21:56:24 | INFO | HikariPool-1 - Shutdown initiated...
+2019-08-15 21:56:24 | INFO | HikariPool-1 - Shutdown completed.
