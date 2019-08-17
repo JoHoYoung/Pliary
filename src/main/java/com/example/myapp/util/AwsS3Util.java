@@ -14,6 +14,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,8 +25,6 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class AwsS3Util {
-
-
     String accessKey = "AKIA6N6ZH6WXBZYD5XXJ";
 
     String secretKey = "E3SXERvnIY2r2Lwi8LFbLbNa9XWUSimcIT2Szx5p";
@@ -60,7 +59,7 @@ public class AwsS3Util {
         String filePath = (fileName).replace(File.separatorChar, '/'); // 파일 구별자를 `/`로 설정(\->/) 이게 기존에 / 였어도 넘어오면서 \로 바뀌는 거같다.
         ObjectMetadata metaData = new ObjectMetadata();
 
-        metaData.setContentLength(fileData.length);   //메타데이터 설정 -->원래는 128kB까지 업로드 가능했으나 파일크기만큼 버퍼를 설정시켰다.
+        metaData.setContentLength(fileData.length);   //메타데이터 설정 --> 원래는 128kB까지 업로드 가능했으나 파일크기만큼 버퍼를 설정시켰다.
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //파일 넣음
         conn.putObject(bucketName, filePath, byteArrayInputStream, metaData);
         String imgName = (fileName).replace(File.separatorChar, '/');

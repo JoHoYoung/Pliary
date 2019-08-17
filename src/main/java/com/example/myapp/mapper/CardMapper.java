@@ -8,13 +8,14 @@ import java.util.List;
 @Repository
 public interface CardMapper {
 
-    // 식물 카드 만들기 (5개로 제한)
+    // 식물 등록
     @Insert("INSERT INTO CARD(uid, user_id, name, nickName, init_period, now_period, state) " +
             "VALUES(#{uid}, #{user_id}, #{name}, #{nickName}, #{init_period}, #{init_period}, 'C')")
     int createCard(@Param("uid")String uid,@Param("user_id")String user_id, @Param("name")String name, @Param("nickName")String nickName, @Param("init_period")int init_period);
 
+    // 특정 사용자 식물 전체 목록 select
     @Select("SELECT * FROM CARD WHERE user_id = #{user_id} AND state = 'C'")
-    List<CardModel> readAllCard(@Param("user_id")String user_id);
+    public List<CardModel> readAllCard(@Param("user_id") String user_id);
 
     @Select("SELECT * FROM CARD WHERE state = 'C' AND uid=#{uid}")
     CardModel readCard(@Param("uid")String uid);
@@ -32,8 +33,12 @@ public interface CardMapper {
     @Select("SELECT * FROM CARD WHERE user_id = #{user_id} AND state='C'")
     List<CardModel> getCards(int user_id);
 
-    // 카드 정보 수정
-    //@Update("")
-    //public int updateCard(String uid, String name, String nickName, int init_period);
+    // 특정 식물 카드 삭제
+    @Delete("DELETE FROM CARD WHERE uid = #{uid}")
+    public int deleteCard(@Param("uid") String uid);
 
+    // 식물 정보 update
+    @Update("UPDATE CARD SET(name=#{name}, nickName=#{nickName}, init_period=#{init_period}, now_period=#{now_period} " +
+            "WHERE uid = #{uid}")
+    public int updateCard(@Param("uid") String uid, @Param("name") String name, @Param("nickName") String nickName, @Param("init_period") int init_period, @Param("now_period") int now_period);
 }

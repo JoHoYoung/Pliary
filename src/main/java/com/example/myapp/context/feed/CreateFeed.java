@@ -14,6 +14,9 @@ public class CreateFeed {
     @JsonProperty("card_id")
     private String card_id;
 
+    @JsonProperty("card_id")
+    private String user_id;
+
     @JsonProperty("over_degree")
     private int over_degree;
 }

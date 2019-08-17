@@ -19,7 +19,7 @@ public class Test2Controller {
     private UserMapper userMapper;
 
     @Autowired
-    AwsS3Util a;
+    AwsS3Util awsS3Util;
 
     // 이메일 인증
     @RequestMapping(value="/auth/cert", method = RequestMethod.GET)

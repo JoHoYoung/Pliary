@@ -10,7 +10,7 @@ import java.util.Date;
 @Service("jwtService")
 public class JwtServiceImpl {
 
-    private static final Logger LOG = LogManager.getLogger(JwtInterceptor.class);
+    private static final Logger LOG = LogManager.getLogger(JwtServiceImpl.class);
     private static final String SALT = "grootsecret";
 
     public String accessToken(String subject) {

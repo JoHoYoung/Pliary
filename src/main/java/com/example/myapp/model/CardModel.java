@@ -12,7 +12,7 @@ public class CardModel {
     private String nickname;
     private String state;
     int init_period;
-    int now_period; // count 필요?
+    int now_period;
     private Date created_at;
     private Date updated_at;
 }

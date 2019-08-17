@@ -7,6 +7,8 @@ import com.example.myapp.model.CardModel;
 import com.example.myapp.model.FeedModel;
 import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +23,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping(value = "/feed") // (?)
+@RequestMapping(value = "/feed")
 public class FeedCrud {
+
+    private static final Logger LOG = LogManager.getLogger(FeedCrud.class);
 
     @Autowired
     FeedMapper feedMapper;
@@ -36,7 +40,7 @@ public class FeedCrud {
         JSONObject JSON = new JSONObject();
         try{
             String uid = UUID.randomUUID().toString();
-            CardModel cardInfo = cardMapper.readCard(param.getCard_id());
+            CardModel cardInfo = cardMapper.readCard(param.getUser_id(), param.getCard_id());
             feedMapper.createFeed(uid, param.getCard_id(), cardInfo.getNow_period());
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
@@ -44,6 +48,7 @@ public class FeedCrud {
         }catch(Exception e){
             JSON.put("statusCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.error("Internal Server Error", e);
             return JSON;
         }
     }
@@ -62,9 +67,9 @@ public class FeedCrud {
             JSON.put("data",data);
             return JSON;
         } catch (Exception e) {
-            System.out.println(e);
             JSON.put("stautsCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.error("Internal Server Error", e);
             return JSON;
         }
     }
@@ -78,9 +83,9 @@ public class FeedCrud {
             JSON.put("statusMsg", "success");
             return JSON;
         } catch (Exception e) {
-            System.out.println(e);
             JSON.put("stautsCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.error("Internal Server Error", e);
             return JSON;
         }
     }
@@ -94,9 +99,9 @@ public class FeedCrud {
             JSON.put("statusMsg", "success");
             return JSON;
         } catch (Exception e) {
-            System.out.println(e);
             JSON.put("stautsCode", 500);
             JSON.put("statusMsg", "Internal Server Error");
+            LOG.error("Internal Server Error", e);
             return JSON;
         }
     }

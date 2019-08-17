@@ -19,5 +19,4 @@ public class CreateCard {
 
     @JsonProperty("init_period")
     private int init_period;
-
 }

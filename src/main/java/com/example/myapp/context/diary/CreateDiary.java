@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateDiary {
-
     @JsonProperty("uid")
     private String uid;
 
@@ -20,5 +19,6 @@ public class CreateDiary {
     @JsonProperty("body")
     private String body;
 
-
+    @JsonProperty("state")
+    private char state;
 }

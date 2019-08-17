@@ -16,6 +16,7 @@ import java.io.IOException;
 public class JwtInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger LOG = LogManager.getLogger(JwtInterceptor.class);
+
     JwtServiceImpl JWT = new JwtServiceImpl();
 
     @Override

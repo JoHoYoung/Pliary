@@ -1,6 +1,5 @@
 package com.example.myapp.controller.diary;
 
-
 import com.example.myapp.context.diary.CreateDiary;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.model.DiaryModel;
@@ -8,6 +7,8 @@ import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.apache.http.HttpRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +22,11 @@ import java.util.UUID;
 @RequestMapping(value = "/diary") // (?)
 public class DiaryCrud {
 
+    private static final Logger LOG = LogManager.getLogger(DiaryCrud.class);
     @Autowired
     DiaryMapper diaryMapper;
 
     ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public JSONObject createDiary(HttpServletRequest req, @RequestBody CreateDiary param){
         JSONObject JSON = new JSONObject();
@@ -41,6 +42,7 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
+            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -51,6 +53,7 @@ public class DiaryCrud {
         try{
             String uid = param.getUid();
             if(uid == null){
+                LOG.warn("diary/update : Empty uid");
                 throw new Error("Empty uid");
             }
             String title = param.getTitle();
@@ -62,6 +65,7 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
+            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -78,6 +82,7 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
+            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -99,10 +104,10 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
+            LOG.error("Internal server error", e);
             return JSON;
         }
     }
-
     @RequestMapping(value ="/delete", method = RequestMethod.POST)
     public JSONObject deleteDiary(HttpServletRequest req, @RequestBody CreateDiary param){
         JSONObject JSON = new JSONObject();
@@ -114,6 +119,7 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
+            LOG.error("Internal server error", e);
             return JSON;
         }
     }
