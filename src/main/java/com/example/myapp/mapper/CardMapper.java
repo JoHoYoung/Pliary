@@ -9,8 +9,8 @@ import java.util.List;
 public interface CardMapper {
 
     // 식물 등록
-    @Insert("INSERT INTO CARD(uid, user_id, name, nickName, init_period, now_period, state) " +
-            "VALUES(#{uid}, #{user_id}, #{name}, #{nickName}, #{init_period}, #{init_period}, 'C')")
+    @Insert("INSERT INTO CARD(uid, user_id, name, nickName, init_period, now_period, state, created_date, updated_date) " +
+            "VALUES(#{uid}, #{user_id}, #{name}, #{nickName}, #{init_period}, #{init_period}, 'C', now(), now())")
     int createCard(@Param("uid")String uid,@Param("user_id")String user_id, @Param("name")String name, @Param("nickName")String nickName, @Param("init_period")int init_period);
 
     // 특정 사용자 식물 전체 목록 select
@@ -27,7 +27,7 @@ public interface CardMapper {
     @Update("UPDATE CARD SET state = 'D' WHERE uid=#{uid}")
     void deleteCard(@Param("uid")String uid);
 
-    @Update("UPDATE CARD SET name=#{name}, nickName=#{nickName}, init_period=#{init_period}, now_period=#{now_period} WHERE uid=#{uid} AND state ='C'")
+    @Update("UPDATE CARD SET name=#{name}, nickName=#{nickName}, init_period=#{init_period}, now_period=#{now_period}, updated_date = now() WHERE uid=#{uid} AND state ='C'")
     void updateCard(@Param("uid")String uid, @Param("name")String name,@Param("nickName")String nickName,@Param("init_period")int init_period,@Param("now_period")int now_period);
 
     // 특정 사용자의 카드 정보 All select

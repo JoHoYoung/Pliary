@@ -2,7 +2,8 @@
 <Configuration status="info" monitorInterval="30">
     <Properties>
         <Property name="LOG_FORMAT">%d{yyyy-MM-dd HH:mm:ss} | %p | %m%n</Property>
-        <Property name="BASE_DIR">/Users/HY/IdeaProjects/myapp</Property>
+        <!-- hyerin : /Users/hyerin/Downloads/log -->
+        <Property name="BASE_DIR">  </Property>
         <Property name="DATE">%d{yyyy-MM-dd}</Property>
     </Properties>
 
