@@ -48,11 +48,9 @@ public class CardCrud {
             JSON.put("statusMsg", "Cannot make card");
             return JSON;
         }
-
         // 카드 생성
         String uid = UUID.randomUUID().toString();
         cardMapper.createCard(uid, user_id, null, null, 0);
-
         JSONObject data = new JSONObject();
         data.put("uid", uid);
 
@@ -112,10 +110,7 @@ public class CardCrud {
     public JSONObject readCard(HttpServletRequest req, @RequestParam("id") String card_id) {
         JSONObject JSON = new JSONObject();
         try {
-            JSONObject session = (JSONObject) req.getAttribute("session");
-            String user_id = userMapper.getUser((String) session.get("email")).getUid();
-            // Get user's All card
-            CardModel Card = cardMapper.readCard(user_id, card_id);
+            CardModel Card = cardMapper.readCard(card_id);
             if (Card == null) {
                 JSON.put("stautsCode", 500);
                 JSON.put("statusMsg", "No data");
@@ -139,9 +134,6 @@ public class CardCrud {
     public JSONObject deleteCard(HttpServletRequest req, @RequestParam("id") String card_id) {
         JSONObject JSON = new JSONObject();
         try {
-            JSONObject session = (JSONObject) req.getAttribute("session");
-            String user_id = userMapper.getUser((String) session.get("email")).getUid();
-            // Get user's All card
             cardMapper.deleteCard(card_id);
             JSON.put("stautsCode", 200);
             JSON.put("statusMsg", "sucsss");

@@ -40,7 +40,7 @@ public class FeedCrud {
         JSONObject JSON = new JSONObject();
         try{
             String uid = UUID.randomUUID().toString();
-            CardModel cardInfo = cardMapper.readCard(param.getUser_id(), param.getCard_id());
+            CardModel cardInfo = cardMapper.readCard(param.getCard_id());
             feedMapper.createFeed(uid, param.getCard_id(), cardInfo.getNow_period());
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");

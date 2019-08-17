@@ -25,9 +25,6 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class AwsS3Util {
-    String accessKey = "AKIA6N6ZH6WXBZYD5XXJ";
-
-    String secretKey = "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";
     private AmazonS3 conn;
 
     public AwsS3Util() {

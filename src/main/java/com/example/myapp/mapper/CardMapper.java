@@ -19,6 +19,7 @@ public interface CardMapper {
 
     @Select("SELECT * FROM CARD WHERE state = 'C' AND uid=#{uid}")
     CardModel readCard(@Param("uid")String uid);
+
     // 식물 카드 개수 제한을 위한 user_id count (user_id가 6이상이면 CreateCard 가 제한됨)
     @Select("SELECT COUNT(*) from CARD WHERE user_id = #{user_id} AND state='C'")
     int countCard(@Param("user_id")String user_id);
@@ -33,12 +34,4 @@ public interface CardMapper {
     @Select("SELECT * FROM CARD WHERE user_id = #{user_id} AND state='C'")
     List<CardModel> getCards(int user_id);
 
-    // 특정 식물 카드 삭제
-    @Delete("DELETE FROM CARD WHERE uid = #{uid}")
-    public int deleteCard(@Param("uid") String uid);
-
-    // 식물 정보 update
-    @Update("UPDATE CARD SET(name=#{name}, nickName=#{nickName}, init_period=#{init_period}, now_period=#{now_period} " +
-            "WHERE uid = #{uid}")
-    public int updateCard(@Param("uid") String uid, @Param("name") String name, @Param("nickName") String nickName, @Param("init_period") int init_period, @Param("now_period") int now_period);
 }

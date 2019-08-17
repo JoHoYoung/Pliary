@@ -34,15 +34,15 @@ public class Test2Controller {
         else return "redirect:" + fail;
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public JSONObject test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
-    {
-        JSONObject JSON = new JSONObject();
-        byte [] byteArr=files.getBytes();
-        a.fileUpload("groot.devdogs.kr","aaq2223",byteArr);
-        System.out.println("KK");
-        JSON.put("statusCode", 200);
-        JSON.put("statusMsg", "success");
-        return JSON;
-    }
+//    @RequestMapping(value = "/test", method = RequestMethod.POST)
+//    public JSONObject test(@RequestParam("userimage") MultipartFile files) throws java.io.IOException
+//    {
+//        JSONObject JSON = new JSONObject();
+//        byte [] byteArr=files.getBytes();
+//        a.fileUpload("groot.devdogs.kr","aaq2223",byteArr);
+//        System.out.println("KK");
+//        JSON.put("statusCode", 200);
+//        JSON.put("statusMsg", "success");
+//        return JSON;
+//    }
 }

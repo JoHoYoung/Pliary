@@ -39,11 +39,12 @@ public class AttachmentCrud {
         String email = (String)sesssion.get("email");
         String type = req.getParameter("type");
         String upperId = req.getParameter("uid");
-        System.out.println(upperId);
         AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
         JSONObject images = new JSONObject();
         try{
             for(int i = 0;i<files.size();i++){
+                System.out.println("upperId");
+
                 String uid = UUID.randomUUID().toString();
                 byte [] byteArr=files.get(i).getBytes();
                 String url = awsS3Util.fileUpload("groot.devdogs.kr",uid, byteArr);
@@ -56,6 +57,7 @@ public class AttachmentCrud {
             JSON.put("data", images);
             return JSON;
         }catch(Exception e){
+            System.out.println(e);
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;
@@ -90,12 +92,13 @@ public class AttachmentCrud {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public JSONObject deleteAttachment(HttpServletRequest req, @RequestBody Attachment param) {
         JSONObject JSON = new JSONObject();
-        JSONObject sesssion = (JSONObject) req.getAttribute("session");
         try{
             String type = param.getType();
             String uid = param.getUid();
+            String filename = param.getFilename();
             AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
             attachmentMapper.deleteAttachment(uid);
+            awsS3Util.fileDelete("groot.devdogs.kr",filename);
             JSON.put("statusCode", 200);
             JSON.put("statusMsg", "success");
             return JSON;
