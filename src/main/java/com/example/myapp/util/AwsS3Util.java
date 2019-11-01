@@ -27,6 +27,8 @@ import javax.annotation.PostConstruct;
 public class AwsS3Util {
     private AmazonS3 conn;
 
+    private String accessKey = "AKIAX5D6IPBXIOR3QJ7R";
+    private String secretKey = "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";
     public AwsS3Util() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         ClientConfiguration clientConfig = new ClientConfiguration();
