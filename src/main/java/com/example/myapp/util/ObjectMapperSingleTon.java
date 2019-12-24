@@ -12,5 +12,6 @@ public class ObjectMapperSingleTon {
         }
         return _instance;
     }
+
     private ObjectMapperSingleTon(){}
 }

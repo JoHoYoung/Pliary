@@ -34,5 +34,4 @@ public interface DiaryMapper {
     // 다이어리 수정
     @Update("UPDATE DIARY SET title=#{title}, body=#{body}, updated_at=now() WHERE uid = #{uid}")
     int updateDiary(@Param("uid")String uid, @Param("title")String title, @Param("body")String body);
-
 }

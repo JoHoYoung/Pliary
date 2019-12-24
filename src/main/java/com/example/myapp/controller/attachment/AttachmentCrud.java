@@ -2,109 +2,66 @@ package com.example.myapp.controller.attachment;
 
 import com.example.myapp.context.attachment.Attachment;
 import com.example.myapp.factory.AttachmentMapperFactory;
-import com.example.myapp.factory.AttachmentModelFactory;
 import com.example.myapp.mapper.attachment.AttachmentMapper;
 import com.example.myapp.model.attachment.AttachmentModel;
+import com.example.myapp.response.BaseResponse;
+import com.example.myapp.response.DataResponse;
+import com.example.myapp.service.ImageHandler;
 import com.example.myapp.util.AwsS3Util;
 import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/attachment")
 public class AttachmentCrud {
 
-    @Autowired
-    AwsS3Util awsS3Util;
+  @Autowired
+  AwsS3Util awsS3Util;
 
-    @Autowired
-    AttachmentMapperFactory attachmentMapperFactory;
+  @Autowired
+  AttachmentMapperFactory attachmentMapperFactory;
 
-    ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
+  @Autowired
+  ImageHandler imageHandler;
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public JSONObject createAttachment(HttpServletRequest req, @RequestParam("userimage") List<MultipartFile> files) throws java.io.IOException{
-        JSONObject JSON = new JSONObject();
-        JSONObject sesssion = (JSONObject) req.getAttribute("session");
-        String email = (String)sesssion.get("email");
-        String type = req.getParameter("type");
-        String upperId = req.getParameter("uid");
-        AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
-        ArrayList<String> images = new ArrayList<>();
-        try {
-            for(int i = 0;i<files.size();i++){
+  @RequestMapping(value = "/create", method = RequestMethod.POST)
+  public ResponseEntity<BaseResponse> createAttachment(HttpServletRequest req, @RequestParam("userimage") List<MultipartFile> files) throws java.io.IOException {
 
-                String uid = UUID.randomUUID().toString();
-                byte [] byteArr=files.get(i).getBytes();
-                String filename = email + uid.substring(0,5);
-                String url = awsS3Util.fileUpload("dailyissue",filename, byteArr);
-                images.add(url);
-                attachmentMapper.createAttachment(uid, upperId, url, filename);
-            }
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            JSON.put("data", images);
-            return JSON;
-        } catch (Exception e) {
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            return JSON;
-        }
-    }
+    JSONObject sesssion = (JSONObject) req.getAttribute("session");
+    ArrayList<String> urls = imageHandler.uploadFile(req.getParameter("type"), (String) sesssion.get("email"), req.getParameter("uid"), files);
 
-    @RequestMapping(value = "/read", method = RequestMethod.POST)
-    public JSONObject readAttachment(HttpServletRequest req, @RequestBody Attachment param) {
-        JSONObject JSON = new JSONObject();
-        JSONObject sesssion = (JSONObject) req.getAttribute("session");
-        try{
-            String type = param.getType();
-            String uid = param.getUid();
-            AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
-            List<AttachmentModel> images = attachmentMapper.readAttachment(uid);
-            List<String> data = new ArrayList<>();
-            for (int i = 0; i < images.size(); i++) {
-                data.add(objectMapper.writeValueAsString(images.get(i)));
-            }
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            JSON.put("data",data);
-            return JSON;
-        }catch(Exception e){
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            return JSON;
-        }
-    }
+    final BaseResponse response = new DataResponse(200, "success",urls);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public JSONObject deleteAttachment(HttpServletRequest req, @RequestBody Attachment param) {
-        JSONObject JSON = new JSONObject();
-        try{
-            String type = param.getType();
-            String uid = param.getUid();
-            String filename = param.getFilename();
-            AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
-            attachmentMapper.deleteAttachment(uid);
-            awsS3Util.fileDelete("dailyissue",filename);
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            return JSON;
-        }catch(Exception e){
-            JSON.put("statusCode", 200);
-            JSON.put("statusMsg", "success");
-            return JSON;
-        }
-    }
+  @RequestMapping(value = "/read", method = RequestMethod.POST)
+  public ResponseEntity<BaseResponse> readAttachment(@RequestBody Attachment param) {
+    AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
+    List<AttachmentModel> images = attachmentMapper.readAttachment(param.getUid());
 
+    final BaseResponse response = new DataResponse<>(HttpStatus.OK.value(), "success", images);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  public ResponseEntity<BaseResponse> deleteAttachment(HttpServletRequest req, @RequestBody Attachment param) {
+
+    AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
+    attachmentMapper.deleteAttachment(param.getUid());
+    imageHandler.deleteFile(param.getFilename());
+
+    final BaseResponse response = new BaseResponse(HttpStatus.OK.value(), "success");
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
 }

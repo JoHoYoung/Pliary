@@ -67,7 +67,6 @@ public class AwsS3Util {
     public void fileDelete(String bucketName, String fileName) {
         String imgName = (fileName).replace(File.separatorChar, '/');
         conn.deleteObject(bucketName, imgName);
-
     }
 
     // 파일 URL
