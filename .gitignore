@@ -1,5 +1,6 @@
 *.properties
 .DS_Store
+
 target
 logs
 .mvn

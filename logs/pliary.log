@@ -1,2 +1,0 @@
-ERROR 19:24:24.734 [http-nio-8080-exec-1 User.java:63] signIn - TEST AT CONTROLLER
-ERROR | 19:26:59.591 | [http-nio-8080-exec-2 User.java:63] signIn | TEST AT CONTROLLER
