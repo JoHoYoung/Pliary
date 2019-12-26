@@ -16,8 +16,6 @@ import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.DataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/card")
 public class CardCrud {
 
-  private static final Logger LOG = LogManager.getLogger(CardCrud.class);
 
   @Autowired
   CardMapper cardMapper;

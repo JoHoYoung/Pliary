@@ -32,9 +32,6 @@ public abstract class BusinessException extends RuntimeException {
   }
 
   public String toString() {
-    this.stringBuilder.append(dateHelper.getDateToString());
-    this.stringBuilder.append(" | ");
-    this.stringBuilder.append("ERROR | ");
     this.stringBuilder.append(this.getStatus());
     this.stringBuilder.append(" | ");
     this.stringBuilder.append(this.getStatusCode());

@@ -10,6 +10,8 @@ import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.JwtResponse;
 import com.example.myapp.util.Mailer;
 import com.example.myapp.util.RandomString;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class User {
-
+  private static final Log LOG = LogFactory.getLog( "com.example.myapp");
   @Autowired
   private JwtServiceImpl jwtService;
   @Autowired
@@ -58,6 +60,7 @@ public class User {
   public ResponseEntity<BaseResponse> signIn(@RequestBody Signin param) {
     String id = param.getId();
 
+    LOG.error("TEST AT CONTROLLER");
     // Uid Valid Check
     if (userMapper.existUserId(id) == 0) {
       throw new InvalidEmailException(ErrorCode.INVALID_EMAIL);

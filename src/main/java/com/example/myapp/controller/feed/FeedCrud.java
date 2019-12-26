@@ -6,8 +6,6 @@ import com.example.myapp.mapper.FeedMapper;
 import com.example.myapp.model.CardModel;
 import com.example.myapp.model.FeedModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(value = "/feed")
 public class FeedCrud {
-
-  private static final Logger LOG = LogManager.getLogger(FeedCrud.class);
 
   @Autowired
   FeedMapper feedMapper;
@@ -48,7 +44,6 @@ public class FeedCrud {
     } catch (Exception e) {
       JSON.put("statusCode", 500);
       JSON.put("statusMsg", "Internal Server Error");
-      LOG.error("Internal Server Error", e);
       return JSON;
     }
   }
@@ -69,7 +64,6 @@ public class FeedCrud {
     } catch (Exception e) {
       JSON.put("stautsCode", 500);
       JSON.put("statusMsg", "Internal Server Error");
-      LOG.error("Internal Server Error", e);
       return JSON;
     }
   }
@@ -85,7 +79,6 @@ public class FeedCrud {
     } catch (Exception e) {
       JSON.put("stautsCode", 500);
       JSON.put("statusMsg", "Internal Server Error");
-      LOG.error("Internal Server Error", e);
       return JSON;
     }
   }
@@ -101,7 +94,6 @@ public class FeedCrud {
     } catch (Exception e) {
       JSON.put("stautsCode", 500);
       JSON.put("statusMsg", "Internal Server Error");
-      LOG.error("Internal Server Error", e);
       return JSON;
     }
   }

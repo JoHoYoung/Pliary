@@ -3,8 +3,6 @@ package com.example.myapp.controller.diary;
 import com.example.myapp.context.request.diary.CreateDiary;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.model.DiaryModel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import java.util.UUID;
 @RequestMapping(value = "/diary")
 public class DiaryCrud {
 
-    private static final Logger LOG = LogManager.getLogger(DiaryCrud.class);
 
     @Autowired
     DiaryMapper diaryMapper;
@@ -37,7 +34,6 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode", 500);
             JSON.put("statusMsg", "Internal server error");
-            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -48,7 +44,6 @@ public class DiaryCrud {
         try{
             String id = param.getId();
             if(id == null){
-                LOG.warn("diary/update : Empty uid");
                 throw new Error("Empty uid");
             }
             String title = param.getTitle();
@@ -60,7 +55,6 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
-            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -78,7 +72,6 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
-            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -96,7 +89,6 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
-            LOG.error("Internal server error", e);
             return JSON;
         }
     }
@@ -112,7 +104,6 @@ public class DiaryCrud {
         }catch(Exception e){
             JSON.put("statusCode",500);
             JSON.put("statusMsg", "Internal server error");
-            LOG.error("Internal server error", e);
             return JSON;
         }
     }

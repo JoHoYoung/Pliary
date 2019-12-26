@@ -6,8 +6,6 @@ import com.example.myapp.exception.InvalidTokenException;
 import com.example.myapp.jwt.JwtServiceImpl;
 import com.example.myapp.context.user.Session;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtInterceptor extends HandlerInterceptorAdapter {
-
-  private static final Logger LOG = LogManager.getLogger(JwtInterceptor.class);
 
   @Autowired
   JwtServiceImpl JWT;
