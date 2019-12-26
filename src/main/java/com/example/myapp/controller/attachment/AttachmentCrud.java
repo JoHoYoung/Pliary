@@ -6,10 +6,9 @@ import com.example.myapp.factory.AttachmentMapperFactory;
 import com.example.myapp.mapper.attachment.AttachmentMapper;
 import com.example.myapp.model.attachment.AttachmentModel;
 import com.example.myapp.response.BaseResponse;
-import com.example.myapp.response.DataResponse;
+import com.example.myapp.response.DataListResponse;
 import com.example.myapp.service.ImageHandler;
 import com.example.myapp.util.AwsS3Util;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,17 +38,17 @@ public class AttachmentCrud {
     ,@RequestParam("type")String type ,@RequestParam("userimage") List<MultipartFile> files)
     throws java.io.IOException {
 
-    ArrayList<String> urls = imageHandler.uploadFile(type, session.getUid(), files);
-    final BaseResponse response = new DataResponse(200, "success",urls);
+    ArrayList<String> urls = imageHandler.uploadFile(type, session.getId(), files);
+    final BaseResponse response = new DataListResponse(200, "success",urls);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/read", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> readAttachment(@RequestBody Attachment param) {
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
-    List<AttachmentModel> images = attachmentMapper.readAttachment(param.getUid());
+    List<AttachmentModel> images = attachmentMapper.readAttachment(param.getId());
 
-    final BaseResponse response = new DataResponse<>(HttpStatus.OK.value(), "success", images);
+    final BaseResponse response = new DataListResponse<>(HttpStatus.OK.value(), "success", images);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
@@ -57,7 +56,7 @@ public class AttachmentCrud {
   public ResponseEntity<BaseResponse> deleteAttachment(HttpServletRequest req, @RequestBody Attachment param) {
 
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
-    attachmentMapper.deleteAttachment(param.getUid());
+    attachmentMapper.deleteAttachment(param.getId());
     imageHandler.deleteFile(param.getFilename());
 
     final BaseResponse response = new BaseResponse(HttpStatus.OK.value(), "success");

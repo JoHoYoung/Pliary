@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class GroupModel {
 
-    private String uid;
+    private String id;
     private String email;
     private String password;
     private char state;
@@ -20,7 +20,7 @@ public class GroupModel {
     private String phone;
     private String token;
     private int provider;
-    private Date create_at;
-    private Date updated_at;
+    private Date createAt;
+    private Date updatedAt;
     List<TestModel> list;
 }

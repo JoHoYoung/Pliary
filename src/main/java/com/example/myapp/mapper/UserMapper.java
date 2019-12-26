@@ -13,23 +13,23 @@ import java.util.List;
 public interface UserMapper {
 
     // 회원가입
-    @Insert("INSERT INTO USER(id, email, token) VALUES(#{uid},#{email}, #{token})")
-    int userSignup(@Param("uid")String uid,
+    @Insert("INSERT INTO USER(id, email, token) VALUES(#{id},#{email}, #{token})")
+    int userSignup(@Param("id")String id,
                           @Param("email")String email,
                           @Param("token")String token);
 
     // 로그인
-    @Select("SELECT * FROM USER where id = #{uid}" )
-    @Results({@Result(property = "images", javaType = List.class, column = "uid",
-            many = @Many(select = "com.example.myapp.mapper.attachment.ProfileAttachmentMapper.readAttachment")),@Result(property="uid",column = "uid")})
-    UserModel getUser(@Param("uid") String uid);
+    @Select("SELECT * FROM USER where id = #{id}" )
+    @Results({@Result(property = "images", javaType = List.class, column = "id",
+            many = @Many(select = "com.example.myapp.mapper.attachment.ProfileAttachmentMapper.readAttachment")),@Result(property="id",column = "id")})
+    UserModel getUser(@Param("id") String id);
 
 
     @Select("SELECT EXISTS(SELECT * FROM USER WHERE email = #{email})")
     int existUserEmail(@Param("email") String email);
 
-    @Select("SELECT EXISTS(SELECT * FROM USER WHERE id = #{uid})")
-    int existUserUid(@Param("uid") String uid);
+    @Select("SELECT EXISTS(SELECT * FROM USER WHERE id = #{id})")
+    int existUserId(@Param("id") String id);
 
     // 이메일 인증 완료 state = 'T' 변경
     @Update("UPDATE USER SET state = 'T' WHERE token = #{token}")
@@ -52,8 +52,8 @@ public interface UserMapper {
     @Update("UPDATE USER SET token = #{token} WHERE email = #{email}")
     int tokenUpdate(@Param("email")String email, @Param("token")String token);
 
-    @Update("UPDATE USER SET state ='D' WHERE id = #{uid} AND state ='C'")
-    void deleteUser(@Param("uid")String uid);
+    @Update("UPDATE USER SET state ='D' WHERE id = #{id} AND state ='C'")
+    void deleteUser(@Param("id")String id);
     // 중복 체크
     @Select("SELECT email FROM member where email = #{email}")
     String emailDuplicate(UserModel user);

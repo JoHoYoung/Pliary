@@ -54,10 +54,10 @@ public class UserCrud {
         try{
             JSONObject sesssion = (JSONObject) req.getAttribute("session");
             UserModel user = userMapper.getUser(sesssion.get("email").toString());
-            List<CardModel> cards = cardMapper.readAllCard(user.getUid());
+            List<CardModel> cards = cardMapper.readAllCard(user.getId());
             for(int i=0;i<cards.size();i++){
-                feedMapper.deleteFeedFromCardId(cards.get(i).getUid());
-                cardMapper.deleteCard(cards.get(i).getUid());
+                feedMapper.deleteFeedFromCardId(cards.get(i).getId());
+                cardMapper.deleteCard(cards.get(i).getId());
             }
             JSON.put("statusCode",200);
             JSON.put("statusMsg","success");

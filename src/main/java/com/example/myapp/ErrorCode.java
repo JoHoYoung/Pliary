@@ -2,26 +2,26 @@ package com.example.myapp;
 
 public enum ErrorCode {
 
+  // JWT Token
   JWT_TOKEN_EXPIRED(400,"A001","Token Expired"),
   INVALID_TOKEN(401,"A002","Invalid Token"),
   EMPTY_TOKEN(402,"A003","Empty Token"),
+  DECODED_TOKEN_PARSE_ERROR(431,"A004","Error at Parse decoded Token"),
 
+  // Email Error
   INVALID_EMAIL(410,"B001","InvalidEmail"),
   DUPLICATED_EMAIL(411,"B002","Duplicated Email"),
+  EMAIL_SEND_ERROR(412,"E001","Fail To Send Email"),
 
-  EMAIL_SEND_ERROR(421,"E001","Fail To Send Email"),
+  // Create Card
+  EXCEED_MAX_CARD_NUMBER(441,"C001","Exceed Maximum Card Number"),
 
-  DECODED_TOKEN_PARSE_ERROR(431,"P001","Error at Parse decoded Token"),
-
+  // Date parsing
   DATE_PARSE_ERROR(471,"I001", "Date Parse Error"),
-  INVALID_INPUT_VALUE(400, "C001", " Invalid Input Value"),
-  METHOD_NOT_ALLOWED(405, "C002", " Invalid Input Value"),
-  HANDLE_ACCESS_DENIED(403, "C006", "Access is Denied"),
 
-
-  // Member
-  EMAIL_DUPLICATION(400, "M001", "Email is Duplication"),
-  LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid");
+  // Data Access
+  DATA_ACCESS_UNAUTHORIZED(481,"D001","UnAuthorized Data Access"),
+  DATA_NOT_FOUND(481,"D002","DATA NOT FOUND");
 
   private final String statusCode;
   private final String statusMsg;

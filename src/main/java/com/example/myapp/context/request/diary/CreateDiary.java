@@ -7,11 +7,11 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateDiary {
-    @JsonProperty("uid")
-    private String uid;
+    @JsonProperty("id")
+    private String id;
 
-    @JsonProperty("card_id")
-    private String card_id;
+    @JsonProperty("cardId")
+    private String cardId;
 
     @JsonProperty("title")
     private String title;

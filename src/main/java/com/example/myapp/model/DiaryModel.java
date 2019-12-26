@@ -9,12 +9,12 @@ import java.util.List;
 
 @Data
 public class DiaryModel {
-    String uid;
-    String card_id;
+    String id;
+    String cardId;
     String title;
     String body;
     private String state;
-    Date created_at;
-    Date update_at;
+    Date createdAt;
+    Date updatedAt;
     List<AttachmentModel> images;
 }

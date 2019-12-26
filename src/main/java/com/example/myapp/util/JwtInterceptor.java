@@ -1,7 +1,7 @@
 package com.example.myapp.util;
 
 import com.example.myapp.ErrorCode;
-import com.example.myapp.exception.DecodedTokenParseError;
+import com.example.myapp.exception.DecodedTokenParseException;
 import com.example.myapp.exception.InvalidTokenException;
 import com.example.myapp.jwt.JwtServiceImpl;
 import com.example.myapp.context.user.Session;
@@ -40,7 +40,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
       return true;
     } catch (IOException e) {
-      throw new DecodedTokenParseError(ErrorCode.DECODED_TOKEN_PARSE_ERROR);
+      throw new DecodedTokenParseException(ErrorCode.DECODED_TOKEN_PARSE_ERROR);
     }
   }
 }

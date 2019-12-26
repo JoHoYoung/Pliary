@@ -26,11 +26,11 @@ public class DiaryCrud {
     public JSONObject createDiary(HttpServletRequest req, @RequestBody CreateDiary param){
         JSONObject JSON = new JSONObject();
         try{
-            String uid = UUID.randomUUID().toString();
-            String card_id = param.getCard_id();
+            String id = UUID.randomUUID().toString();
+            String cardId = param.getCardId();
             String title = param.getTitle();
             String body = param.getBody();
-            diaryMapper.createDiary(uid, card_id, title, body);
+            diaryMapper.createDiary(id, cardId, title, body);
             JSON.put("statusCode",200);
             JSON.put("statusMsg", "success create");
             return JSON;
@@ -46,14 +46,14 @@ public class DiaryCrud {
     public JSONObject updateDiary(HttpServletRequest req, @RequestBody CreateDiary param){
         JSONObject JSON = new JSONObject();
         try{
-            String uid = param.getUid();
-            if(uid == null){
+            String id = param.getId();
+            if(id == null){
                 LOG.warn("diary/update : Empty uid");
                 throw new Error("Empty uid");
             }
             String title = param.getTitle();
             String body = param.getBody();
-            diaryMapper.updateDiary(uid, title, body);
+            diaryMapper.updateDiary(id, title, body);
             JSON.put("statusCode",200);
             JSON.put("statusMsg", "success update");
             return JSON;

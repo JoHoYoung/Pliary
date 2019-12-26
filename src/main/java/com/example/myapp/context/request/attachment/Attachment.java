@@ -18,7 +18,7 @@ public class Attachment {
   @JsonProperty("type")
   private String type;
 
-  @JsonProperty("uid")
-  private String uid;
+  @JsonProperty("id")
+  private String id;
 
 }

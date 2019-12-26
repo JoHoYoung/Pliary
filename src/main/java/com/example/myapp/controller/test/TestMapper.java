@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TestMapper {
-    @Select("SELECT * FROM TEST WHERE user_id=#{user_id}")
-    public List<TestModel> getTest(@Param("user_id")int user_id);
+    @Select("SELECT * FROM TEST WHERE userId=#{userId}")
+    public List<TestModel> getTest(@Param("userId")int userId);
 
 }

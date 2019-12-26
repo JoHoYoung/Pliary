@@ -13,11 +13,11 @@ public class Signup {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("uid")
-    private String uid;
+    @JsonProperty("id")
+    private String id;
 
-    public Signup(String uid, String email) {
-        this.uid = uid;
+    public Signup(String id, String email) {
+        this.id = id;
         this.email = email;
     }
 

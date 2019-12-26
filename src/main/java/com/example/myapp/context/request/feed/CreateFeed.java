@@ -8,12 +8,12 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateFeed {
 
-    @JsonProperty("uid")
-    private String uid;
+    @JsonProperty("id")
+    private String id;
 
-    @JsonProperty("card_id")
-    private String card_id;
+    @JsonProperty("cardId")
+    private String cardId;
 
-    @JsonProperty("over_degree")
-    private int over_degree;
+    @JsonProperty("overDegree")
+    private int overDegree;
 }

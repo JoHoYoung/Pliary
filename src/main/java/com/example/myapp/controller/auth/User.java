@@ -36,7 +36,7 @@ public class User {
 
   @RequestMapping(value = "/signup", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> Signup(@RequestBody Signup param) {
-    String uid = param.getUid();
+    String id = param.getId();
     String email = param.getEmail();
 
     // Duplicate Check
@@ -48,7 +48,7 @@ public class User {
 
     // Send verification mail, and insert to DB
     mailer.sendVerfyMail(email, token);
-    userMapper.userSignup(uid, email, token);
+    userMapper.userSignup(id, email, token);
 
     final BaseResponse response = new BaseResponse(200,"success");
     return new ResponseEntity<>(response,HttpStatus.OK);
@@ -56,16 +56,16 @@ public class User {
 
   @RequestMapping(value = "/signin", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> signIn(@RequestBody Signin param) {
-    String uid = param.getUid();
+    String id = param.getId();
 
     // Uid Valid Check
-    if (userMapper.existUserUid(uid) == 0) {
+    if (userMapper.existUserId(id) == 0) {
       throw new InvalidEmailException(ErrorCode.INVALID_EMAIL);
     }
 
     // Gen Token
     JSONObject Session = new JSONObject();
-    Session.put("uid", uid);
+    Session.put("id", id);
 
     final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
       jwtService.accessToken(Session.toString()),

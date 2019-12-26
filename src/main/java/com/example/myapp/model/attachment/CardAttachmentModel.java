@@ -5,11 +5,11 @@ import java.util.Date;
 
 @Data
 public class CardAttachmentModel extends AttachmentModel {
-    private String uid;
-    private String card_id;
+    private String id;
+    private String cardId;
     private String url;
     private String state;
     private String filename;
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 }

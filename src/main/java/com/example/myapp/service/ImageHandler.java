@@ -25,12 +25,12 @@ public class ImageHandler {
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
 
     for (int i = 0; i < files.size(); i++) {
-      String uid = UUID.randomUUID().toString();
+      String id = UUID.randomUUID().toString();
       byte[] byteArr = files.get(i).getBytes();
-      String filename = upperId + uid.substring(0, 5);
+      String filename = upperId + id.substring(0, 5);
       String url = awsS3Util.fileUpload("dailyissue", filename, byteArr);
       images.add(url);
-      attachmentMapper.createAttachment(uid, upperId, url, filename);
+      attachmentMapper.createAttachment(id, upperId, url, filename);
     }
     return images;
   }

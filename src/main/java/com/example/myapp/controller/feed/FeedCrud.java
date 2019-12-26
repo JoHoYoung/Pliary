@@ -39,9 +39,9 @@ public class FeedCrud {
   public JSONObject createFeed(HttpServletRequest req, @RequestBody CreateFeed param) {
     JSONObject JSON = new JSONObject();
     try {
-      String uid = UUID.randomUUID().toString();
-      CardModel cardInfo = cardMapper.readCard(param.getCard_id());
-      feedMapper.createFeed(uid, param.getCard_id(), cardInfo.getNow_period());
+      String id = UUID.randomUUID().toString();
+      CardModel cardInfo = cardMapper.readCard(param.getCardId());
+      feedMapper.createFeed(id, param.getCardId(), cardInfo.getNowPeriod());
       JSON.put("statusCode", 200);
       JSON.put("statusMsg", "success");
       return JSON;
@@ -57,7 +57,7 @@ public class FeedCrud {
   public JSONObject readFeed(HttpServletRequest req, @RequestBody CreateFeed param) {
     JSONObject JSON = new JSONObject();
     try {
-      List<FeedModel> Feeds = feedMapper.readAllFeed(param.getCard_id());
+      List<FeedModel> Feeds = feedMapper.readAllFeed(param.getCardId());
       List<String> data = new ArrayList<>();
       for (int i = 0; i < Feeds.size(); i++) {
         data.add(objectMapper.writeValueAsString(Feeds.get(i)));
@@ -78,7 +78,7 @@ public class FeedCrud {
   public JSONObject updateFeed(HttpServletRequest req, @RequestBody CreateFeed param) {
     JSONObject JSON = new JSONObject();
     try {
-      feedMapper.updateFeed(param.getUid());
+      feedMapper.updateFeed(param.getId());
       JSON.put("statusCode", 200);
       JSON.put("statusMsg", "success");
       return JSON;
@@ -94,7 +94,7 @@ public class FeedCrud {
   public JSONObject deleteFeed(HttpServletRequest req, @RequestBody CreateFeed param) {
     JSONObject JSON = new JSONObject();
     try {
-      feedMapper.deleteFeed(param.getUid());
+      feedMapper.deleteFeed(param.getId());
       JSON.put("statusCode", 200);
       JSON.put("statusMsg", "success");
       return JSON;

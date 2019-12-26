@@ -57,7 +57,7 @@ public class Test2Controller {
 
             a-=100000;
         }
-        data.put("uid", ChronoUnit.MILLIS.between(currentDateTime,LocalDateTime.now()));
+        data.put("id", ChronoUnit.MILLIS.between(currentDateTime,LocalDateTime.now()));
         JSON.put("statusCode", 200);
         JSON.put("statusMsg", "success");
         JSON.put("data",data);

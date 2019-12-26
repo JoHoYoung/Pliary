@@ -1,145 +1,118 @@
 package com.example.myapp.controller.card;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.myapp.ErrorCode;
 import com.example.myapp.context.request.card.CreateCard;
+import com.example.myapp.context.user.Session;
+import com.example.myapp.exception.ExceedMaximumCardNumberException;
+import com.example.myapp.exception.NotFoundException;
+import com.example.myapp.exception.UnauthorizedAccessException;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.CardModel;
+import com.example.myapp.response.BaseResponse;
+import com.example.myapp.response.DataListResponse;
+import com.example.myapp.response.DataResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
 @RequestMapping(value = "/card")
 public class CardCrud {
 
-    private static final Logger LOG = LogManager.getLogger(CardCrud.class);
+  private static final Logger LOG = LogManager.getLogger(CardCrud.class);
 
-    @Autowired
-    CardMapper cardMapper;
+  @Autowired
+  CardMapper cardMapper;
 
-    @Autowired
-    UserMapper userMapper;
+  @Autowired
+  UserMapper userMapper;
 
-    @Autowired
-    ObjectMapper objectMapper;
+  @Autowired
+  ObjectMapper objectMapper;
 
-    // 유저 id, 식물 이름, 애칭, 시작 날짜, 주기
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public JSONObject createCard(HttpServletRequest req, @RequestBody CreateCard param) {
-
-        JSONObject session = (JSONObject) req.getAttribute("session");
-        JSONObject JSON = new JSONObject();
-        String user_id = userMapper.getUser((String) session.get("email")).getUid();
-        int count = cardMapper.countCard(user_id);
-
-        if (count > 5) {
-            JSON.put("statusCode", 400);
-            JSON.put("statusMsg", "Cannot make card");
-            return JSON;
-        }
-        // 카드 생성
-        String uid = UUID.randomUUID().toString();
-        String name = param.getName();
-        String nickName = param.getNickname();
-        int initPeriod = param.getInit_period();
-        cardMapper.createCard(uid, user_id, name, nickName, initPeriod);
-
-        JSONObject data = new JSONObject();
-
-        data.put("uid", uid);
-        JSON.put("statusCode", 200);
-        JSON.put("statusMsg", "success");
-        JSON.put("data",data);
-        return JSON;
+  // 유저 id, 식물 이름, 애칭, 시작 날짜, 주기
+  @RequestMapping(value = "/create", method = RequestMethod.POST)
+  public ResponseEntity<BaseResponse> createCard(@RequestAttribute("session") Session session, @RequestBody CreateCard param) {
+    if (cardMapper.countCard(session.getId()) > 5) {
+      throw new ExceedMaximumCardNumberException(ErrorCode.EXCEED_MAX_CARD_NUMBER);
     }
+    // 카드 생성
+    String id = UUID.randomUUID().toString();
+    String name = param.getName();
+    String nickName = param.getNickname();
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public JSONObject updateCard(HttpServletRequest req, @RequestBody CreateCard param) {
-        JSONObject JSON = new JSONObject();
-        String uid = param.getUid();
-        String name = param.getName();
-        String nickName = param.getNickname();
-        int init_period = param.getInit_period();
-        // update
-        cardMapper.updateCard(uid, name, nickName, init_period, init_period);
-        JSON.put("statusCode", 200);
-        JSON.put("statusMsg", "success");
-        return JSON;
+    int initPeriod = param.getInitPeriod();
+    cardMapper.createCard(id, session.getId(), name, nickName, initPeriod);
+
+    JSONObject data = new JSONObject();
+    data.put("id", id);
+    final BaseResponse response = new DataResponse<>(200, "success", data);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public ResponseEntity<BaseResponse> updateCard(@RequestAttribute("session") Session session, @RequestBody CreateCard param) {
+
+    String id = param.getId();
+    String name = param.getName();
+    String nickName = param.getNickname();
+    int initPeriod = param.getInitPeriod();
+
+    String userId = cardMapper.getUserId(id);
+    if (!(userId == session.getId())) {
+      if (userId == null) {
+        throw new NotFoundException(ErrorCode.DATA_NOT_FOUND);
+      }
+      throw new UnauthorizedAccessException(ErrorCode.DATA_ACCESS_UNAUTHORIZED);
     }
+    // update
+    cardMapper.updateCard(id, name, nickName, initPeriod, initPeriod);
+    final BaseResponse response = new BaseResponse(200, "success");
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/readAll", method = RequestMethod.GET)
-    public JSONObject readAllCard(HttpServletRequest req) {
-        JSONObject JSON = new JSONObject();
-        try {
-            JSONObject session = (JSONObject) req.getAttribute("session");
-            String user_id = userMapper.getUser((String) session.get("email")).getUid();
-            // Get user's All card
-            List<CardModel> Cards = cardMapper.readAllCard(user_id);
-            List<String> data = new ArrayList<>();
-            for (int i = 0; i < Cards.size(); i++) {
-                data.add(objectMapper.writeValueAsString(Cards.get(i)));
-            }
-            JSON.put("stautsCode", 200);
-            JSON.put("statusMsg", "sucsss");
-            JSON.put("data", data);
-            return JSON;
-            // Get user's one card(card_id)
+  @RequestMapping(value = "/readAll", method = RequestMethod.GET)
+  public ResponseEntity<BaseResponse> readAllCard(@RequestAttribute("session") Session session) {
+    List<CardModel> Cards = cardMapper.readAllCard(session.getId());
+    final BaseResponse response = new DataListResponse<>(200, "success", Cards);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-        } catch (Exception e) {
-            JSON.put("stautsCode", 500);
-            JSON.put("statusMsg", "Internal Server Error");
-            LOG.warn("Internal Server Error", e);
-            return JSON;
-        }
+  @RequestMapping(value = "/read", method = RequestMethod.GET)
+  public ResponseEntity<BaseResponse> readCard(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
+    String userId = cardMapper.getUserId(id);
+    if (!(userId == session.getId())) {
+      if (userId == null) {
+        throw new NotFoundException(ErrorCode.DATA_NOT_FOUND);
+      }
+      throw new UnauthorizedAccessException(ErrorCode.DATA_ACCESS_UNAUTHORIZED);
     }
+    CardModel Card = cardMapper.readCard(id);
+    final BaseResponse response = new DataResponse<>(200, "success", Card);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public JSONObject readCard(HttpServletRequest req, @RequestParam("id") String card_id) {
-        JSONObject JSON = new JSONObject();
-        try {
-            CardModel Card = cardMapper.readCard(card_id);
-            if (Card == null) {
-                JSON.put("stautsCode", 500);
-                JSON.put("statusMsg", "No data");
-                LOG.info("/read : No data");
-                return JSON;
-            }
-            JSON.put("stautsCode", 200);
-            JSON.put("statusMsg", "sucsss");
-            JSON.put("data", objectMapper.writeValueAsString(Card));
-            return JSON;
-
-        } catch (Exception e) {
-            JSON.put("stautsCode", 500);
-            JSON.put("statusMsg", "Internal Server Error");
-            LOG.error("Internal Server Error", e);
-            return JSON;
-        }
+  @RequestMapping(value = "/delete", method = RequestMethod.GET)
+  public ResponseEntity<BaseResponse> deleteCard(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
+    String userId = cardMapper.getUserId(id);
+    if (!(userId == session.getId())) {
+      if (userId == null) {
+        throw new NotFoundException(ErrorCode.DATA_NOT_FOUND);
+      }
+      throw new UnauthorizedAccessException(ErrorCode.DATA_ACCESS_UNAUTHORIZED);
     }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public JSONObject deleteCard(HttpServletRequest req, @RequestParam("id") String card_id) {
-        JSONObject JSON = new JSONObject();
-        try {
-            cardMapper.deleteCard(card_id);
-            JSON.put("stautsCode", 200);
-            JSON.put("statusMsg", "sucsss");
-            return JSON;
-        } catch (Exception e) {
-            JSON.put("stautsCode", 500);
-            JSON.put("statusMsg", "Internal Server Error");
-            LOG.error("Internal Server Error", e);
-            return JSON;
-        }
-    }
+    cardMapper.deleteCard(id);
+    final BaseResponse response = new BaseResponse(200,"success");
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 }

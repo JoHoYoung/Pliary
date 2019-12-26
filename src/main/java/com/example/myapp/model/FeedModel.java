@@ -6,10 +6,10 @@ import java.util.Date;
 
 @Data
 public class FeedModel {
-    private String uid;
-    private String card_id;
-    private int over_degree;
+    private String id;
+    private String cardId;
+    private int overDegree;
     private String state;
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 }

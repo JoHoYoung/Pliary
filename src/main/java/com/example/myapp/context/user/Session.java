@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Session {
-  @JsonProperty("uid")
-  private String uid;
+  @JsonProperty("id")
+  private String id;
 }
