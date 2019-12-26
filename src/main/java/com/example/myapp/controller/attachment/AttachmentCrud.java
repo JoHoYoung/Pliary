@@ -1,6 +1,7 @@
 package com.example.myapp.controller.attachment;
 
-import com.example.myapp.context.attachment.Attachment;
+import com.example.myapp.context.request.attachment.Attachment;
+import com.example.myapp.context.user.Session;
 import com.example.myapp.factory.AttachmentMapperFactory;
 import com.example.myapp.mapper.attachment.AttachmentMapper;
 import com.example.myapp.model.attachment.AttachmentModel;
@@ -8,8 +9,6 @@ import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataResponse;
 import com.example.myapp.service.ImageHandler;
 import com.example.myapp.util.AwsS3Util;
-import com.example.myapp.util.ObjectMapperSingleTon;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,12 +33,13 @@ public class AttachmentCrud {
   @Autowired
   ImageHandler imageHandler;
 
+
   @RequestMapping(value = "/create", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> createAttachment(HttpServletRequest req, @RequestParam("userimage") List<MultipartFile> files) throws java.io.IOException {
+  public ResponseEntity<BaseResponse> createAttachment(@RequestAttribute("session")Session session
+    ,@RequestParam("type")String type ,@RequestParam("userimage") List<MultipartFile> files)
+    throws java.io.IOException {
 
-    JSONObject sesssion = (JSONObject) req.getAttribute("session");
-    ArrayList<String> urls = imageHandler.uploadFile(req.getParameter("type"), (String) sesssion.get("email"), req.getParameter("uid"), files);
-
+    ArrayList<String> urls = imageHandler.uploadFile(type, session.getUid(), files);
     final BaseResponse response = new DataResponse(200, "success",urls);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }

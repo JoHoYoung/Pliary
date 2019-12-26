@@ -1,4 +1,4 @@
-package com.example.myapp.context.diary;
+package com.example.myapp.context.request.diary;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

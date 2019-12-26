@@ -1,4 +1,4 @@
-package com.example.myapp.context.user;
+package com.example.myapp.context.request.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

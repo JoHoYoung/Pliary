@@ -20,14 +20,14 @@ public class ImageHandler {
 
   @Autowired
   AttachmentMapperFactory attachmentMapperFactory;
-  public ArrayList<String> uploadFile(String type, String email,String upperId, List<MultipartFile> files) throws FileNotFoundException, IOException {
+  public ArrayList<String> uploadFile(String type, String upperId, List<MultipartFile> files) throws FileNotFoundException, IOException {
     ArrayList<String> images = new ArrayList<>();
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
 
     for (int i = 0; i < files.size(); i++) {
       String uid = UUID.randomUUID().toString();
       byte[] byteArr = files.get(i).getBytes();
-      String filename = email + uid.substring(0, 5);
+      String filename = upperId + uid.substring(0, 5);
       String url = awsS3Util.fileUpload("dailyissue", filename, byteArr);
       images.add(url);
       attachmentMapper.createAttachment(uid, upperId, url, filename);

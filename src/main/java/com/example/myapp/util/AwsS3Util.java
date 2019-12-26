@@ -28,31 +28,15 @@ public class AwsS3Util {
     private AmazonS3 conn;
 
     public AwsS3Util() {
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+        AWSCredentials credentials = new BasicAWSCredentials("sad","asd");
         ClientConfiguration clientConfig = new ClientConfiguration();
         clientConfig.setProtocol(Protocol.HTTP);
         this.conn = new AmazonS3Client(credentials, clientConfig);
         conn.setEndpoint("s3.ap-northeast-2.amazonaws.com"); // 엔드포인트 설정 [ 아시아 태평양 서울 ]
     }
 
-    // 버킷 리스트를 가져오는 메서드이다.
-    public List<Bucket> getBucketList() {
-        return conn.listBuckets();
-    }
-
-    // 버킷을 생성하는 메서드이다.
-    public Bucket createBucket(String bucketName) {
-        return conn.createBucket(bucketName);
-    }
-
-    // 폴더 생성 (폴더는 파일명 뒤에 "/"를 붙여야한다.)
-    public void createFolder(String bucketName, String folderName) {
-        conn.putObject(bucketName, folderName + "/", new ByteArrayInputStream(new byte[0]), new ObjectMetadata());
-    }
-
     // 파일 업로드
     public String fileUpload(String bucketName, String fileName, byte[] fileData) throws FileNotFoundException {
-
         String filePath = (fileName).replace(File.separatorChar, '/'); // 파일 구별자를 `/`로 설정(\->/) 이게 기존에 / 였어도 넘어오면서 \로 바뀌는 거같다.
         ObjectMetadata metaData = new ObjectMetadata();
 

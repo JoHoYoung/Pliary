@@ -1,4 +1,4 @@
-package com.example.myapp.context.attachment;
+package com.example.myapp.context.request.attachment;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

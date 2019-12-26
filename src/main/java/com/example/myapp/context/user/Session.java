@@ -3,17 +3,15 @@ package com.example.myapp.context.user;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
 @NoArgsConstructor
-public class Signin {
-
-    @JsonProperty("email")
-    private String email;
-
-    public Signin(String email, String password) {
-        this.email = email;
-    }
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Session {
+  @JsonProperty("uid")
+  private String uid;
 }

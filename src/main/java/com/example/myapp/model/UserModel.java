@@ -1,6 +1,6 @@
 package com.example.myapp.model;
 
-import com.example.myapp.context.attachment.Attachment;
+import com.example.myapp.context.request.attachment.Attachment;
 import lombok.*;
 import org.apache.ibatis.type.Alias;
 

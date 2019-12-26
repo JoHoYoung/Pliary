@@ -1,6 +1,7 @@
 package com.example.myapp.config;
 
 import com.example.myapp.util.JwtInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,9 +15,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api2/test", "/static/*", "/error"};
 
+    @Bean
+    public JwtInterceptor jwtInterceptor(){
+        return new JwtInterceptor();
+    }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JwtInterceptor())
+        registry.addInterceptor(jwtInterceptor())
                 .excludePathPatterns(Arrays.asList(exclude));
     }
 
@@ -25,6 +30,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
     }
-
 
 }

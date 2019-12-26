@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.myapp.context.card.CreateCard;
+import com.example.myapp.context.request.card.CreateCard;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.CardModel;
-import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +30,8 @@ public class CardCrud {
     @Autowired
     UserMapper userMapper;
 
-    ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
+    @Autowired
+    ObjectMapper objectMapper;
 
     // 유저 id, 식물 이름, 애칭, 시작 날짜, 주기
     @RequestMapping(value = "/create", method = RequestMethod.POST)

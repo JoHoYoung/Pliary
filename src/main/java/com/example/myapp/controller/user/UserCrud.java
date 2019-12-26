@@ -5,7 +5,6 @@ import com.example.myapp.mapper.FeedMapper;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.model.CardModel;
 import com.example.myapp.model.UserModel;
-import com.example.myapp.util.ObjectMapperSingleTon;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,8 @@ public class UserCrud {
     @Autowired
     FeedMapper feedMapper;
 
-    ObjectMapper objectMapper = ObjectMapperSingleTon.getInstance();
+    @Autowired
+    ObjectMapper objectMapper;
 
     @RequestMapping(value ="/info", method=RequestMethod.GET)
     public JSONObject userInfo(HttpServletRequest req){
