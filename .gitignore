@@ -1,6 +1,8 @@
 *.properties
 .DS_Store
-target/
+target
+logs
+.mvn
 
 ### STS ###
 .apt_generated
