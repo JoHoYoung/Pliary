@@ -8,15 +8,19 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CardAttachmentMapper extends AttachmentMapper{
+public interface CardAttachmentMapper extends AttachmentMapper {
 
-    @Insert("INSERT INTO CARDATTACHMENT(id, cardId, url, filename, state, createdAt, updatedAt) VALUES(#{id}, #{cardId}, #{url}, #{filename}, 'C', now(),now())")
-    void createAttachment(@Param("id")String id, @Param("cardId")String cardId, @Param("url")String url, @Param("filename")String filename);
+  @Insert("INSERT INTO CARDATTACHMENT(id, cardId, url, filename, state, createdAt, updatedAt) VALUES(#{id}, #{cardId}, #{url}, #{filename}, 'C', now(),now())")
+  void createAttachment(@Param("id") String id, @Param("cardId") String cardId, @Param("url") String url, @Param("filename") String filename);
 
-    @Update("UPDATE CARDATTACHMENT SET state = 'D' WHERE id = #{id}")
-    void deleteAttachment(@Param("id")String id);
+  @Update("UPDATE CARDATTACHMENT SET state = 'D' WHERE id = #{id}")
+  void deleteAttachment(@Param("id") String id);
 
-    @Select("SELECT * FROM CARDATTACHMENT WHERE cardId = #{cardId} AND state='C'")
-    @Results({@Result(property = "cardId", column = "cardId")})
-    List<AttachmentModel> readAttachment(@Param("cardId")String cardId);
+  @Select("SELECT * FROM CARDATTACHMENT WHERE cardId = #{cardId} AND state='C'")
+  @Results({@Result(property = "cardId", column = "cardId")})
+  List<AttachmentModel> readAttachment(@Param("cardId") String cardId);
+
+  @Select("SELECT userId FROM CARDATTACHMENT WHERE id = #{id}")
+  String getUserId(@Param("id")String id);
+
 }

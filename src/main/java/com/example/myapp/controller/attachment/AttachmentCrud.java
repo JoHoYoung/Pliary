@@ -9,13 +9,13 @@ import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.service.ImageHandler;
 import com.example.myapp.util.AwsS3Util;
+import com.example.myapp.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,31 +32,41 @@ public class AttachmentCrud {
   @Autowired
   ImageHandler imageHandler;
 
-
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> createAttachment(@RequestAttribute("session")Session session
-    ,@RequestParam("type")String type ,@RequestParam("userimage") List<MultipartFile> files)
-    throws java.io.IOException {
+    ,@RequestParam("type")String type,@RequestParam("id")String id ,@RequestParam("userimage") List<MultipartFile> files)
+     {
+       System.out.println(type);
+       System.out.println(files.size());
 
-    ArrayList<String> urls = imageHandler.uploadFile(type, session.getId(), files);
+       ArrayList<String> urls = imageHandler.uploadFile(type, id, files);
     final BaseResponse response = new DataListResponse(200, "success",urls);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/read", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> readAttachment(@RequestBody Attachment param) {
+  public ResponseEntity<BaseResponse> readAttachment(@RequestAttribute("session")Session session,@RequestBody Attachment param) {
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
     List<AttachmentModel> images = attachmentMapper.readAttachment(param.getId());
+
+    String userId = attachmentMapper.getUserId(param.getId());
+
+    Util.DataAthorization(userId,session.getId());
 
     final BaseResponse response = new DataListResponse<>(HttpStatus.OK.value(), "success", images);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> deleteAttachment(HttpServletRequest req, @RequestBody Attachment param) {
+  public ResponseEntity<BaseResponse> deleteAttachment(@RequestAttribute("session")Session session, @RequestBody Attachment param) {
 
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
     attachmentMapper.deleteAttachment(param.getId());
+
+    String userId = attachmentMapper.getUserId(param.getId());
+
+    Util.DataAthorization(userId,session.getId());
+
     imageHandler.deleteFile(param.getFilename());
 
     final BaseResponse response = new BaseResponse(HttpStatus.OK.value(), "success");

@@ -69,4 +69,10 @@ public class BusinessExceptionHandler {
     return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
   }
 
+  @ExceptionHandler(UploadImageException.class)
+  protected ResponseEntity<ErrorResponse> UploadImageExceptionHandler(UploadImageException e) {
+    final ErrorResponse response = new ErrorResponse(e.getErrorCode());
+    return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+  }
+
 }

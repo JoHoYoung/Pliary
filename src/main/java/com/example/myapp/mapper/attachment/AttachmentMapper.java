@@ -9,5 +9,5 @@ public interface AttachmentMapper {
   void createAttachment(String id, String upperId, String url, String filename);
   void deleteAttachment(String id);
   List<AttachmentModel> readAttachment(String id);
-
+  String getUserId(String id);
 }

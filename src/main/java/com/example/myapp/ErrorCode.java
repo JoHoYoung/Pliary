@@ -13,6 +13,8 @@ public enum ErrorCode {
   DUPLICATED_EMAIL(411,"B002","Duplicated Email"),
   EMAIL_SEND_ERROR(412,"E001","Fail To Send Email"),
 
+  // image
+  FAIL_TO_UPLOAD_IMAGE(421,"I001","Fail To Upload Images"),
   // Create Card
   EXCEED_MAX_CARD_NUMBER(441,"C001","Exceed Maximum Card Number"),
 

@@ -21,7 +21,7 @@ public interface CardMapper {
   List<CardModel> readAllCard(@Param("userId") String userId);
 
   @Select("SELECT userId FROM CARD WHERE id = #{id}")
-  String getUserId(@Param("id")String id);
+  String getUserId(@Param("id") String id);
 
   @Select("SELECT * FROM CARD WHERE state = 'C' AND id=#{id}")
   CardModel readCard(@Param("id") String id);
@@ -35,9 +35,5 @@ public interface CardMapper {
 
   @Update("UPDATE CARD SET name=#{name}, nickName=#{nickName}, initPeriod=#{initPeriod}, nowPeriod=#{nowPeriod}, updatedAt = now() WHERE id=#{id} AND state ='C'")
   void updateCard(@Param("id") String id, @Param("name") String name, @Param("nickName") String nickName, @Param("initPeriod") int init_period, @Param("nowPeriod") int nowPeriod);
-
-  // 특정 사용자의 카드 정보 All select
-  @Select("SELECT * FROM CARD WHERE userId = #{userId} AND state='C'")
-  List<CardModel> getCards(@Param("userId") int userId);
 
 }

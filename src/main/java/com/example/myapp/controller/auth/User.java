@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class User {
-  private static final Log LOG = LogFactory.getLog( "com.example.myapp");
+
+  private static final Log LOG = LogFactory.getLog("com.example.myapp");
+
   @Autowired
   private JwtServiceImpl jwtService;
   @Autowired
@@ -35,6 +38,8 @@ public class User {
   private RandomString randomString;
   @Autowired
   private Mailer mailer;
+  @Autowired
+  Environment env;
 
   @RequestMapping(value = "/signup", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> Signup(@RequestBody Signup param) {
@@ -52,14 +57,15 @@ public class User {
     mailer.sendVerfyMail(email, token);
     userMapper.userSignup(id, email, token);
 
-    final BaseResponse response = new BaseResponse(200,"success");
-    return new ResponseEntity<>(response,HttpStatus.OK);
+    final BaseResponse response = new BaseResponse(200, "success");
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/signin", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> signIn(@RequestBody Signin param) {
-    String id = param.getId();
 
+    String id = param.getId();
+    System.out.println(env.getProperty("aws.access"));
     LOG.error("TEST AT CONTROLLER");
     // Uid Valid Check
     if (userMapper.existUserId(id) == 0) {

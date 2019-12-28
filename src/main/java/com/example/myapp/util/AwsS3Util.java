@@ -3,7 +3,6 @@ package com.example.myapp.util;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
@@ -11,52 +10,58 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 
 @Component
+@NoArgsConstructor
+@PropertySource("classpath:/application.properties")
 public class AwsS3Util {
-    private AmazonS3 conn;
+  private AmazonS3 conn;
 
-    public AwsS3Util() {
-        AWSCredentials credentials = new BasicAWSCredentials("sad","asd");
-        ClientConfiguration clientConfig = new ClientConfiguration();
-        clientConfig.setProtocol(Protocol.HTTP);
-        this.conn = new AmazonS3Client(credentials, clientConfig);
-        conn.setEndpoint("s3.ap-northeast-2.amazonaws.com"); // 엔드포인트 설정 [ 아시아 태평양 서울 ]
-    }
+  @Autowired
+  private Environment env;
 
-    // 파일 업로드
-    public String fileUpload(String bucketName, String fileName, byte[] fileData) throws FileNotFoundException {
-        String filePath = (fileName).replace(File.separatorChar, '/'); // 파일 구별자를 `/`로 설정(\->/) 이게 기존에 / 였어도 넘어오면서 \로 바뀌는 거같다.
-        ObjectMetadata metaData = new ObjectMetadata();
+  @PostConstruct
+  public void init(){
+    System.out.println(env.getProperty("aws.access"));
+    AWSCredentials credentials = new BasicAWSCredentials(env.getProperty("aws.access"), env.getProperty("aws.secret"));
+    ClientConfiguration clientConfig = new ClientConfiguration();
+    clientConfig.setProtocol(Protocol.HTTP);
+    this.conn = new AmazonS3Client(credentials, clientConfig);
+    conn.setEndpoint("s3.ap-northeast-2.amazonaws.com"); // 엔드포인트 설정 [ 아시아 태평양 서울 ]
+  }
 
-        metaData.setContentLength(fileData.length);   //메타데이터 설정 --> 원래는 128kB까지 업로드 가능했으나 파일크기만큼 버퍼를 설정시켰다.
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //파일 넣음
-        conn.putObject(bucketName, filePath, byteArrayInputStream, metaData);
-        String imgName = (fileName).replace(File.separatorChar, '/');
-        return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
-    }
+  // 파일 업로드
+  public String fileUpload(String bucketName, String fileName, byte[] fileData) throws FileNotFoundException {
+    String filePath = (fileName).replace(File.separatorChar, '/'); // 파일 구별자를 `/`로 설정(\->/) 이게 기존에 / 였어도 넘어오면서 \로 바뀌는 거같다.
+    ObjectMetadata metaData = new ObjectMetadata();
 
-    // 파일 삭제
-    public void fileDelete(String bucketName, String fileName) {
-        String imgName = (fileName).replace(File.separatorChar, '/');
-        conn.deleteObject(bucketName, imgName);
-    }
+    metaData.setContentLength(fileData.length);   //메타데이터 설정 --> 원래는 128kB까지 업로드 가능했으나 파일크기만큼 버퍼를 설정시켰다.
+    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //파일 넣음
+    conn.putObject(bucketName, filePath, byteArrayInputStream, metaData);
+    String imgName = (fileName).replace(File.separatorChar, '/');
+    return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
+  }
 
-    // 파일 URL
-    public String getFileURL(String bucketName, String fileName) {
-        String imgName = (fileName).replace(File.separatorChar, '/');
-        return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
-    }
+  // 파일 삭제
+  public void fileDelete(String bucketName, String fileName) {
+    String imgName = (fileName).replace(File.separatorChar, '/');
+    conn.deleteObject(bucketName, imgName);
+  }
+
+  // 파일 URL
+  public String getFileURL(String bucketName, String fileName) {
+    String imgName = (fileName).replace(File.separatorChar, '/');
+    return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, imgName)).toString();
+  }
 
 }
