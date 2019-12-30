@@ -33,8 +33,8 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
       Session session = objectMapper.readValue(JWT.decode(token), Session.class);
       req.setAttribute("session", session);
-
       return true;
+
     } catch (IOException e) {
       throw new DecodedTokenParseException(ErrorCode.DECODED_TOKEN_PARSE_ERROR);
     }

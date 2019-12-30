@@ -39,6 +39,7 @@ public class CardCrud {
   // 유저 id, 식물 이름, 애칭, 시작 날짜, 주기
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> createCard(@RequestAttribute("session") Session session, @RequestBody CreateCard param) {
+
     if (cardMapper.countCard(session.getId()) > 5) {
       throw new ExceedMaximumCardNumberException(ErrorCode.EXCEED_MAX_CARD_NUMBER);
     }

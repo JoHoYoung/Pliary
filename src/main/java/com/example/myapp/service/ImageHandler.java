@@ -4,12 +4,10 @@ import com.example.myapp.ErrorCode;
 import com.example.myapp.exception.UploadImageException;
 import com.example.myapp.factory.AttachmentMapperFactory;
 import com.example.myapp.mapper.attachment.AttachmentMapper;
-import com.example.myapp.util.AwsS3Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.UUID;
 @Component
 public class ImageHandler {
   @Autowired
-  AwsS3Util awsS3Util;
+  AwsS3Service awsS3Service;
 
   @Autowired
   AttachmentMapperFactory attachmentMapperFactory;
@@ -30,7 +28,7 @@ public class ImageHandler {
         String id = UUID.randomUUID().toString();
         byte[] byteArr = files.get(i).getBytes();
         String filename = upperId + id.substring(0, 5);
-        String url = awsS3Util.fileUpload("dailyissue", filename, byteArr);
+        String url = awsS3Service.fileUpload("dailyissue", filename, byteArr);
         images.add(url);
         attachmentMapper.createAttachment(id, upperId, url, filename);
       }
@@ -41,6 +39,6 @@ public class ImageHandler {
   }
 
   public void deleteFile(String filename){
-    awsS3Util.fileDelete("dailyissue",filename);
+    awsS3Service.fileDelete("dailyissue",filename);
   }
 }

@@ -14,10 +14,7 @@ import org.springframework.core.env.Environment;
 @PropertySource("application.properties")
 public class MyappApplication {
 
-
-  //private static final Log LOG = LogFactory.getLog( "com.example.myapp");
   public static void main(String[] args) {
-  //  LOG.error("HELLO");
     SpringApplication.run(MyappApplication.class, args);
   }
 }

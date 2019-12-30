@@ -13,22 +13,22 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api2/test", "/static/*", "/error"};
+  private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api2/test", "/static/*", "/error"};
 
-    @Bean
-    public JwtInterceptor jwtInterceptor(){
-        return new JwtInterceptor();
-    }
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor())
-                .excludePathPatterns(Arrays.asList(exclude));
-    }
+  @Bean
+  public JwtInterceptor jwtInterceptor() {
+    return new JwtInterceptor();
+  }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
-    }
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(jwtInterceptor())
+      .excludePathPatterns(Arrays.asList(exclude));
+  }
 
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/static/**")
+      .addResourceLocations("classpath:/static/");
+  }
 }

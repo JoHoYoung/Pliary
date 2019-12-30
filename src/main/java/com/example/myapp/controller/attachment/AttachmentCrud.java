@@ -8,7 +8,7 @@ import com.example.myapp.model.attachment.AttachmentModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.service.ImageHandler;
-import com.example.myapp.util.AwsS3Util;
+import com.example.myapp.service.AwsS3Service;
 import com.example.myapp.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import java.util.List;
 public class AttachmentCrud {
 
   @Autowired
-  AwsS3Util awsS3Util;
+  AwsS3Service awsS3Service;
 
   @Autowired
   AttachmentMapperFactory attachmentMapperFactory;
@@ -64,9 +64,7 @@ public class AttachmentCrud {
     attachmentMapper.deleteAttachment(param.getId());
 
     String userId = attachmentMapper.getUserId(param.getId());
-
     Util.DataAthorization(userId,session.getId());
-
     imageHandler.deleteFile(param.getFilename());
 
     final BaseResponse response = new BaseResponse(HttpStatus.OK.value(), "success");

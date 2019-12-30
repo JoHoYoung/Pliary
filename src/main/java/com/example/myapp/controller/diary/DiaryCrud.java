@@ -2,6 +2,7 @@ package com.example.myapp.controller.diary;
 
 import com.example.myapp.context.request.diary.CreateDiary;
 import com.example.myapp.context.user.Session;
+import com.example.myapp.controller.card.CardCrud;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.model.DiaryModel;
@@ -23,7 +24,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/diary")
 public class DiaryCrud {
-
 
   @Autowired
   DiaryMapper diaryMapper;

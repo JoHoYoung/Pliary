@@ -66,7 +66,6 @@ public class User {
 
     String id = param.getId();
     System.out.println(env.getProperty("aws.access"));
-    LOG.error("TEST AT CONTROLLER");
     // Uid Valid Check
     if (userMapper.existUserId(id) == 0) {
       throw new InvalidEmailException(ErrorCode.INVALID_EMAIL);

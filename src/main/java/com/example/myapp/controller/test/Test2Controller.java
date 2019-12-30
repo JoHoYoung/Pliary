@@ -1,20 +1,17 @@
 package com.example.myapp.controller.test;
 
 import com.example.myapp.mapper.UserMapper;
-import com.example.myapp.util.AwsS3Util;
+import com.example.myapp.service.AwsS3Service;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
 
 @RestController
@@ -25,7 +22,7 @@ public class Test2Controller {
     private UserMapper userMapper;
 
     @Autowired
-    AwsS3Util awsS3Util;
+    AwsS3Service awsS3Service;
 
     // 이메일 인증
     @RequestMapping(value="/auth/cert", method = RequestMethod.GET)
