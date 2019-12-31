@@ -1,4 +1,4 @@
-package com.example.myapp.util;
+package com.example.myapp.service;
 
 import com.example.myapp.ErrorCode;
 import com.example.myapp.exception.EmailSendException;
@@ -11,7 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Component
-public class Mailer {
+public class MailerService {
   @Autowired
   private JavaMailSender emailSender;
 

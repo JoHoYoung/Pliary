@@ -38,4 +38,6 @@ public interface DiaryMapper {
   @Select("SELECT userId FROM CARD WHERE CARD.id = (SELECT cardId FROM DIARY WHERE id = #{id})")
   String getUserId(@Param("id") String id);
 
+  @Update("UPDATE DIARY SET state='D' WHERE cardId=#{cardId}")
+  int deleteDiaryFromCardId(@Param("cardId") String cardId);
 }

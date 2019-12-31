@@ -1,28 +1,25 @@
 package com.example.myapp.config;
 
-import com.example.myapp.util.JwtInterceptor;
-import org.springframework.context.annotation.Bean;
+import com.example.myapp.service.JwtInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-  private String[] exclude = new String[]{"/auth/signup", "/auth/signin", "/api2/test", "/static/*", "/error"};
+  private String[] exclude = new String[]{"/user/signup", "/user/signin", "/api2/test", "/static/*", "/error"};
 
-  @Bean
-  public JwtInterceptor jwtInterceptor() {
-    return new JwtInterceptor();
-  }
+  @Autowired
+  JwtInterceptor jwtInterceptor;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(jwtInterceptor())
+    registry.addInterceptor(jwtInterceptor)
       .excludePathPatterns(Arrays.asList(exclude));
   }
 

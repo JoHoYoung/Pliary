@@ -1,22 +1,24 @@
-package com.example.myapp.util;
+package com.example.myapp.service;
 
 import com.example.myapp.ErrorCode;
 import com.example.myapp.exception.DecodedTokenParseException;
 import com.example.myapp.exception.InvalidTokenException;
-import com.example.myapp.jwt.JwtServiceImpl;
+import com.example.myapp.service.JwtService;
 import com.example.myapp.context.user.Session;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class JwtInterceptor extends HandlerInterceptorAdapter {
 
   @Autowired
-  JwtServiceImpl JWT;
+  JwtService JWT;
 
   @Autowired
   ObjectMapper objectMapper;

@@ -4,11 +4,11 @@ import com.example.myapp.ErrorCode;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.context.request.user.Signup;
 import com.example.myapp.exception.InvalidEmailException;
-import com.example.myapp.jwt.JwtServiceImpl;
+import com.example.myapp.service.JwtService;
 import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.JwtResponse;
-import com.example.myapp.util.Mailer;
+import com.example.myapp.service.MailerService;
 import com.example.myapp.util.RandomString;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,55 +31,14 @@ public class User {
   private static final Log LOG = LogFactory.getLog("com.example.myapp");
 
   @Autowired
-  private JwtServiceImpl jwtService;
+  private JwtService jwtService;
   @Autowired
   private UserMapper userMapper;
   @Autowired
-  private RandomString randomString;
-  @Autowired
-  private Mailer mailer;
+  private MailerService mailerService;
   @Autowired
   Environment env;
 
-  @RequestMapping(value = "/signup", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> Signup(@RequestBody Signup param) {
-    String id = param.getId();
-    String email = param.getEmail();
 
-    // Duplicate Check
-    if (userMapper.existUserEmail(email) != 0) {
-      throw new InvalidEmailException(ErrorCode.DUPLICATED_EMAIL);
-    }
-
-    String token = randomString.generate();
-
-    // Send verification mail, and insert to DB
-    mailer.sendVerfyMail(email, token);
-    userMapper.userSignup(id, email, token);
-
-    final BaseResponse response = new BaseResponse(200, "success");
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
-
-  @RequestMapping(value = "/signin", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> signIn(@RequestBody Signin param) {
-
-    String id = param.getId();
-    System.out.println(env.getProperty("aws.access"));
-    // Uid Valid Check
-    if (userMapper.existUserId(id) == 0) {
-      throw new InvalidEmailException(ErrorCode.INVALID_EMAIL);
-    }
-
-    // Gen Token
-    JSONObject Session = new JSONObject();
-    Session.put("id", id);
-
-    final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
-      jwtService.accessToken(Session.toString()),
-      jwtService.refereshToken(Session.toString()));
-
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
 
 }

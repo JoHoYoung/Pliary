@@ -1,9 +1,13 @@
 package com.example.myapp.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class JwtResponse extends BaseResponse {
 
   private String accessToken;
@@ -14,4 +18,5 @@ public class JwtResponse extends BaseResponse {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
   }
+
 }

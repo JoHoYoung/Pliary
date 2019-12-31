@@ -1,4 +1,4 @@
-package com.example.myapp.util;
+package com.example.myapp.service;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.Key;
@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.websocket.server.ServerEndpoint;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ import org.springframework.stereotype.Service;
  * 양방향 암호화 알고리즘인 AES256 암호화를 지원하는 클래스
  */
 @Service("Encoder")
-public class AES256Util {
+public class AES256UtilService {
 
     private String iv;
     private Key keySpec;
-    private static AES256Util instance;
+    private static AES256UtilService instance;
     /**
      * 16자리의 키값을 입력하여 객체를 생성한다.
      *
@@ -30,7 +29,7 @@ public class AES256Util {
      */
     final static String key = "grootsecrethihihiqweqdsasdadsweqwe";
 
-    public AES256Util(){
+    public AES256UtilService(){
         try{
             this.iv = key.substring(0, 16);
             byte[] keyBytes = new byte[16];

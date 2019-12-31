@@ -23,4 +23,5 @@ public interface CardAttachmentMapper extends AttachmentMapper {
   @Select("SELECT userId FROM CARDATTACHMENT WHERE id = #{id}")
   String getUserId(@Param("id")String id);
 
+
 }

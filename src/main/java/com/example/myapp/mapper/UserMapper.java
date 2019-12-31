@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserMapper {
 
     // 회원가입
-    @Insert("INSERT INTO USER(id, email, token) VALUES(#{id},#{email}, #{token})")
+    @Insert("INSERT INTO USER(id, email, token, state, createdAt, updatedAt) VALUES(#{id},#{email}, #{token}, 'C', now(), now())")
     int userSignup(@Param("id")String id,
                           @Param("email")String email,
                           @Param("token")String token);
@@ -52,7 +52,7 @@ public interface UserMapper {
     @Update("UPDATE USER SET token = #{token} WHERE email = #{email}")
     int tokenUpdate(@Param("email")String email, @Param("token")String token);
 
-    @Update("UPDATE USER SET state ='D' WHERE id = #{id} AND state ='C'")
+    @Update("UPDATE USER SET state ='D' WHERE id = #{id} AND state != 'D'")
     void deleteUser(@Param("id")String id);
     // 중복 체크
     @Select("SELECT email FROM member where email = #{email}")

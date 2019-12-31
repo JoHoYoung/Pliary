@@ -87,8 +87,6 @@ public class DiaryCrud {
 
     String userId = diaryMapper.getUserId(id);
     Util.DataAthorization(userId, session.getId());
-    System.out.println(userId);
-    System.out.println(session.getId());
     diaryMapper.deleteDiary(id);
     final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity(response, HttpStatus.OK);

@@ -1,17 +1,15 @@
-package com.example.myapp.jwt;
+package com.example.myapp.service;
 
 import com.example.myapp.exception.InvalidTokenException;
 import com.example.myapp.exception.TokenExpiredException;
 import com.example.myapp.ErrorCode;
-import com.example.myapp.util.JwtInterceptor;
 import io.jsonwebtoken.*;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Component
-public class JwtServiceImpl {
+@Service
+public class JwtService {
 
   private static final String SALT = "grootsecret";
 

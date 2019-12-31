@@ -7,8 +7,9 @@ import java.util.List;
 @Data
 public class DataListResponse<T> extends BaseResponse {
   List<T> data;
-  public DataListResponse(int statusCode, String statusMsg, List<T> data){
-    super(statusCode,statusMsg);
+
+  public DataListResponse(int statusCode, String statusMsg, List<T> data) {
+    super(statusCode, statusMsg);
     this.data = data;
   }
 }

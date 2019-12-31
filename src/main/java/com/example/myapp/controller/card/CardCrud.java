@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/card")
 public class CardCrud {
 
-
   @Autowired
   CardMapper cardMapper;
 

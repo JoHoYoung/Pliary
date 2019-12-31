@@ -10,8 +10,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.example.myapp")
-@PropertySource("application.properties")
 public class MyappApplication {
 
   public static void main(String[] args) {

@@ -7,7 +7,7 @@ import com.example.myapp.mapper.attachment.AttachmentMapper;
 import com.example.myapp.model.attachment.AttachmentModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
-import com.example.myapp.service.ImageHandler;
+import com.example.myapp.service.ImageService;
 import com.example.myapp.service.AwsS3Service;
 import com.example.myapp.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +30,12 @@ public class AttachmentCrud {
   AttachmentMapperFactory attachmentMapperFactory;
 
   @Autowired
-  ImageHandler imageHandler;
+  ImageService imageHandler;
 
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> createAttachment(@RequestAttribute("session")Session session
     ,@RequestParam("type")String type,@RequestParam("id")String id ,@RequestParam("userimage") List<MultipartFile> files)
      {
-       System.out.println(type);
-       System.out.println(files.size());
 
        ArrayList<String> urls = imageHandler.uploadFile(type, id, files);
     final BaseResponse response = new DataListResponse(200, "success",urls);
