@@ -97,7 +97,7 @@ public class UserCrud {
 
     final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
       jwtService.accessToken(Session.toString()),
-      jwtService.refereshToken(Session.toString()));
+      jwtService.refreshToken(Session.toString()));
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }

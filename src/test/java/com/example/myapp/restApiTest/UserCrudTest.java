@@ -1,7 +1,9 @@
-package com.example.myapp;
+package com.example.myapp.restApiTest;
 
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.context.request.user.Signup;
+import com.example.myapp.mapper.UserMapper;
+import com.example.myapp.model.UserModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.JwtResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +32,9 @@ public class UserCrudTest {
 
   @Autowired
   ObjectMapper objectMapper;
+
+  @Autowired
+  UserMapper userMapper;
 
   final String testId = "signup_test_uid";
   final String testEmail = "whghdud17@gmail.com";
@@ -99,5 +104,8 @@ public class UserCrudTest {
       .header("Authorization","Bearer " + accessToken))
       .andExpect(status().isOk());
 
+    userMapper.dropUserData(testId);
   }
+
+
 }

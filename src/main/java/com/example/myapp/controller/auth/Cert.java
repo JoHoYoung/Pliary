@@ -12,27 +12,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api")
 public class Cert {
 
-    @Autowired
-    UserMapper userMapper;
+  @Autowired
+  UserMapper userMapper;
 
-    // 회원가입 시, 이메일 인증 및 state 변경
-    @RequestMapping(value="/cert", method = RequestMethod.GET)
-    public String emailCertification(@RequestParam("token") String token){
-        int result = userMapper.emailCertification(token);
-        String fail = "http://localhost:8080/static/certFail.html";
-        String success = "http://localhost:8080/static/certCompletion.html";
-        if(result == 1) return "redirect:" + success;
-        else return "redirect:" + fail;
-    }
+  // 회원가입 시, 이메일 인증 및 state 변경
+  @RequestMapping(value = "/cert", method = RequestMethod.GET)
+  public String emailCertification(@RequestParam("token") String token) {
+    int result = userMapper.emailCertification(token);
+    String fail = "http://localhost:8080/static/certFail.html";
+    String success = "http://localhost:8080/static/certCompletion.html";
+    if (result == 1) return "redirect:" + success;
+    else return "redirect:" + fail;
+  }
 
-    // 비밀번호 변경
-    @RequestMapping(value="/cert2", method = RequestMethod.GET)
-    public String emailCertification2(@RequestParam("token") String token){
-        int result1 = userMapper.passwordUpdate(token);
-        int result2 = userMapper.emailCertification(token);
-        String fail = "http://localhost:8080/static/certFail.html";
-        String success = "http://localhost:8080/static/pwCertCompletion.html";
-        if(result1 + result2 == 2) return "redirect:" + success;
-        else return "redirect:" + fail;
-    }
+  // 비밀번호 변경
+  @RequestMapping(value = "/cert2", method = RequestMethod.GET)
+  public String emailCertification2(@RequestParam("token") String token) {
+    int result1 = userMapper.passwordUpdate(token);
+    int result2 = userMapper.emailCertification(token);
+    String fail = "http://localhost:8080/static/certFail.html";
+    String success = "http://localhost:8080/static/pwCertCompletion.html";
+    if (result1 + result2 == 2) return "redirect:" + success;
+    else return "redirect:" + fail;
+  }
 }

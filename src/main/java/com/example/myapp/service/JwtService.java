@@ -4,6 +4,7 @@ import com.example.myapp.exception.InvalidTokenException;
 import com.example.myapp.exception.TokenExpiredException;
 import com.example.myapp.ErrorCode;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -11,7 +12,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-  private static final String SALT = "grootsecret";
+  @Value("groot.jwt.secret")
+  private String SALT;
 
   public String accessToken(String subject) {
     Date Now = new Date();
@@ -24,9 +26,9 @@ public class JwtService {
     return jwt;
   }
 
-  public String refereshToken(String subject) {
+  public String refreshToken(String subject) {
     Date Now = new Date();
-    Date expireTime = new Date(Now.getTime() + 1000 * 60 * 60 * 24 * 365 * 5);
+    Date expireTime = new Date(Now.getTime() + 1000 * 60 * 60 * 24 * 365);
     String jwt = Jwts.builder()
       .setExpiration(expireTime)
       .setSubject(subject)
@@ -39,8 +41,10 @@ public class JwtService {
     try {
       Jwts.parser().setSigningKey(SALT).parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
+      System.out.println(decode(token));
       throw new TokenExpiredException(ErrorCode.JWT_TOKEN_EXPIRED);
     } catch (JwtException e) {
+      System.out.println(e);
       throw new InvalidTokenException(ErrorCode.INVALID_TOKEN);
     }
   }
@@ -50,4 +54,5 @@ public class JwtService {
     Claims Claim = Jwts.parser().setSigningKey(SALT).parseClaimsJws(token).getBody();
     return Claim.getSubject();
   }
+
 }

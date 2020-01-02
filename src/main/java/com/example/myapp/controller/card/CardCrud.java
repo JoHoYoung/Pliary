@@ -42,6 +42,8 @@ public class CardCrud {
     if (cardMapper.countCard(session.getId()) > 5) {
       throw new ExceedMaximumCardNumberException(ErrorCode.EXCEED_MAX_CARD_NUMBER);
     }
+    System.out.println("INNER ");
+    System.out.println(cardMapper.countCard(session.getId()));
     // 카드 생성
     String id = UUID.randomUUID().toString();
     String name = param.getName();

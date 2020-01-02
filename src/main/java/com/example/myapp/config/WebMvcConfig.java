@@ -12,7 +12,7 @@ import java.util.Arrays;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-  private String[] exclude = new String[]{"/user/signup", "/user/signin", "/api2/test", "/static/*", "/error"};
+  private String[] exclude = new String[]{"/user/signup", "/user/signin", "/api2/test", "/static/*", "/error", "/token/refresh"};
 
   @Autowired
   JwtInterceptor jwtInterceptor;
