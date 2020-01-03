@@ -1,6 +1,7 @@
 package com.example.myapp.mapper;
 
 import com.example.myapp.model.CardModel;
+import lombok.Data;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -36,4 +37,6 @@ public interface CardMapper {
   @Update("UPDATE CARD SET name=#{name}, nickName=#{nickName}, initPeriod=#{initPeriod}, nowPeriod=#{nowPeriod}, updatedAt = now() WHERE id=#{id} AND state ='C'")
   void updateCard(@Param("id") String id, @Param("name") String name, @Param("nickName") String nickName, @Param("initPeriod") int init_period, @Param("nowPeriod") int nowPeriod);
 
+  @Delete("DELETE FROM CARD WHERE userId = #{userId}")
+  void dropCard(@Param("userId")String userId);
 }

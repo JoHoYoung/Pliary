@@ -3,6 +3,7 @@ package com.example.myapp.restApiTest;
 
 import com.example.myapp.context.request.card.CreateCard;
 import com.example.myapp.context.request.user.Signin;
+import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.model.CardModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
@@ -18,6 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+
+import java.util.LinkedHashMap;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,6 +38,9 @@ public class CardCrudTest {
 
   @Autowired
   ObjectMapper objectMapper;
+
+  @Autowired
+  CardMapper cardMapper;
 
   private String accessToken;
 
@@ -91,14 +97,11 @@ public class CardCrudTest {
     DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    //response.getData().get(0);
-    System.out.println(response.getData().get(0));
-    //CardModel cardModel = objectMapper.readValue((response.getData().get(0).to), CardModel.class);
-//    String cardId = cardModel.getId();
-//    mockMvc.perform(get("/card/read")
-//      .header("Authorization", "Bearer " + accessToken)
-//      .param("id", cardId))
-//      .andExpect(status().isOk());
+    String cardId = ((LinkedHashMap)(response.getData().get(0))).get("id").toString();
+    mockMvc.perform(get("/card/read")
+      .header("Authorization", "Bearer " + accessToken)
+      .param("id", cardId))
+      .andExpect(status().isOk());
   }
 
   @Test
@@ -110,10 +113,10 @@ public class CardCrudTest {
         .andExpect(status().isOk())
         .andReturn();
 
-    DataListResponse<CardModel> response = objectMapper.readValue(result.getResponse().getContentAsString()
+    DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    String cardId = response.getData().get(0).getId();
+    String cardId = ((LinkedHashMap)(response.getData().get(0))).get("id").toString();
     CreateCard updateCard = new CreateCard();
 
     updateCard.setId(cardId);
@@ -141,16 +144,17 @@ public class CardCrudTest {
         .andExpect(status().isOk())
         .andReturn();
 
-    DataListResponse<CardModel> response = objectMapper.readValue(result.getResponse().getContentAsString()
+    DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    String cardId = response.getData().get(0).getId();
+    String cardId = ((LinkedHashMap)(response.getData().get(0))).get("id").toString();
 
     mockMvc.perform(get("/card/delete")
       .header("Authorization", "Bearer " + accessToken)
       .param("id", cardId))
       .andExpect(status().isOk());
 
+//    cardMapper.dropCard(testId);
   }
 
 }
