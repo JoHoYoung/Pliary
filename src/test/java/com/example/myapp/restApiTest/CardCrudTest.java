@@ -2,8 +2,10 @@ package com.example.myapp.restApiTest;
 
 
 import com.example.myapp.context.request.card.CreateCard;
+import com.example.myapp.context.request.card.UpdateCard;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.mapper.CardMapper;
+import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.JwtResponse;
@@ -40,6 +42,8 @@ public class CardCrudTest {
 
   @Autowired
   CardMapper cardMapper;
+  @Autowired
+  UserMapper userMapper;
 
   private String accessToken;
 
@@ -57,9 +61,15 @@ public class CardCrudTest {
       .getContentAsString(), JwtResponse.class);
 
     this.accessToken = ((JwtResponse) response).getAccessToken();
+
+    // Clear Data
+    int userId = userMapper.getUserId(testOauthKey);
+    cardMapper.dropCard(userId);
+
+    //MakeDate
+    this.createCardTest();
   }
 
-  @Test
   public void createCardTest() throws Exception {
     CreateCard createCard = new CreateCard();
 
@@ -96,7 +106,7 @@ public class CardCrudTest {
     DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    String cardId = ((LinkedHashMap)(response.getData().get(0))).get("id").toString();
+    String cardId = ((LinkedHashMap) (response.getData().get(0))).get("id").toString();
     mockMvc.perform(get("/card/read")
       .header("Authorization", "Bearer " + accessToken)
       .param("id", cardId))
@@ -115,9 +125,10 @@ public class CardCrudTest {
     DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    int cardId = (int)((LinkedHashMap)(response.getData().get(0))).get("id");
-    CreateCard updateCard = new CreateCard();
+    int cardId = (int) ((LinkedHashMap) (response.getData().get(0))).get("id");
+    UpdateCard updateCard = new UpdateCard();
 
+    updateCard.setId(cardId);
     updateCard.setTypeId(3);
     updateCard.setWaterPeriod(10);
     updateCard.setEngName("Kind of Plant");
@@ -148,14 +159,15 @@ public class CardCrudTest {
     DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    String cardId = ((LinkedHashMap)(response.getData().get(0))).get("id").toString();
+    String cardId = ((LinkedHashMap) (response.getData().get(0))).get("id").toString();
 
+    System.out.println(cardId);
     mockMvc.perform(get("/card/delete")
       .header("Authorization", "Bearer " + accessToken)
       .param("id", cardId))
       .andExpect(status().isOk());
 
-//    cardMapper.dropCard(testOauthKey);
+    //cardMapper.dropCard(testOauthKey);
   }
 
 }

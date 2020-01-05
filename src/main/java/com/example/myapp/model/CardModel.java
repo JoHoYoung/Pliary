@@ -14,6 +14,7 @@ public class CardModel {
   private int id;
   private int userId;
   private int typeId;
+
   private String name;
   private String nickName;
   private String engName;

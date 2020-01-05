@@ -1,13 +1,14 @@
 package com.example.myapp.restApiTest;
 
-import com.example.myapp.context.request.token.Refresh;
 import com.example.myapp.context.request.user.Signin;
+import com.example.myapp.mapper.CardMapper;
+import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.JwtResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,20 +23,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-public class TokenTest {
-  final String testId = "API_TEST_OAUTH_KEY";
+public class DiaryCrudTest {
 
+  final private String testOauthKey = "API_TEST_OAUTH_KEY";
   @Autowired
   MockMvc mockMvc;
 
   @Autowired
   ObjectMapper objectMapper;
 
-  @Test
-  public void TokenRefreshTest() throws Exception{
+  @Autowired
+  static CardMapper cardMapper;
+  static int testUserId = 10;
 
+  @Autowired
+  UserMapper userMapper;
+
+  private String accessToken;
+
+  @BeforeClass
+  public static void makeCard(){
+    cardMapper.createCard(testUserId,1,"ForDiary","ForDiary",
+      "ForDiary","ForDiary",10,10);
+  }
+
+  @Before
+  public void getAccessToken() throws Exception {
     final Signin signin = new Signin();
-    signin.setOauthKey(testId);
+    signin.setOauthKey(testOauthKey);
 
     MvcResult mvcResult = mockMvc.perform(post("/user/signin")
       .contentType(APPLICATION_JSON_UTF8)
@@ -43,17 +58,10 @@ public class TokenTest {
       .andExpect(status().isOk()).andReturn();
 
     final BaseResponse response = objectMapper.readValue(mvcResult.getResponse()
-      .getContentAsString(),JwtResponse.class);
+      .getContentAsString(), JwtResponse.class);
 
-    final String accessToken = ((JwtResponse) response).getAccessToken();
-    final String refreshToken = ((JwtResponse) response).getRefreshToken();
+    this.accessToken = ((JwtResponse) response).getAccessToken();
 
-    final Refresh refresh = new Refresh(accessToken, refreshToken);
-
-    mockMvc.perform(post("/token/refresh")
-      .contentType(APPLICATION_JSON_UTF8)
-      .content(objectMapper.writeValueAsString(refresh)))
-      .andExpect(status().isOk());
   }
 
 }

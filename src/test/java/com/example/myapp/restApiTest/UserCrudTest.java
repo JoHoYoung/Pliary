@@ -3,7 +3,6 @@ package com.example.myapp.restApiTest;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.context.request.user.Signup;
 import com.example.myapp.mapper.UserMapper;
-import com.example.myapp.model.UserModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.JwtResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -36,13 +34,13 @@ public class UserCrudTest {
   @Autowired
   UserMapper userMapper;
 
-  final String testOuathKey = "SIGNUP_TEST_OAUTH_KEY";
+  final String testOauthKey = "SIGNUP_TEST_OAUTH_KEY";
   final String testEmail = "whghdud17@gmail.com";
 
   @Test
   public void SingUpTest() throws Exception{
     final Signup signup = new Signup();
-    signup.setOauthKey(testOuathKey);
+    signup.setOauthKey(testOauthKey);
     signup.setEmail(testEmail);
 
     mockMvc.perform(post("/user/signup")
@@ -55,7 +53,7 @@ public class UserCrudTest {
   public void SignInTest() throws Exception{
     final Signin signin = new Signin();
 
-    signin.setOauthKey(testOuathKey);
+    signin.setOauthKey(testOauthKey);
 
     mockMvc.perform(post("/user/signin")
       .contentType(APPLICATION_JSON_UTF8)
@@ -67,7 +65,7 @@ public class UserCrudTest {
   public void InfoTest() throws Exception{
 
     final Signin signin = new Signin();
-    signin.setId(testId);
+    signin.setOauthKey(testOauthKey);
 
     MvcResult mvcResult = mockMvc.perform(post("/user/signin")
       .contentType(APPLICATION_JSON_UTF8)
@@ -89,7 +87,7 @@ public class UserCrudTest {
   public void WithDrawTest() throws Exception{
 
     final Signin signin = new Signin();
-    signin.setId(testId);
+    signin.setOauthKey(testOauthKey);
 
     MvcResult mvcResult = mockMvc.perform(post("/user/signin")
       .contentType(APPLICATION_JSON_UTF8)
@@ -105,7 +103,7 @@ public class UserCrudTest {
       .header("Authorization","Bearer " + accessToken))
       .andExpect(status().isOk());
 
-    userMapper.dropUserData(testId);
+    userMapper.dropUserData(testOauthKey);
   }
 
 

@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserMapper {
 
   // 회원가입
-  @Insert("INSERT INTO USER(email, token, oauthKey, state, createdAt, updatedAt) VALUES(#{email}, #{token}, 'T', now(), now())")
+  @Insert("INSERT INTO USER(email, token, oauthKey, state, createdAt, updatedAt) VALUES(#{email}, #{token}, #{oauthKey},'T', now(), now())")
   int userSignup(@Param("email") String email,
                  @Param("token") String token, @Param("oauthKey")String oauthKey);
 
@@ -56,8 +56,8 @@ public interface UserMapper {
   @Update("UPDATE USER SET state ='D' WHERE id = #{id} AND state != 'D'")
   void deleteUser(@Param("id")int id);
 
-  @Delete("DELETE FROM USER where id = #{id}")
-  void dropUserData(@Param("id")int id);
+  @Delete("DELETE FROM USER where oauthKey = #{oauthKey}")
+  void dropUserData(@Param("oauthKey")String oauthKey);
 
   // 중복 체크
   @Select("SELECT email FROM member where email = #{email}")

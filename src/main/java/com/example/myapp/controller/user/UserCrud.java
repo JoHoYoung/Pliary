@@ -145,7 +145,6 @@ public class UserCrud {
       diaryMapper.deleteDiaryFromCardId(cardModel.getId());
       cardMapper.deleteCard(cardModel.getId());
     }
-    System.out.println(userId);
     userMapper.deleteUser(userId);
 
     final BaseResponse response = new BaseResponse(200, "success");
