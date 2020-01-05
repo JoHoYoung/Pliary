@@ -5,15 +5,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class FeedModel {
+public class TypeModel {
 
   private int id;
-  private int cardId;
-  private int overDegree;
-
-  private String state;
-
-  private Date feedAt;
+  private String krName;
+  private String engName;
   private Date createdAt;
   private Date updatedAt;
+
 }

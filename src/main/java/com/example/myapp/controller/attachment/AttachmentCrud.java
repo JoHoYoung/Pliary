@@ -32,37 +32,46 @@ public class AttachmentCrud {
   @Autowired
   ImageService imageHandler;
 
+  // 사진파일 생서ㅓ
   @RequestMapping(value = "/create", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> createAttachment(@RequestAttribute("session")Session session
-    ,@RequestParam("type")String type,@RequestParam("id")String id ,@RequestParam("userimage") List<MultipartFile> files)
-     {
+  public ResponseEntity<BaseResponse> createAttachment(@RequestAttribute("session") Session session
+    , @RequestParam("type") String type, @RequestParam("id")int id, @RequestParam("userimage") List<MultipartFile> files) {
 
-       ArrayList<String> urls = imageHandler.uploadFile(type, id, files);
-    final BaseResponse response = new DataListResponse(200, "success",urls);
+    // 자신의 데이터에 접근하는 지
+    Util.numberDataAthorization(attachmentMapperFactory.getAttachmentMapper(type).getUserId(id), session.getId());
+
+    // S3에 업로드 후, url 받아 옴
+    ArrayList<String> urls = imageHandler.uploadFile(type, id, files);
+
+    final BaseResponse response = new DataListResponse(200, "success", urls);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/read", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> readAttachment(@RequestAttribute("session")Session session,@RequestBody Attachment param) {
+  public ResponseEntity<BaseResponse> readAttachment(@RequestAttribute("session") Session session, @RequestBody Attachment param) {
+
+    // 자신의 데이터에 접근하는 지
+    Util.numberDataAthorization(attachmentMapperFactory.getAttachmentMapper(param.getType()).getUserId(param.getId()), session.getId());
+
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
     List<AttachmentModel> images = attachmentMapper.readAttachment(param.getId());
 
-    String userId = attachmentMapper.getUserId(param.getId());
+    int userId = attachmentMapper.getUserId(param.getId());
 
-    Util.DataAthorization(userId,session.getId());
+    Util.numberDataAthorization(userId, session.getId());
 
     final BaseResponse response = new DataListResponse<>(HttpStatus.OK.value(), "success", images);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> deleteAttachment(@RequestAttribute("session")Session session, @RequestBody Attachment param) {
+  public ResponseEntity<BaseResponse> deleteAttachment(@RequestAttribute("session") Session session, @RequestBody Attachment param) {
 
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(param.getType());
     attachmentMapper.deleteAttachment(param.getId());
 
-    String userId = attachmentMapper.getUserId(param.getId());
-    Util.DataAthorization(userId,session.getId());
+    int userId = attachmentMapper.getUserId(param.getId());
+    Util.numberDataAthorization(userId, session.getId());
     imageHandler.deleteFile(param.getFilename());
 
     final BaseResponse response = new BaseResponse(HttpStatus.OK.value(), "success");

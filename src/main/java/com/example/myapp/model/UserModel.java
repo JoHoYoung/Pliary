@@ -10,7 +10,8 @@ import java.util.List;
 @Data
 @Alias("USER")
 public class UserModel {
-  private String id;
+
+  private int id;
   private String email;
   private String state;
   private String name;
@@ -22,4 +23,5 @@ public class UserModel {
   private Date createdAt;
   private Date updatedAt;
   private List<Attachment> images;
+
 }

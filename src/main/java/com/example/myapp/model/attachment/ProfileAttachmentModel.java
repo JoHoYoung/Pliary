@@ -10,11 +10,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfileAttachmentModel extends AttachmentModel {
-  private String id;
-  private String userId;
+
+  private int id;
+  private int userId;
   private String url;
   private String state;
   private String filename;
   private Date createdAt;
   private Date updatedAt;
+
 }

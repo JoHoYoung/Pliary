@@ -8,10 +8,10 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateDiary {
     @JsonProperty("id")
-    private String id;
+    private int id;
 
     @JsonProperty("cardId")
-    private String cardId;
+    private int cardId;
 
     @JsonProperty("title")
     private String title;

@@ -15,7 +15,7 @@ public class Signup {
   @JsonProperty("email")
   private String email;
 
-  @JsonProperty("id")
-  private String id;
+  @JsonProperty("oauthKey")
+  private String oauthKey;
 
 }

@@ -2,7 +2,6 @@ package com.example.myapp.controller.diary;
 
 import com.example.myapp.context.request.diary.CreateDiary;
 import com.example.myapp.context.user.Session;
-import com.example.myapp.controller.card.CardCrud;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.model.DiaryModel;
@@ -16,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -34,24 +31,21 @@ public class DiaryCrud {
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> createDiary(@RequestAttribute("session") Session session, @RequestBody CreateDiary param) {
 
-    String id = UUID.randomUUID().toString();
-    String cardId = param.getCardId();
-    String title = param.getTitle();
-    String body = param.getBody();
+    int userId = cardMapper.getUserId(param.getCardId());
+    Util.numberDataAthorization(userId, session.getId());
 
-    diaryMapper.createDiary(id, cardId, title, body);
+    diaryMapper.createDiary(param.getCardId(), param.getTitle(), param.getBody());
 
     JSONObject data = new JSONObject();
-    data.put("id", id);
-    final BaseResponse response = new DataResponse<>(200, "success", data);
+    final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public ResponseEntity updateDiary(@RequestAttribute("session") Session session, @RequestBody CreateDiary param) {
-    String userId = cardMapper.getUserId(param.getCardId());
+    int userId = cardMapper.getUserId(param.getCardId());
 
-    Util.DataAthorization(userId, session.getId());
+    Util.numberDataAthorization(userId, session.getId());
 
     diaryMapper.updateDiary(param.getId(), param.getTitle(), param.getTitle());
     final BaseResponse response = new BaseResponse(200, "success");
@@ -59,10 +53,10 @@ public class DiaryCrud {
   }
 
   @RequestMapping(value = "/read", method = RequestMethod.GET)
-  public ResponseEntity readDiary(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
+  public ResponseEntity readDiary(@RequestAttribute("session") Session session, @RequestParam("id")int id) {
 
-    String userId = diaryMapper.getUserId(id);
-    Util.DataAthorization(userId, session.getId());
+    int userId = diaryMapper.getUserId(id);
+    Util.numberDataAthorization(userId, session.getId());
 
     DiaryModel diary = diaryMapper.readDiary(id);
     final BaseResponse response = new DataResponse<>(200, "success", diary);
@@ -71,10 +65,10 @@ public class DiaryCrud {
 
   @RequestMapping(value = "/readAll", method = RequestMethod.GET)
   // id = cardId
-  public ResponseEntity readAllDiary(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
+  public ResponseEntity readAllDiary(@RequestAttribute("session") Session session, @RequestParam("id") int id) {
 
-    String userId = cardMapper.getUserId(id);
-    Util.DataAthorization(userId, session.getId());
+    int userId = cardMapper.getUserId(id);
+    Util.numberDataAthorization(userId, session.getId());
 
     ArrayList<DiaryModel> diaries = diaryMapper.readAllDiary(id);
 
@@ -83,10 +77,10 @@ public class DiaryCrud {
 
   }
   @RequestMapping(value = "/delete", method = RequestMethod.GET)
-  public ResponseEntity deleteDiary(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
+  public ResponseEntity deleteDiary(@RequestAttribute("session") Session session, @RequestParam("id") int id) {
 
-    String userId = diaryMapper.getUserId(id);
-    Util.DataAthorization(userId, session.getId());
+    int userId = diaryMapper.getUserId(id);
+    Util.numberDataAthorization(userId, session.getId());
     diaryMapper.deleteDiary(id);
     final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity(response, HttpStatus.OK);

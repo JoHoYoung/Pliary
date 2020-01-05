@@ -10,11 +10,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiaryAttachmentModel extends AttachmentModel {
-    private String id;
-    private String diaryId;
-    private String url;
-    private String state;
-    private String filename;
-    private Date createdAt;
-    private Date updatedAt;
+
+  private int id;
+  private int diaryId;
+  private String url;
+  private String state;
+  private String filename;
+  private Date createdAt;
+  private Date updatedAt;
+
 }

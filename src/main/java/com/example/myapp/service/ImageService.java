@@ -22,7 +22,7 @@ public class ImageService {
 
   @Autowired
   AttachmentMapperFactory attachmentMapperFactory;
-  public ArrayList<String> uploadFile(String type, String upperId, List<MultipartFile> files) {
+  public ArrayList<String> uploadFile(String type, int upperId, List<MultipartFile> files) {
     ArrayList<String> images = new ArrayList<>();
     AttachmentMapper attachmentMapper = attachmentMapperFactory.getAttachmentMapper(type);
     try{
@@ -32,7 +32,7 @@ public class ImageService {
         String filename = upperId + id.substring(0, 5);
         String url = awsS3Service.fileUpload("dailyissue", filename, byteArr);
         images.add(url);
-        attachmentMapper.createAttachment(id, upperId, url, filename);
+        attachmentMapper.createAttachment(upperId, url, filename);
       }
       return images;
     }catch (IOException e){

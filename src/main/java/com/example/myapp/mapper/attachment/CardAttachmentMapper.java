@@ -10,18 +10,18 @@ import java.util.List;
 @Repository
 public interface CardAttachmentMapper extends AttachmentMapper {
 
-  @Insert("INSERT INTO CARDATTACHMENT(id, cardId, url, filename, state, createdAt, updatedAt) VALUES(#{id}, #{cardId}, #{url}, #{filename}, 'C', now(),now())")
-  void createAttachment(@Param("id") String id, @Param("cardId") String cardId, @Param("url") String url, @Param("filename") String filename);
+  @Insert("INSERT INTO CARDATTACHMENT(cardId, url, filename, state, createdAt, updatedAt) VALUES(#{cardId}, #{url}, #{filename}, 'C', now(),now())")
+  void createAttachment(@Param("cardId") int cardId, @Param("url") String url, @Param("filename") String filename);
 
   @Update("UPDATE CARDATTACHMENT SET state = 'D' WHERE id = #{id}")
-  void deleteAttachment(@Param("id") String id);
+  void deleteAttachment(@Param("id") int id);
 
   @Select("SELECT * FROM CARDATTACHMENT WHERE cardId = #{cardId} AND state='C'")
   @Results({@Result(property = "cardId", column = "cardId")})
-  List<AttachmentModel> readAttachment(@Param("cardId") String cardId);
+  List<AttachmentModel> readAttachment(@Param("cardId")int cardId);
 
   @Select("SELECT userId FROM CARDATTACHMENT WHERE id = #{id}")
-  String getUserId(@Param("id")String id);
+  int getUserId(@Param("id")int id);
 
 
 }

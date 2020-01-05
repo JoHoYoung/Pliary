@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.example.myapp.ErrorCode;
 import com.example.myapp.context.request.card.CreateCard;
+import com.example.myapp.context.request.card.UpdateCard;
 import com.example.myapp.context.user.Session;
 import com.example.myapp.exception.ExceedMaximumCardNumberException;
 import com.example.myapp.mapper.CardMapper;
@@ -42,36 +43,25 @@ public class CardCrud {
     if (cardMapper.countCard(session.getId()) > 5) {
       throw new ExceedMaximumCardNumberException(ErrorCode.EXCEED_MAX_CARD_NUMBER);
     }
-    System.out.println("INNER ");
-    System.out.println(cardMapper.countCard(session.getId()));
-    // 카드 생성
-    String id = UUID.randomUUID().toString();
-    String name = param.getName();
-    String nickName = param.getNickname();
 
-    int initPeriod = param.getInitPeriod();
-    cardMapper.createCard(id, session.getId(), name, nickName, initPeriod);
+    cardMapper.createCard(session.getId(), param.getTypeId(), param.getName(), param.getNickname(),
+      param.getEngName(), param.getKrName(), param.getWaterPeriod(), param.getRemainPeriod());
 
-    JSONObject data = new JSONObject();
-    data.put("id", id);
-    final BaseResponse response = new DataResponse<>(200, "success", data);
+    final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> updateCard(@RequestAttribute("session") Session session, @RequestBody CreateCard param) {
+  public ResponseEntity<BaseResponse> updateCard(@RequestAttribute("session") Session session, @RequestBody UpdateCard param) {
 
-    String id = param.getId();
-    String name = param.getName();
-    String nickName = param.getNickname();
-    int initPeriod = param.getInitPeriod();
+    int userId = cardMapper.getUserId(param.getId());
 
-    String userId = cardMapper.getUserId(id);
-
-    Util.DataAthorization(userId,session.getId());
+    Util.numberDataAthorization(userId,session.getId());
 
     // update
-    cardMapper.updateCard(id, name, nickName, initPeriod, initPeriod);
+    cardMapper.updateCard(param.getId(), param.getName(), param.getNickname()
+      , param.getWaterPeriod(), param.getRemainPeriod());
+
     final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
@@ -84,10 +74,10 @@ public class CardCrud {
   }
 
   @RequestMapping(value = "/read", method = RequestMethod.GET)
-  public ResponseEntity<BaseResponse> readCard(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
-    String userId = cardMapper.getUserId(id);
+  public ResponseEntity<BaseResponse> readCard(@RequestAttribute("session") Session session, @RequestParam("id")int id) {
+    int userId = cardMapper.getUserId(id);
 
-    Util.DataAthorization(userId,session.getId());
+    Util.numberDataAthorization(userId,session.getId());
 
     CardModel Card = cardMapper.readCard(id);
     final BaseResponse response = new DataResponse<>(200, "success", Card);
@@ -95,10 +85,10 @@ public class CardCrud {
   }
 
   @RequestMapping(value = "/delete", method = RequestMethod.GET)
-  public ResponseEntity<BaseResponse> deleteCard(@RequestAttribute("session") Session session, @RequestParam("id") String id) {
-    String userId = cardMapper.getUserId(id);
+  public ResponseEntity<BaseResponse> deleteCard(@RequestAttribute("session") Session session, @RequestParam("id")int id) {
+    int userId = cardMapper.getUserId(id);
 
-    Util.DataAthorization(userId,session.getId());
+    Util.numberDataAthorization(userId,session.getId());
 
     cardMapper.deleteCard(id);
     final BaseResponse response = new BaseResponse(200, "success");

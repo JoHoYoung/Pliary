@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface AttachmentMapper {
 
-  void createAttachment(String id, String upperId, String url, String filename);
-  void deleteAttachment(String id);
-  List<AttachmentModel> readAttachment(String id);
-  String getUserId(String id);
+  void createAttachment(int upperId, String url, String filename);
+  void deleteAttachment(int id);
+  List<AttachmentModel> readAttachment(int id);
+  int getUserId(int id);
 }

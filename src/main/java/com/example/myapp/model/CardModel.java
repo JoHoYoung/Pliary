@@ -10,14 +10,21 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CardModel {
-  private String id;
-  private String userId;
+
+  private int id;
+  private int userId;
+  private int typeId;
   private String name;
-  private String nickname;
+  private String nickName;
+  private String engName;
+  private String krName;
   private String state;
-  int initPeriod;
-  int nowPeriod;
+
+  private int waterPeriod;
+  private int remainPeriod;
+
   private Date createdAt;
   private Date updatedAt;
+
   List<CardAttachmentModel> images;
 }

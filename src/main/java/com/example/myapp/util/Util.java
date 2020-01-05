@@ -6,9 +6,9 @@ import com.example.myapp.exception.UnauthorizedAccessException;
 
 public class Util {
 
-  public static void DataAthorization(String userId, String sessionId){
-    if(!(userId.equals(sessionId))){
-      if (userId == null) {
+  public static void numberDataAthorization(int userId, int sessionId){
+    if(!(userId == sessionId)){
+      if (userId == 0) {
         throw new NotFoundException(ErrorCode.DATA_NOT_FOUND);
       }
       throw new UnauthorizedAccessException(ErrorCode.DATA_ACCESS_UNAUTHORIZED);

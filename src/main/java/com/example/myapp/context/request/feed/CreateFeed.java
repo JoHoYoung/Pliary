@@ -9,10 +9,10 @@ import lombok.Data;
 public class CreateFeed {
 
     @JsonProperty("id")
-    private String id;
+    private int id;
 
     @JsonProperty("cardId")
-    private String cardId;
+    private int cardId;
 
     @JsonProperty("overDegree")
     private int overDegree;

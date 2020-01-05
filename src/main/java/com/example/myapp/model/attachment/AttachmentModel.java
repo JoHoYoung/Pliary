@@ -12,13 +12,15 @@ import java.util.Date;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttachmentModel {
-    private String id;
-    private String diaryId;
-    private String cardId;
-    private String userId;
-    private String url;
-    private String state;
-    private String filename;
-    private Date createdAt;
-    private Date updatedAt;
+
+  private int id;
+  private int diaryId;
+  private int cardId;
+  private int userId;
+  private String url;
+  private String state;
+  private String filename;
+  private Date createdAt;
+  private Date updatedAt;
+
 }

@@ -13,23 +13,24 @@ import java.util.List;
 public interface UserMapper {
 
   // 회원가입
-  @Insert("INSERT INTO USER(id, email, token, state, createdAt, updatedAt) VALUES(#{id},#{email}, #{token}, 'C', now(), now())")
-  int userSignup(@Param("id") String id,
-                 @Param("email") String email,
-                 @Param("token") String token);
+  @Insert("INSERT INTO USER(email, token, oauthKey, state, createdAt, updatedAt) VALUES(#{email}, #{token}, 'T', now(), now())")
+  int userSignup(@Param("email") String email,
+                 @Param("token") String token, @Param("oauthKey")String oauthKey);
 
   // 로그인
   @Select("SELECT * FROM USER where id = #{id}")
   @Results({@Result(property = "images", javaType = List.class, column = "id",
     many = @Many(select = "com.example.myapp.mapper.attachment.ProfileAttachmentMapper.readAttachment")), @Result(property = "id", column = "id")})
-  UserModel getUser(@Param("id") String id);
+  UserModel getUser(@Param("id")int id);
 
+  @Select("SELECT id FROM USER where oauthKey=#{oauthKey}")
+  int getUserId(@Param("oauthKey")String oauthKey);
 
   @Select("SELECT EXISTS(SELECT * FROM USER WHERE email = #{email})")
   int existUserEmail(@Param("email") String email);
 
-  @Select("SELECT EXISTS(SELECT * FROM USER WHERE id = #{id})")
-  int existUserId(@Param("id") String id);
+  @Select("SELECT EXISTS(SELECT * FROM USER WHERE oauthKey = #{oauthKey})")
+  int existUserOauthKey(@Param("oauthKey")String oauthKey);
 
   // 이메일 인증 완료 state = 'T' 변경
   @Update("UPDATE USER SET state = 'T' WHERE token = #{token}")
@@ -53,12 +54,12 @@ public interface UserMapper {
   int tokenUpdate(@Param("email") String email, @Param("token") String token);
 
   @Update("UPDATE USER SET state ='D' WHERE id = #{id} AND state != 'D'")
-  void deleteUser(@Param("id") String id);
+  void deleteUser(@Param("id")int id);
 
   @Delete("DELETE FROM USER where id = #{id}")
-  void dropUserData(@Param("id")String id);
+  void dropUserData(@Param("id")int id);
 
   // 중복 체크
   @Select("SELECT email FROM member where email = #{email}")
-  String emailDuplicate(UserModel user);
+  String emailDuplicate(@Param("email")String email);
 }

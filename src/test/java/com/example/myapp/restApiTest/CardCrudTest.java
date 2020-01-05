@@ -4,7 +4,6 @@ package com.example.myapp.restApiTest;
 import com.example.myapp.context.request.card.CreateCard;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.mapper.CardMapper;
-import com.example.myapp.model.CardModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.JwtResponse;
@@ -32,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class CardCrudTest {
 
-  final private String testId = "API_TEST_UID";
+  final private String testOauthKey = "API_TEST_OAUTH_KEY";
   @Autowired
   MockMvc mockMvc;
 
@@ -47,7 +46,7 @@ public class CardCrudTest {
   @Before
   public void getAccessToken() throws Exception {
     final Signin signin = new Signin();
-    signin.setId(testId);
+    signin.setOauthKey(testOauthKey);
 
     MvcResult mvcResult = mockMvc.perform(post("/user/signin")
       .contentType(APPLICATION_JSON_UTF8)
@@ -64,7 +63,7 @@ public class CardCrudTest {
   public void createCardTest() throws Exception {
     CreateCard createCard = new CreateCard();
 
-    createCard.setInitPeriod(5);
+    createCard.setWaterPeriod(5);
     createCard.setName("TEST Plant");
     createCard.setNickname("Sponge bob");
 
@@ -116,11 +115,13 @@ public class CardCrudTest {
     DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    String cardId = ((LinkedHashMap)(response.getData().get(0))).get("id").toString();
+    int cardId = (int)((LinkedHashMap)(response.getData().get(0))).get("id");
     CreateCard updateCard = new CreateCard();
 
-    updateCard.setId(cardId);
-    updateCard.setInitPeriod(10);
+    updateCard.setTypeId(3);
+    updateCard.setWaterPeriod(10);
+    updateCard.setEngName("Kind of Plant");
+    updateCard.setKrName("임의의 식물");
     updateCard.setName("Update Card");
     updateCard.setNickname("Sponge bob");
 
@@ -132,7 +133,7 @@ public class CardCrudTest {
 
     mockMvc.perform(get("/card/read")
       .header("Authorization", "Bearer " + accessToken)
-      .param("id", cardId))
+      .param("id", Integer.toString(cardId)))
       .andExpect(status().isOk());
   }
 
@@ -154,7 +155,7 @@ public class CardCrudTest {
       .param("id", cardId))
       .andExpect(status().isOk());
 
-//    cardMapper.dropCard(testId);
+//    cardMapper.dropCard(testOauthKey);
   }
 
 }

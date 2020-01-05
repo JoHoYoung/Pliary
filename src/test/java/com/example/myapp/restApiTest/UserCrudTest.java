@@ -36,13 +36,13 @@ public class UserCrudTest {
   @Autowired
   UserMapper userMapper;
 
-  final String testId = "signup_test_uid";
+  final String testOuathKey = "SIGNUP_TEST_OAUTH_KEY";
   final String testEmail = "whghdud17@gmail.com";
 
   @Test
   public void SingUpTest() throws Exception{
     final Signup signup = new Signup();
-    signup.setId(testId);
+    signup.setOauthKey(testOuathKey);
     signup.setEmail(testEmail);
 
     mockMvc.perform(post("/user/signup")
@@ -54,7 +54,8 @@ public class UserCrudTest {
   @Test
   public void SignInTest() throws Exception{
     final Signin signin = new Signin();
-    signin.setId(testId);
+
+    signin.setOauthKey(testOuathKey);
 
     mockMvc.perform(post("/user/signin")
       .contentType(APPLICATION_JSON_UTF8)

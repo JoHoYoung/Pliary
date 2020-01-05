@@ -33,11 +33,11 @@ public class FeedCrud {
   public ResponseEntity createFeed(@RequestAttribute("session") Session session, @RequestBody CreateFeed param) {
     String id = UUID.randomUUID().toString();
 
-    String userId = cardMapper.getUserId(param.getCardId());
-    Util.DataAthorization(userId, session.getId());
+    int userId = cardMapper.getUserId(param.getCardId());
+    Util.numberDataAthorization(userId, session.getId());
 
     CardModel cardInfo = cardMapper.readCard(param.getCardId());
-    feedMapper.createFeed(id, param.getCardId(), cardInfo.getNowPeriod());
+    feedMapper.createFeed(param.getCardId(), cardInfo.getWaterPeriod());
 
     final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity(response, HttpStatus.OK);
@@ -47,8 +47,8 @@ public class FeedCrud {
   @RequestMapping(value = "/read", method = RequestMethod.POST)
   public ResponseEntity readFeed(@RequestAttribute("session") Session session, @RequestBody CreateFeed param) {
 
-    String userId = cardMapper.getUserId(param.getCardId());
-    Util.DataAthorization(userId, session.getId());
+    int userId = cardMapper.getUserId(param.getCardId());
+    Util.numberDataAthorization(userId, session.getId());
 
     List<FeedModel> Feeds = feedMapper.readAllFeed(param.getCardId());
     final BaseResponse response = new DataListResponse<>(200, "success", Feeds);
@@ -59,9 +59,9 @@ public class FeedCrud {
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public ResponseEntity updateFeed(@RequestAttribute("session") Session session, @RequestBody CreateFeed param) {
 
-    String userId = cardMapper.getUserId(param.getCardId());
+    int userId = cardMapper.getUserId(param.getCardId());
 
-    Util.DataAthorization(userId, session.getId());
+    Util.numberDataAthorization(userId, session.getId());
     feedMapper.updateFeed(param.getId());
 
     final BaseResponse response = new BaseResponse(200, "success");
@@ -72,8 +72,8 @@ public class FeedCrud {
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
   public ResponseEntity deleteFeed(@RequestAttribute("session") Session session, @RequestBody CreateFeed param) {
 
-    String userId = cardMapper.getUserId(param.getCardId());
-    Util.DataAthorization(userId, session.getId());
+    int userId = cardMapper.getUserId(param.getCardId());
+    Util.numberDataAthorization(userId, session.getId());
 
     feedMapper.deleteFeed(param.getId());
 

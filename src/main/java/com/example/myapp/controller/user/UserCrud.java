@@ -4,6 +4,7 @@ import com.example.myapp.ErrorCode;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.context.request.user.Signup;
 import com.example.myapp.context.user.Session;
+import com.example.myapp.exception.InvalidAuthException;
 import com.example.myapp.exception.InvalidEmailException;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.DiaryMapper;
@@ -64,19 +65,20 @@ public class UserCrud {
 
   @RequestMapping(value = "/signup", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> Signup(@RequestBody Signup param) {
-    String id = param.getId();
-    String email = param.getEmail();
 
     // Duplicate Check
-    if (userMapper.existUserEmail(email) != 0) {
+    if (userMapper.existUserEmail(param.getEmail()) != 0) {
       throw new InvalidEmailException(ErrorCode.DUPLICATED_EMAIL);
     }
+    if (userMapper.existUserOauthKey(param.getOauthKey()) != 0){
+      throw new InvalidAuthException(ErrorCode.USER_ALREADY_SIGNUP);
+    }
 
+    // Generate Token for Email Auth
     String token = RandomString.generate();
-
     // Send verification mail, and insert to DB
-    mailerService.sendVerfyMail(email, token);
-    userMapper.userSignup(id, email, token);
+    mailerService.sendVerfyMail(param.getEmail(), token);
+    userMapper.userSignup(param.getEmail(), token, param.getOauthKey());
 
     final BaseResponse response = new BaseResponse(200, "success");
     return new ResponseEntity<>(response, HttpStatus.OK);
@@ -85,15 +87,15 @@ public class UserCrud {
   @RequestMapping(value = "/signin", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> signIn(@RequestBody Signin param) {
 
-    String id = param.getId();
     // Uid Valid Check
-    if (userMapper.existUserId(id) == 0) {
+    if (userMapper.existUserOauthKey(param.getOauthKey()) == 0) {
       throw new InvalidEmailException(ErrorCode.INVALID_EMAIL);
     }
 
+    int userId = userMapper.getUserId(param.getOauthKey());
     // Gen Token
     JSONObject Session = new JSONObject();
-    Session.put("id", id);
+    Session.put("id", userId);
 
     final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
       jwtService.accessToken(Session.toString()),
@@ -111,8 +113,7 @@ public class UserCrud {
 
   @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
   public ResponseEntity userWithdraw(@RequestAttribute("session") Session session) {
-    String userId = session.getId();
-
+    int userId = session.getId();
     // 프로필 삭제
     List<AttachmentModel> userProfileAttachment = profileAttachmentMapper.readAttachment(userId);
     for (AttachmentModel profileAttachment : userProfileAttachment) {

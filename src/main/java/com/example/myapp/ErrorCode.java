@@ -13,6 +13,8 @@ public enum ErrorCode {
   DUPLICATED_EMAIL(411,"B002","Duplicated Email"),
   EMAIL_SEND_ERROR(412,"E001","Fail To Send Email"),
 
+  // Oauth Error
+  USER_ALREADY_SIGNUP(413,"E002","User Already Sign up"),
   // image
   FAIL_TO_UPLOAD_IMAGE(421,"I001","Fail To Upload Images"),
   // Create Card

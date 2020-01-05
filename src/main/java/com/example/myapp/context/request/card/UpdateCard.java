@@ -1,13 +1,17 @@
 package com.example.myapp.context.request.card;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateCard {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateCard {
 
+  @JsonProperty("id")
+  private int id;
   @JsonProperty("name")
   private String name;
   @JsonProperty("nickname")
@@ -24,13 +28,3 @@ public class CreateCard {
   private int typeId;
 
 }
-
-//{
-//	"name":"Plant",
-//	"nickname":"CAT",
-//	"initPeriod":10,
-//	"krName":"다욱이",
-//	"engName":"Daaaa",
-//	"typeId":"23ewwq-123eweqwqe",
-//	"remainPeriod":8
-//}

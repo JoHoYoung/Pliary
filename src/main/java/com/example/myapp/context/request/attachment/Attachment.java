@@ -14,11 +14,9 @@ public class Attachment {
 
   @JsonProperty("filename")
   private String filename;
-
   @JsonProperty("type")
   private String type;
-
   @JsonProperty("id")
-  private String id;
+  private int id;
 
 }

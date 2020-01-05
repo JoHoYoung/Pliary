@@ -11,32 +11,33 @@ import java.util.List;
 public interface CardMapper {
 
   // 식물 등록
-  @Insert("INSERT INTO CARD(id, userId, name, nickName, initPeriod, nowPeriod, state, createdAt, updatedAt) " +
-    "VALUES(#{id}, #{userId}, #{name}, #{nickName}, #{initPeriod}, #{initPeriod}, 'C', now(), now())")
-  int createCard(@Param("id") String id, @Param("userId") String userId, @Param("name") String name, @Param("nickName") String nickName, @Param("initPeriod") int initPeriod);
+  @Insert("INSERT INTO CARD(userId, typeId, name, nickname, engName, krName, state, waterPeriod, remainPeriod, createdAt, updatedAt) " +
+    "VALUES(#{userId}, #{typeId}, #{name}, #{nickName}, #{engName}, #{krName}, 'C', #{waterPeriod}, #{remainPeriod}, now(), now())")
+  int createCard(@Param("userId")int userId, @Param("typeId")int typeId, @Param("name")String name, @Param("nickName")String nickName, @Param("engName")String engName, @Param("krName")String krName
+  , @Param("waterPeriod")int waterPeriod, @Param("remainPeriod")int remainPeriod);
 
   // 특정 사용자 식물 전체 목록 select
   @Select("SELECT * FROM CARD WHERE userId = #{userId} AND state = 'C'")
   @Results({@Result(property = "images", javaType = List.class, column = "id",
     many = @Many(select = "com.example.myapp.mapper.attachment.CardAttachmentMapper.readAttachment")), @Result(property = "id", column = "id")})
-  List<CardModel> readAllCard(@Param("userId") String userId);
+  List<CardModel> readAllCard(@Param("userId") int userId);
 
   @Select("SELECT userId FROM CARD WHERE id = #{id}")
-  String getUserId(@Param("id") String id);
+  int getUserId(@Param("id")int id);
 
   @Select("SELECT * FROM CARD WHERE state = 'C' AND id=#{id}")
-  CardModel readCard(@Param("id") String id);
+  CardModel readCard(@Param("id")int id);
 
   // 식물 카드 개수 제한을 위한 user_id count (user_id가 6이상이면 CreateCard 가 제한됨)
   @Select("SELECT COUNT(*) from CARD WHERE userId = #{userId} AND state='C'")
-  int countCard(@Param("userId") String userId);
+  int countCard(@Param("userId")int userId);
 
   @Update("UPDATE CARD SET state = 'D' WHERE id=#{id}")
-  void deleteCard(@Param("id") String id);
+  void deleteCard(@Param("id")int id);
 
-  @Update("UPDATE CARD SET name=#{name}, nickName=#{nickName}, initPeriod=#{initPeriod}, nowPeriod=#{nowPeriod}, updatedAt = now() WHERE id=#{id} AND state ='C'")
-  void updateCard(@Param("id") String id, @Param("name") String name, @Param("nickName") String nickName, @Param("initPeriod") int init_period, @Param("nowPeriod") int nowPeriod);
+  @Update("UPDATE CARD SET name=#{name}, nickName=#{nickName}, waterPeriod=#{waterPeriod}, remainPeriod=#{remainPeriod}, updatedAt = now() WHERE id=#{id} AND state ='C'")
+  void updateCard(@Param("id")int id, @Param("name") String name, @Param("nickName") String nickName, @Param("waterPeriod") int waterPeriod, @Param("remainPeriod") int remainPeriod);
 
   @Delete("DELETE FROM CARD WHERE userId = #{userId}")
-  void dropCard(@Param("userId")String userId);
+  void dropCard(@Param("userId")int userId);
 }
