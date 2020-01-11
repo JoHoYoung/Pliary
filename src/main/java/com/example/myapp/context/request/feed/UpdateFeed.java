@@ -8,13 +8,13 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateFeed {
-
-  @JsonProperty("cardId")
-  private int cardId;
+public class UpdateFeed {
+  @JsonProperty("id")
+  private int id;
   @JsonProperty("overDegree")
   private int overDegree;
   @JsonProperty("feedAt")
   private Date feedAt;
 
 }
+

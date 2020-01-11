@@ -3,9 +3,13 @@ package com.example.myapp.restApiTest;
 
 import com.example.myapp.context.request.card.CreateCard;
 import com.example.myapp.context.request.card.UpdateCard;
+import com.example.myapp.context.request.feed.CreateFeed;
+import com.example.myapp.context.request.feed.UpdateFeed;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.mapper.CardMapper;
+import com.example.myapp.mapper.FeedMapper;
 import com.example.myapp.mapper.UserMapper;
+import com.example.myapp.model.CardModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.JwtResponse;
@@ -22,32 +26,37 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @AutoConfigureMockMvc
-public class CardCrudTest {
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class FeedCrudTest {
   final private String testOauthKey = "API_TEST_OAUTH_KEY";
+
   @Autowired
   MockMvc mockMvc;
+
   @Autowired
   ObjectMapper objectMapper;
+
+  @Autowired
+  UserMapper userMapper;
   @Autowired
   CardMapper cardMapper;
   @Autowired
-  UserMapper userMapper;
+  FeedMapper feedMapper;
 
   private String accessToken;
-  private int userId;
+  private int testUserId;
 
   @Before
   public void getAccessToken() throws Exception {
@@ -62,114 +71,117 @@ public class CardCrudTest {
     final BaseResponse response = objectMapper.readValue(mvcResult.getResponse()
       .getContentAsString(), JwtResponse.class);
 
-    this.accessToken = ((JwtResponse) response).getAccessToken();
 
-    // Clear Data
-    this.userId = userMapper.getUserId(testOauthKey);
+    this.accessToken = ((JwtResponse) response).getAccessToken();
+    this.testUserId = userMapper.getUserId(this.testOauthKey);
   }
 
   @Test
-  public void AcreateCardTest() throws Exception {
-    cardMapper.dropCard(userId);
-
+  public void AcreateFeedTest() throws Exception {
     CreateCard createCard = new CreateCard();
 
     createCard.setWaterPeriod(5);
-    createCard.setName("TEST Plant");
-    createCard.setNickname("Sponge bob");
+    createCard.setName("Test Card For Feed");
+    createCard.setNickname("Test Card For Feed");
 
-    // 카드 갯수제한 까지
-    for (int i = 0; i < 6; i++) {
-      mockMvc.perform(post("/card/create")
-        .header("Authorization", "Bearer " + accessToken)
-        .contentType(APPLICATION_JSON_UTF8)
-        .content(objectMapper.writeValueAsString(createCard)))
-        .andExpect(status().isOk());
-    }
-
-    //갯수 제한을 넘은경우 테스트
     mockMvc.perform(post("/card/create")
       .header("Authorization", "Bearer " + accessToken)
       .contentType(APPLICATION_JSON_UTF8)
       .content(objectMapper.writeValueAsString(createCard)))
-      .andExpect(status().isNotAcceptable());
-
-  }
-
-
-  @Test
-  public void BreadCardTest() throws Exception {
-    MvcResult result =
-      mockMvc.perform(get("/card/readAll")
-        .header("Authorization", "Bearer " + accessToken))
-        .andExpect(status().isOk())
-        .andReturn();
-
-    DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
-      , DataListResponse.class);
-
-    String cardId = ((LinkedHashMap) (response.getData().get(0))).get("id").toString();
-    mockMvc.perform(get("/card/read")
-      .header("Authorization", "Bearer " + accessToken)
-      .param("id", cardId))
       .andExpect(status().isOk());
-  }
 
-  @Test
-  public void CupdateCardTest() throws Exception {
+    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    int cardId = cards.get(0).getId();
 
-    MvcResult result =
-      mockMvc.perform(get("/card/readAll")
-        .header("Authorization", "Bearer " + accessToken))
-        .andExpect(status().isOk())
-        .andReturn();
+    CreateFeed createFeed = new CreateFeed();
+    createFeed.setCardId(cardId);
+    createFeed.setOverDegree(3);
+    createFeed.setFeedAt(new Date());
 
-    DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
-      , DataListResponse.class);
-
-    int cardId = (int) ((LinkedHashMap) (response.getData().get(0))).get("id");
-    UpdateCard updateCard = new UpdateCard();
-
-    updateCard.setId(cardId);
-    updateCard.setTypeId(3);
-    updateCard.setWaterPeriod(10);
-    updateCard.setEngName("Kind of Plant");
-    updateCard.setKrName("임의의 식물");
-    updateCard.setName("Update Card");
-    updateCard.setNickname("Sponge bob");
-
-    mockMvc.perform(post("/card/update")
+    mockMvc.perform(post("/feed/create")
       .header("Authorization", "Bearer " + accessToken)
       .contentType(APPLICATION_JSON_UTF8)
-      .content(objectMapper.writeValueAsString(updateCard)))
+      .content(objectMapper.writeValueAsString(createFeed)))
       .andExpect(status().isOk());
 
-    mockMvc.perform(get("/card/read")
-      .header("Authorization", "Bearer " + accessToken)
-      .param("id", Integer.toString(cardId)))
-      .andExpect(status().isOk());
   }
 
   @Test
-  public void DeleteCardTest() throws Exception {
+  public void BreadFeedTest() throws Exception {
+    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    int cardId = cards.get(0).getId();
+
     MvcResult result =
-      mockMvc.perform(get("/card/readAll")
-        .header("Authorization", "Bearer " + accessToken))
+      mockMvc.perform(get("/feed/readAll")
+        .header("Authorization", "Bearer " + accessToken)
+        .param("id", Integer.toString(cardId)))
         .andExpect(status().isOk())
         .andReturn();
 
     DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
       , DataListResponse.class);
 
-    String cardId = ((LinkedHashMap) (response.getData().get(0))).get("id").toString();
+    String feedId = ((LinkedHashMap) (response.getData().get(0))).get("id").toString();
 
-    System.out.println(cardId);
-    mockMvc.perform(get("/card/delete")
+    mockMvc.perform(get("/feed/read")
       .header("Authorization", "Bearer " + accessToken)
-      .param("id", cardId))
+      .param("id", feedId))
       .andExpect(status().isOk());
 
-    cardMapper.dropCard(userId);
   }
+
+  @Test
+  public void CupdateFeedTest() throws Exception {
+    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    int cardId = cards.get(0).getId();
+
+    MvcResult result =
+      mockMvc.perform(get("/feed/readAll")
+        .header("Authorization", "Bearer " + accessToken)
+        .param("id", Integer.toString(cardId)))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
+      , DataListResponse.class);
+
+    int feedId = (int) ((LinkedHashMap) (response.getData().get(0))).get("id");
+
+    UpdateFeed updateFeed = new UpdateFeed();
+    updateFeed.setFeedAt(new Date());
+    updateFeed.setId(feedId);
+    updateFeed.setOverDegree(100);
+
+    mockMvc.perform(post("/feed/update")
+      .header("Authorization", "Bearer " + accessToken)
+      .contentType(APPLICATION_JSON_UTF8)
+      .content(objectMapper.writeValueAsString(updateFeed)))
+      .andExpect(status().isOk());
+  }
+
+  @Test
+  public void DdeleteFeedTest() throws Exception {
+    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    int cardId = cards.get(0).getId();
+
+    MvcResult result =
+      mockMvc.perform(get("/feed/readAll")
+        .header("Authorization", "Bearer " + accessToken)
+        .param("id", Integer.toString(cardId)))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    DataListResponse response = objectMapper.readValue(result.getResponse().getContentAsString()
+      , DataListResponse.class);
+
+    int feedId = (int) ((LinkedHashMap) (response.getData().get(0))).get("id");
+    mockMvc.perform(get("/feed/delete")
+      .header("Authorization", "Bearer " + accessToken)
+      .param("id", Integer.toString(feedId)))
+      .andExpect(status().isOk());
+
+    feedMapper.dropFeed(feedId);
+  }
+
 
 }

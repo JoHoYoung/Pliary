@@ -40,4 +40,7 @@ public interface DiaryMapper {
 
   @Update("UPDATE DIARY SET state='D' WHERE cardId=#{cardId}")
   int deleteDiaryFromCardId(@Param("cardId")int cardId);
+
+  @Delete("DELETE FROM DIARY WHERE cardId=#{cardId}")
+  void dropDiary(@Param("cardId")int cardId);
 }

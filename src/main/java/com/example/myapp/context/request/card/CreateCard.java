@@ -28,9 +28,9 @@ public class CreateCard {
 //{
 //	"name":"Plant",
 //	"nickname":"CAT",
-//	"initPeriod":10,
+//	"waterPeriod":10,
+//  "remainPeriod":10,
 //	"krName":"다욱이",
 //	"engName":"Daaaa",
 //	"typeId":"23ewwq-123eweqwqe",
-//	"remainPeriod":8
 //}

@@ -1,6 +1,7 @@
 package com.example.myapp.controller.diary;
 
 import com.example.myapp.context.request.diary.CreateDiary;
+import com.example.myapp.context.request.diary.UpdateDiary;
 import com.example.myapp.context.user.Session;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.DiaryMapper;
@@ -42,7 +43,7 @@ public class DiaryCrud {
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public ResponseEntity updateDiary(@RequestAttribute("session") Session session, @RequestBody CreateDiary param) {
+  public ResponseEntity updateDiary(@RequestAttribute("session") Session session, @RequestBody UpdateDiary param) {
     int userId = cardMapper.getUserId(param.getCardId());
 
     Util.numberDataAthorization(userId, session.getId());
@@ -64,12 +65,12 @@ public class DiaryCrud {
   }
 
   @RequestMapping(value = "/readAll", method = RequestMethod.GET)
-  // id = cardId
   public ResponseEntity readAllDiary(@RequestAttribute("session") Session session, @RequestParam("id") int id) {
-
+    System.out.println(id);
     int userId = cardMapper.getUserId(id);
     Util.numberDataAthorization(userId, session.getId());
 
+    System.out.println("READ ALL");
     ArrayList<DiaryModel> diaries = diaryMapper.readAllDiary(id);
 
     final BaseResponse response = new DataListResponse<>(200, "success", diaries);
