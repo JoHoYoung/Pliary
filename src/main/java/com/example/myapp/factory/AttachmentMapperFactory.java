@@ -10,25 +10,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class AttachmentMapperFactory {
 
-    @Autowired
-    CardAttachmentMapper cardAttachmentMapper;
+  @Autowired
+  CardAttachmentMapper cardAttachmentMapper;
 
-    @Autowired
-    DiaryAttachmentMapper diaryAttachmentMapper;
+  @Autowired
+  DiaryAttachmentMapper diaryAttachmentMapper;
 
-    @Autowired
-    ProfileAttachmentMapper profileAttachmentMapper;
+  @Autowired
+  ProfileAttachmentMapper profileAttachmentMapper;
 
-    public AttachmentMapper getAttachmentMapper(String type){
-        if(type.equals("card")){
-            return cardAttachmentMapper;
-        }
-        if(type.equals("diary")){
-            return diaryAttachmentMapper;
-        }
-        if(type.equals("profile")){
-            return profileAttachmentMapper;
-        }
-        return null;
+  public AttachmentMapper getAttachmentMapper(String type) {
+    if (type.equals("card")) {
+      return cardAttachmentMapper;
     }
+    if (type.equals("diary")) {
+      return diaryAttachmentMapper;
+    }
+    if (type.equals("profile")) {
+      return profileAttachmentMapper;
+    }
+    return null;
+  }
 }

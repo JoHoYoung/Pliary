@@ -4,6 +4,7 @@ import com.example.myapp.ErrorCode;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.context.request.user.Signup;
 import com.example.myapp.context.user.Session;
+import com.example.myapp.exception.DateParseException;
 import com.example.myapp.exception.InvalidAuthException;
 import com.example.myapp.exception.InvalidEmailException;
 import com.example.myapp.mapper.CardMapper;
@@ -31,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -70,7 +72,7 @@ public class UserCrud {
     if (userMapper.existUserEmail(param.getEmail()) != 0) {
       throw new InvalidEmailException(ErrorCode.DUPLICATED_EMAIL);
     }
-    if (userMapper.existUserOauthKey(param.getOauthKey()) != 0){
+    if (userMapper.existUserOauthKey(param.getOauthKey()) != 0) {
       throw new InvalidAuthException(ErrorCode.USER_ALREADY_SIGNUP);
     }
 
@@ -111,6 +113,7 @@ public class UserCrud {
     return new ResponseEntity(response, HttpStatus.OK);
   }
 
+  @Transactional
   @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
   public ResponseEntity userWithdraw(@RequestAttribute("session") Session session) {
     int userId = session.getId();
@@ -123,6 +126,8 @@ public class UserCrud {
 
     // 카드 삭제
     List<CardModel> cardModels = cardMapper.readAllCard(userId);
+
+
     for (CardModel cardModel : cardModels) {
       List<AttachmentModel> cardAttachments = cardAttachmentMapper.readAttachment(cardModel.getId());
 
@@ -145,6 +150,7 @@ public class UserCrud {
       diaryMapper.deleteDiaryFromCardId(cardModel.getId());
       cardMapper.deleteCard(cardModel.getId());
     }
+
     userMapper.deleteUser(userId);
 
     final BaseResponse response = new BaseResponse(200, "success");
