@@ -5,8 +5,7 @@ import com.example.myapp.context.request.feed.UpdateFeed;
 import com.example.myapp.context.user.Session;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.FeedMapper;
-import com.example.myapp.model.CardModel;
-import com.example.myapp.model.FeedModel;
+import com.example.myapp.model.Feed;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.DataResponse;
@@ -17,9 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/feed")
@@ -49,7 +46,7 @@ public class FeedCrud {
   public ResponseEntity readAllFeed(@RequestAttribute("session") Session session, @RequestParam("id") int id){
     int userId = cardMapper.getUserId(id);
     Util.numberDataAthorization(userId, session.getId());
-    List<FeedModel> Feeds = feedMapper.readAllFeed(id);
+    List<Feed> Feeds = feedMapper.readAllFeed(id);
     final BaseResponse response = new DataListResponse<>(200, "success", Feeds);
     return new ResponseEntity(response, HttpStatus.OK);
 
@@ -61,7 +58,7 @@ public class FeedCrud {
     int userId = feedMapper.getUserId(id);
     Util.numberDataAthorization(userId, session.getId());
 
-    FeedModel Feed = feedMapper.readFeed(id);
+    Feed Feed = feedMapper.readFeed(id);
     final BaseResponse response = new DataResponse<>(200, "success", Feed);
     return new ResponseEntity(response, HttpStatus.OK);
 

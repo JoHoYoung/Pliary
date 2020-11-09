@@ -1,6 +1,6 @@
 package com.example.myapp.mapper;
 
-import com.example.myapp.model.FeedModel;
+import com.example.myapp.model.Feed;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +15,10 @@ public interface FeedMapper {
   void createFeed(@Param("cardId")int cardId, @Param("overDegree") int overDegree, @Param("feedAt")Date feedAt);
 
   @Select("SELECT * FROM FEED WHERE cardId=#{cardId} AND state='C'")
-  List<FeedModel> readAllFeed(@Param("cardId")int cardId);
+  List<Feed> readAllFeed(@Param("cardId")int cardId);
 
   @Select("SELECT * FROM FEED WHERE id=#{id}")
-  FeedModel readFeed(@Param("id")int id);
+  Feed readFeed(@Param("id")int id);
 
   @Select("SELECT cardId FROM FEED WHERE id=#{id}")
   int getCardId(@Param("id")int id);

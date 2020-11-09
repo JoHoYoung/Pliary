@@ -1,7 +1,6 @@
 package com.example.myapp.mapper;
 
-import com.example.myapp.model.CardModel;
-import lombok.Data;
+import com.example.myapp.model.Card;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -20,13 +19,13 @@ public interface CardMapper {
   @Select("SELECT * FROM CARD WHERE userId = #{userId} AND state = 'C'")
   @Results({@Result(property = "images", javaType = List.class, column = "id",
     many = @Many(select = "com.example.myapp.mapper.attachment.CardAttachmentMapper.readAttachment")), @Result(property = "id", column = "id")})
-  List<CardModel> readAllCard(@Param("userId") int userId);
+  List<Card> readAllCard(@Param("userId") int userId);
 
   @Select("SELECT userId FROM CARD WHERE id = #{id}")
   int getUserId(@Param("id")int id);
 
   @Select("SELECT * FROM CARD WHERE state = 'C' AND id=#{id}")
-  CardModel readCard(@Param("id")int id);
+  Card readCard(@Param("id")int id);
 
   // 식물 카드 개수 제한을 위한 user_id count (user_id가 6이상이면 CreateCard 가 제한됨)
   @Select("SELECT COUNT(*) from CARD WHERE userId = #{userId} AND state='C'")

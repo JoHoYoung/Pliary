@@ -2,14 +2,13 @@ package com.example.myapp.restApiTest;
 
 
 import com.example.myapp.context.request.card.CreateCard;
-import com.example.myapp.context.request.card.UpdateCard;
 import com.example.myapp.context.request.feed.CreateFeed;
 import com.example.myapp.context.request.feed.UpdateFeed;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.FeedMapper;
 import com.example.myapp.mapper.UserMapper;
-import com.example.myapp.model.CardModel;
+import com.example.myapp.model.Card;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.JwtResponse;
@@ -90,7 +89,7 @@ public class FeedCrudTest {
       .content(objectMapper.writeValueAsString(createCard)))
       .andExpect(status().isOk());
 
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     int cardId = cards.get(0).getId();
 
     CreateFeed createFeed = new CreateFeed();
@@ -108,7 +107,7 @@ public class FeedCrudTest {
 
   @Test
   public void BreadFeedTest() throws Exception {
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     int cardId = cards.get(0).getId();
 
     MvcResult result =
@@ -132,7 +131,7 @@ public class FeedCrudTest {
 
   @Test
   public void CupdateFeedTest() throws Exception {
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     int cardId = cards.get(0).getId();
 
     MvcResult result =
@@ -161,7 +160,7 @@ public class FeedCrudTest {
 
   @Test
   public void DdeleteFeedTest() throws Exception {
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     int cardId = cards.get(0).getId();
 
     MvcResult result =

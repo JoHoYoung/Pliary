@@ -9,7 +9,7 @@ import com.example.myapp.context.user.Session;
 import com.example.myapp.exception.ExceedMaximumCardNumberException;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.UserMapper;
-import com.example.myapp.model.CardModel;
+import com.example.myapp.model.Card;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.DataResponse;
@@ -66,7 +66,7 @@ public class CardCrud {
 
   @RequestMapping(value = "/readAll", method = RequestMethod.GET)
   public ResponseEntity<BaseResponse> readAllCard(@RequestAttribute("session") Session session) {
-    List<CardModel> Cards = cardMapper.readAllCard(session.getId());
+    List<Card> Cards = cardMapper.readAllCard(session.getId());
     final BaseResponse response = new DataListResponse<>(200, "success", Cards);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
@@ -77,7 +77,7 @@ public class CardCrud {
 
     Util.numberDataAthorization(userId,session.getId());
 
-    CardModel Card = cardMapper.readCard(id);
+    Card Card = cardMapper.readCard(id);
     final BaseResponse response = new DataResponse<>(200, "success", Card);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }

@@ -7,7 +7,7 @@ import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.DiaryMapper;
 import com.example.myapp.mapper.UserMapper;
-import com.example.myapp.model.CardModel;
+import com.example.myapp.model.Card;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.JwtResponse;
@@ -95,7 +95,7 @@ public class DiaryCrudTest {
       .content(objectMapper.writeValueAsString(createCard)))
       .andExpect(status().isOk());
 
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     this.testCardId = cards.get(0).getId();
 
     CreateDiary createDiary = new CreateDiary();
@@ -115,7 +115,7 @@ public class DiaryCrudTest {
   @Test
   public void BreadDiaryTest() throws Exception {
 
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     this.testCardId = cards.get(0).getId();
 
     MvcResult result = mockMvc.perform(get("/diary/readAll")
@@ -135,7 +135,7 @@ public class DiaryCrudTest {
 
   @Test
   public void CupdateDiaryTest() throws Exception {
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     this.testCardId = cards.get(0).getId();
 
     MvcResult result = mockMvc.perform(get("/diary/readAll")
@@ -164,7 +164,7 @@ public class DiaryCrudTest {
 
   @Test
   public void DdeleteDiaryTest() throws Exception {
-    List<CardModel> cards = cardMapper.readAllCard(this.testUserId);
+    List<Card> cards = cardMapper.readAllCard(this.testUserId);
     this.testCardId = cards.get(0).getId();
 
     MvcResult result = mockMvc.perform(get("/diary/readAll")

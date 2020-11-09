@@ -4,7 +4,6 @@ import com.example.myapp.ErrorCode;
 import com.example.myapp.context.request.user.Signin;
 import com.example.myapp.context.request.user.Signup;
 import com.example.myapp.context.user.Session;
-import com.example.myapp.exception.DateParseException;
 import com.example.myapp.exception.InvalidAuthException;
 import com.example.myapp.exception.InvalidEmailException;
 import com.example.myapp.mapper.CardMapper;
@@ -14,9 +13,9 @@ import com.example.myapp.mapper.UserMapper;
 import com.example.myapp.mapper.attachment.CardAttachmentMapper;
 import com.example.myapp.mapper.attachment.DiaryAttachmentMapper;
 import com.example.myapp.mapper.attachment.ProfileAttachmentMapper;
-import com.example.myapp.model.CardModel;
-import com.example.myapp.model.DiaryModel;
-import com.example.myapp.model.UserModel;
+import com.example.myapp.model.Card;
+import com.example.myapp.model.Diary;
+import com.example.myapp.model.User;
 import com.example.myapp.model.attachment.AttachmentModel;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataResponse;
@@ -108,7 +107,7 @@ public class UserCrud {
 
   @RequestMapping(value = "/info", method = RequestMethod.GET)
   public ResponseEntity userInfo(@RequestAttribute("session") Session session) {
-    UserModel user = userMapper.getUser(session.getId());
+    User user = userMapper.getUser(session.getId());
     final BaseResponse response = new DataResponse(200, "success", user);
     return new ResponseEntity(response, HttpStatus.OK);
   }
@@ -125,11 +124,11 @@ public class UserCrud {
     }
 
     // 카드 삭제
-    List<CardModel> cardModels = cardMapper.readAllCard(userId);
+    List<Card> cards = cardMapper.readAllCard(userId);
 
 
-    for (CardModel cardModel : cardModels) {
-      List<AttachmentModel> cardAttachments = cardAttachmentMapper.readAttachment(cardModel.getId());
+    for (Card card : cards) {
+      List<AttachmentModel> cardAttachments = cardAttachmentMapper.readAttachment(card.getId());
 
 
       for (AttachmentModel cardAttachment : cardAttachments) {
@@ -137,18 +136,18 @@ public class UserCrud {
         // #TODO: 사진 삭제에따른 추가 작업 ( S3에서 삭제? )
       }
 
-      feedMapper.deleteFeedFromCardId(cardModel.getId());
-      List<DiaryModel> diaryModels = diaryMapper.readAllDiary(cardModel.getId());
+      feedMapper.deleteFeedFromCardId(card.getId());
+      List<Diary> diaries = diaryMapper.readAllDiary(card.getId());
 
-      for (DiaryModel diaryModel : diaryModels) {
-        List<AttachmentModel> diaryAttachments = diaryAttachmentMapper.readAttachment(diaryModel.getId());
+      for (Diary diary : diaries) {
+        List<AttachmentModel> diaryAttachments = diaryAttachmentMapper.readAttachment(diary.getId());
         for (AttachmentModel diaryAttachment : diaryAttachments) {
           diaryAttachmentMapper.deleteAttachment(diaryAttachment.getId());
           // #TODO: 사진 삭제에따른 추가 작업 ( S3에서 삭제? )
         }
       }
-      diaryMapper.deleteDiaryFromCardId(cardModel.getId());
-      cardMapper.deleteCard(cardModel.getId());
+      diaryMapper.deleteDiaryFromCardId(card.getId());
+      cardMapper.deleteCard(card.getId());
     }
 
     userMapper.deleteUser(userId);

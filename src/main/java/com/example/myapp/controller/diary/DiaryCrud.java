@@ -5,7 +5,7 @@ import com.example.myapp.context.request.diary.UpdateDiary;
 import com.example.myapp.context.user.Session;
 import com.example.myapp.mapper.CardMapper;
 import com.example.myapp.mapper.DiaryMapper;
-import com.example.myapp.model.DiaryModel;
+import com.example.myapp.model.Diary;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.DataListResponse;
 import com.example.myapp.response.DataResponse;
@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/diary")
@@ -59,7 +58,7 @@ public class DiaryCrud {
     int userId = diaryMapper.getUserId(id);
     Util.numberDataAthorization(userId, session.getId());
 
-    DiaryModel diary = diaryMapper.readDiary(id);
+    Diary diary = diaryMapper.readDiary(id);
     final BaseResponse response = new DataResponse<>(200, "success", diary);
     return new ResponseEntity(response, HttpStatus.OK);
   }
@@ -71,7 +70,7 @@ public class DiaryCrud {
     Util.numberDataAthorization(userId, session.getId());
 
     System.out.println("READ ALL");
-    ArrayList<DiaryModel> diaries = diaryMapper.readAllDiary(id);
+    ArrayList<Diary> diaries = diaryMapper.readAllDiary(id);
 
     final BaseResponse response = new DataListResponse<>(200, "success", diaries);
     return new ResponseEntity<>(response, HttpStatus.OK);

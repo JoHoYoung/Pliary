@@ -1,6 +1,6 @@
 package com.example.myapp.mapper;
 
-import com.example.myapp.model.DiaryModel;
+import com.example.myapp.model.Diary;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,13 +19,13 @@ public interface DiaryMapper {
   @Select("SELECT * FROM DIARY WHERE cardId=#{cardId} AND state='C'")
   @Results({@Result(property = "images", javaType = List.class, column = "id",
     many = @Many(select = "com.example.myapp.mapper.attachment.DiaryAttachmentMapper.readAttachment")), @Result(property = "id", column = "id")})
-  ArrayList<DiaryModel> readAllDiary(@Param("cardId")int cardId);
+  ArrayList<Diary> readAllDiary(@Param("cardId")int cardId);
 
   // 하나의 다이어리(선택) 읽기
   @Select("SELECT * FROM DIARY WHERE id = #{id} AND state='C'")
   @Results({@Result(property = "images", javaType = List.class, column = "id",
     many = @Many(select = "com.example.myapp.mapper.attachment.DiaryAttachmentMapper.readAttachment"))})
-  DiaryModel readDiary(@Param("id")int id);
+  Diary readDiary(@Param("id")int id);
 
   // 다이어리 삭제 (1개 지정) - state = 'D' 로 update
   @Update("UPDATE DIARY SET state='D' WHERE id=#{id}")

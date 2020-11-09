@@ -1,6 +1,6 @@
 package com.example.myapp.mapper;
 
-import com.example.myapp.model.UserModel;
+import com.example.myapp.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -21,7 +21,7 @@ public interface UserMapper {
   @Select("SELECT * FROM USER where id = #{id}")
   @Results({@Result(property = "images", javaType = List.class, column = "id",
     many = @Many(select = "com.example.myapp.mapper.attachment.ProfileAttachmentMapper.readAttachment")), @Result(property = "id", column = "id")})
-  UserModel getUser(@Param("id")int id);
+  User getUser(@Param("id")int id);
 
   @Select("SELECT id FROM USER where oauthKey=#{oauthKey}")
   int getUserId(@Param("oauthKey")String oauthKey);

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class FeedModel {
+public class Feed {
 
   private int id;
   private int cardId;

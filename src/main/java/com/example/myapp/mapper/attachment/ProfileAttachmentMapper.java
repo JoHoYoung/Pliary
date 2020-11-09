@@ -12,17 +12,17 @@ import java.util.List;
 @Component
 public interface ProfileAttachmentMapper extends AttachmentMapper {
 
-  @Insert("INSERT INTO PROFILEATTACHMENT(userId, url, filename, state, createdAt, updatedAt) VALUES(#{userId}, #{url}, #{filename},'C', now(),now())")
-  void createAttachment(@Param("userId")int userId, @Param("url") String url, @Param("filename") String filename);
+    @Insert("INSERT INTO PROFILEATTACHMENT(userId, url, filename, state, createdAt, updatedAt) VALUES(#{userId}, #{url}, #{filename},'C', now(),now())")
+    void createAttachment(@Param("userId") int userId, @Param("url") String url, @Param("filename") String filename);
 
-  @Update("UPDATE PROFILEATTACHMENT SET state = 'D' WHERE id = #{id}")
-  void deleteAttachment(@Param("id") int id);
+    @Update("UPDATE PROFILEATTACHMENT SET state = 'D' WHERE id = #{id}")
+    void deleteAttachment(@Param("id") int id);
 
-  @Select("SELECT * FROM PROFILEATTACHMENT WHERE userId = #{userId} AND state='C'")
-  @Results({@Result(property = "userId", column = "userId")})
-  List<AttachmentModel> readAttachment(@Param("userId") int userId);
+    @Select("SELECT * FROM PROFILEATTACHMENT WHERE userId = #{userId} AND state='C'")
+    @Results({@Result(property = "userId", column = "userId")})
+    List<AttachmentModel> readAttachment(@Param("userId") int userId);
 
-  @Select("SELECT userId FROM PROFILEATTACHMENT WHERE id = #{id}")
-  int getUserId(@Param("id")int id);
+    @Select("SELECT userId FROM PROFILEATTACHMENT WHERE id = #{id}")
+    int getUserId(@Param("id") int id);
 
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class DiaryModel {
+public class Diary {
 
   private int id;
   private int cardId;

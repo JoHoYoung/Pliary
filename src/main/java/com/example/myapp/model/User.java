@@ -9,9 +9,9 @@ import java.util.List;
 
 @Data
 @Alias("USER")
-public class UserModel {
+public class User {
 
-  private int id;
+  private Integer id;
   private String email;
   private String state;
   private String name;
