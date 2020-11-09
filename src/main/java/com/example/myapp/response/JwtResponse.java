@@ -13,8 +13,8 @@ public class JwtResponse extends BaseResponse {
   private String accessToken;
   private String refreshToken;
 
-  public JwtResponse(int statusCode, String statusMsg, String accessToken, String refreshToken){
-    super(statusCode,statusMsg);
+  public JwtResponse(String statusMsg, String accessToken, String refreshToken){
+    super(statusMsg);
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
   }

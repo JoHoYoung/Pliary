@@ -10,9 +10,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Card {
 
-    private int id;
-    private int userId;
-    private int typeId;
+    private Integer id;
+    private Integer userId;
+    private Integer typeId;
 
     private String name;
     private String nickName;
@@ -20,8 +20,7 @@ public class Card {
     private String krName;
     private String state;
 
-    private int waterPeriod;
-    private int remainPeriod;
+    private Integer waterPeriod;
 
     private Date createdAt;
     private Date updatedAt;

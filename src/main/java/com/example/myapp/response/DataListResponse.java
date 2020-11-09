@@ -12,8 +12,8 @@ import java.util.List;
 public class DataListResponse<T> extends BaseResponse {
   List<T> data;
 
-  public DataListResponse(int statusCode, String statusMsg, List<T> data) {
-    super(statusCode, statusMsg);
+  public DataListResponse(String statusMsg, List<T> data) {
+    super(statusMsg);
     this.data = data;
   }
 }

@@ -1,6 +1,7 @@
 package com.example.myapp.model;
 
 import com.example.myapp.context.request.attachment.Attachment;
+import com.example.myapp.model.enumeration.AuthType;
 import lombok.*;
 import org.apache.ibatis.type.Alias;
 
@@ -19,7 +20,7 @@ public class User {
   private String birth;
   private String phone;
   private String token;
-  private int provider;
+  private AuthType authType;
   private Date createdAt;
   private Date updatedAt;
   private List<Attachment> images;

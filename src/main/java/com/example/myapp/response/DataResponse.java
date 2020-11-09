@@ -8,7 +8,7 @@ public class DataResponse<T> extends BaseResponse {
   private T data;
 
   public DataResponse(int statusCode, String statusMsg, T data) {
-    super(statusCode, statusMsg);
+    super(statusMsg);
     this.data = data;
   }
 }

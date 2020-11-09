@@ -15,22 +15,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/token", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class Token {
 
-  @Autowired
-  private JwtService jwtService;
-  @Autowired
-  public JavaMailSender emailSender;
+    @Autowired
+    private JwtService jwtService;
 
-  @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-  public ResponseEntity<BaseResponse> refreshToken(@RequestBody Refresh token) {
+    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+    public ResponseEntity<BaseResponse> refreshToken(@RequestBody Refresh token) {
 
-    jwtService.verifyToken(token.getAccessToken());
-    jwtService.verifyToken(token.getRefreshToken());
+        jwtService.verifyToken(token.getAccessToken());
+        jwtService.verifyToken(token.getRefreshToken());
 
 
-    String decodeSubject = jwtService.decode(token.getAccessToken()); // decodeSubject = userEmail (?)
+        String decodeSubject = jwtService.decode(token.getAccessToken()); // decodeSubject = userEmail (?)
 
-    final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
-      jwtService.accessToken(decodeSubject), token.getRefreshToken());
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
+        final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
+                jwtService.accessToken(decodeSubject), token.getRefreshToken());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

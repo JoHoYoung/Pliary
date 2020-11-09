@@ -7,9 +7,9 @@ import java.util.Date;
 @Data
 public class Feed {
 
-  private int id;
-  private int cardId;
-  private int overDegree;
+  private Integer id;
+  private Integer cardId;
+  private Integer overDegree;
   private String state;
   private Date feedAt;
   private Date createdAt;

@@ -9,7 +9,7 @@ public class ErrorResponse extends BaseResponse {
   private String code;
 
   public ErrorResponse(ErrorCode errorCode) {
-    super(errorCode.getStatus(), errorCode.getStatusMsg());
+    super(errorCode.getStatusMsg());
     this.code = errorCode.getStatusCode();
   }
 }

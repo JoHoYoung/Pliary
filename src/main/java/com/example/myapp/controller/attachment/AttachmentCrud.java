@@ -32,7 +32,7 @@ public class AttachmentCrud {
   @Autowired
   ImageService imageHandler;
 
-  // 사진파일 생서ㅓ
+  // 사진파일 생성
   @RequestMapping(value = "/create", method = RequestMethod.POST)
   public ResponseEntity<BaseResponse> createAttachment(@RequestAttribute("session") Session session
     , @RequestParam("type") String type, @RequestParam("id")int id, @RequestParam("userimage") List<MultipartFile> files) {
