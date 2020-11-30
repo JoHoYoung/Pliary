@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Signin {
 
-  @JsonProperty("oauthKey")
-  private String oauthKey;
+  @JsonProperty("oauthToken")
+  private String oauthToken;
 
 }

@@ -15,6 +15,8 @@ public enum ErrorCode {
 
   // Oauth Error
   USER_ALREADY_SIGNUP(413,"E002","User Already Sign up"),
+  USER_NOT_EXIST(414,"E003", "User is not exist"),
+  DUPICATE_OAUTH_TOKEN(415, "E004", "User's Oauth key is duplicated"),
   // image
   FAIL_TO_UPLOAD_IMAGE(421,"I001","Fail To Upload Images"),
   // Create Card

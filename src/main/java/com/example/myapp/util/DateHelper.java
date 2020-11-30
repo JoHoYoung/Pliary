@@ -1,7 +1,7 @@
 package com.example.myapp.util;
 
 import com.example.myapp.ErrorCode;
-import com.example.myapp.exception.DateParseException;
+import com.example.myapp.exception.PliaryException;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.text.ParseException;
@@ -38,7 +38,7 @@ public class DateHelper {
       SimpleDateFormat transFormat = new SimpleDateFormat(format);
       return transFormat.parse(time);
     } catch (ParseException e) {
-      throw new DateParseException(ErrorCode.DATE_PARSE_ERROR);
+      throw new PliaryException(ErrorCode.DATE_PARSE_ERROR);
     }
   }
 
@@ -47,7 +47,7 @@ public class DateHelper {
       SimpleDateFormat transFormat = new SimpleDateFormat(DateHelper.baseForamt);
       return transFormat.parse(time);
     } catch (ParseException e) {
-      throw new DateParseException(ErrorCode.DATE_PARSE_ERROR);
+      throw new PliaryException(ErrorCode.DATE_PARSE_ERROR);
     }
   }
 }

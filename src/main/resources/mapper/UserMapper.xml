@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myapp.repository.UserRepository">
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+        USER(email, state, name, nickname, birth, phone, oauthToken, authType, createdAt, updatedAt)
+        VALUES(#{user.email , jdbcType=LONGVARCHAR}, #{user.state, jdbcType=VARCHAR}, #{user.name, jdbcType=LONGVARCHAR},#{user.nickname, jdbcType=LONGVARCHAR}, #{user.birth, jdbcType=LONGVARCHAR}, #{user.phone, jdbcType=LONGVARCHAR}, #{user.oauthToken, jdbcType=LONGVARCHAR}, #{user.authType, jdbcType=LONGVARCHAR}, now(), now())
+    </insert>
+
+    <select id="selectUserById" resultType="com.example.myapp.model.User">
+        SELECT *
+        FROM USER
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectUserByOauthToken" resultType="com.example.myapp.model.User">
+        SELECT *
+        FROM USER
+        WHERE oauthToken = #{oauthToken}
+    </select>
+
+    <update id="updateUser">
+        UPDATE USER
+        SET email = #{user.email}, state = #{user.state}, name = #{user.name}, nickname = #{user.nickname},
+        birth = #{user.birth}, phone = #{user.phone}, refreshToken = #{user.refreshToken}, authType = #{user.authType}, updatedAt = now()
+        WHERE id = #{user.id};
+    </update>
+</mapper>

@@ -1,8 +1,7 @@
 package com.example.myapp.service;
 
-import com.example.myapp.exception.InvalidTokenException;
-import com.example.myapp.exception.TokenExpiredException;
 import com.example.myapp.ErrorCode;
+import com.example.myapp.exception.PliaryException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,10 +41,10 @@ public class JwtService {
       Jwts.parser().setSigningKey(SALT).parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
       System.out.println(decode(token));
-      throw new TokenExpiredException(ErrorCode.JWT_TOKEN_EXPIRED);
+      throw new PliaryException(ErrorCode.JWT_TOKEN_EXPIRED);
     } catch (JwtException e) {
       System.out.println(e);
-      throw new InvalidTokenException(ErrorCode.INVALID_TOKEN);
+      throw new PliaryException(ErrorCode.INVALID_TOKEN);
     }
   }
 

@@ -1,6 +1,7 @@
 package com.example.myapp.controller.auth;
 
 import com.example.myapp.context.request.token.Refresh;
+import com.example.myapp.response.DataResponse;
 import com.example.myapp.service.JwtService;
 import com.example.myapp.response.BaseResponse;
 import com.example.myapp.response.JwtResponse;
@@ -17,18 +18,16 @@ public class Token {
 
     @Autowired
     private JwtService jwtService;
-
-    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-    public ResponseEntity<BaseResponse> refreshToken(@RequestBody Refresh token) {
-
-        jwtService.verifyToken(token.getAccessToken());
-        jwtService.verifyToken(token.getRefreshToken());
-
-
-        String decodeSubject = jwtService.decode(token.getAccessToken()); // decodeSubject = userEmail (?)
-
-        final BaseResponse response = new JwtResponse(HttpStatus.OK.value(), "success",
-                jwtService.accessToken(decodeSubject), token.getRefreshToken());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//
+//    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+//    public ResponseEntity<BaseResponse> refreshToken(@RequestBody Refresh token) {
+//
+//        jwtService.verifyToken(token.getAccessToken());
+//        jwtService.verifyToken(token.getRefreshToken());
+//        String decodeSubject = jwtService.decode(token.getAccessToken()); // decodeSubject = userEmail (?)
+//
+//        final BaseResponse response = new DataResponse<>(HttpStatus.OK.value(), "success",
+//                jwtService.accessToken(decodeSubject), token.getRefreshToken());
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 }

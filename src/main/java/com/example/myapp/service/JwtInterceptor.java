@@ -1,10 +1,8 @@
 package com.example.myapp.service;
 
 import com.example.myapp.ErrorCode;
-import com.example.myapp.exception.DecodedTokenParseException;
-import com.example.myapp.exception.InvalidTokenException;
-import com.example.myapp.service.JwtService;
 import com.example.myapp.context.user.Session;
+import com.example.myapp.exception.PliaryException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +25,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
     try {
       if (req.getHeader("Authorization") == null) {
-        throw new InvalidTokenException(ErrorCode.EMPTY_TOKEN);
+        throw new PliaryException(ErrorCode.EMPTY_TOKEN);
       }
       String[] authHeader = req.getHeader("Authorization").split(" ");
       String token = authHeader[1];
@@ -38,7 +36,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
       return true;
 
     } catch (IOException e) {
-      throw new DecodedTokenParseException(ErrorCode.DECODED_TOKEN_PARSE_ERROR);
+      throw new PliaryException(ErrorCode.DECODED_TOKEN_PARSE_ERROR);
     }
   }
 }
