@@ -2,17 +2,31 @@ package com.example.myapp.model;
 
 import com.example.myapp.model.enumeration.AuthType;
 import com.example.myapp.model.enumeration.DataState;
-import lombok.*;
-import org.apache.ibatis.type.Alias;
-
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.Data;
 
 @Data
-@Alias("USER")
-public class User {
+@Entity
+@Table(name = "USER")
+public class User implements Serializable {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String email;
+
+    @Column
+    @Enumerated(EnumType.STRING)
     private DataState state;
     private String name;
     private String nickname;

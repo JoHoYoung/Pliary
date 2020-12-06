@@ -1,8 +1,9 @@
 package com.example.myapp.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-
+@AllArgsConstructor
 @Data
 public class DataResponse<T> extends BaseResponse {
   private T data;

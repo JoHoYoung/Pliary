@@ -7,18 +7,15 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UpdateDiary {
-  @JsonProperty("id")
-  private int id;
 
-  @JsonProperty("cardId")
-  private int cardId;
-
-  @JsonProperty("title")
-  private String title;
-
-  @JsonProperty("body")
-  private String body;
-
-  @JsonProperty("state")
-  private char state;
+    @JsonProperty("id")
+    private long id;
+    @JsonProperty("cardId")
+    private long cardId;
+    @JsonProperty("title")
+    private String title;
+    @JsonProperty("body")
+    private String body;
+    @JsonProperty("state")
+    private char state;
 }

@@ -11,7 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -31,13 +34,13 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody Signin signin) {
         String oauthToken = signin.getOauthToken();
-        SigninResult signinResult = userBO.signin(oauthToken);
+        SigninResult signinResult = this.userBO.signin(oauthToken);
         return new ResponseEntity(new DataResponse<>(signinResult), HttpStatus.OK);
     }
 
     @RequestMapping("/signup")
-    public ResponseEntity signup(@RequestBody User user){
-        SigninResult signinResult = userBO.signup(user);
+    public ResponseEntity signup(@RequestBody User user) {
+        SigninResult signinResult = this.userBO.signup(user);
         return new ResponseEntity(new DataResponse<>(signinResult), HttpStatus.OK);
     }
 

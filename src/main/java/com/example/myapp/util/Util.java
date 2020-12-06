@@ -5,7 +5,7 @@ import com.example.myapp.exception.PliaryException;
 
 public class Util {
 
-  public static void numberDataAthorization(int userId, int sessionId){
+  public static void numberDataAthorization(long userId, long sessionId){
     if(!(userId == sessionId)){
       if (userId == 0) {
         throw new PliaryException(ErrorCode.DATA_NOT_FOUND);

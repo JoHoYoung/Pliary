@@ -3,17 +3,14 @@ package com.example.myapp.repository;
 
 import com.example.myapp.model.Diary;
 import com.example.myapp.model.Feed;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface FeedRepository {
+public interface FeedRepository extends JpaRepository<Feed, Long> {
 
-    void insertFeed(@Param("feed") Feed feed);
-    List<Diary> selectFeedByDiaryId(@Param("feedId")Integer diaryId);
-    Feed selectDiaryById(@Param("id")Integer id);
-    void updateFeed(@Param("feed")Feed feed);
-    void deleteFeed(@Param("id")Integer id);
+    List<Feed> findByCardId(@Param("cardId") long cardId);
 }

@@ -6,14 +6,12 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateDiary {
+public class DiaryList {
 
     @JsonProperty("cardId")
-    private int cardId;
-    @JsonProperty("title")
-    private String title;
-    @JsonProperty("body")
-    private String body;
-    @JsonProperty("state")
-    private char state;
+    long cardId;
+    @JsonProperty("firstResult")
+    Integer firstResult;
+    @JsonProperty("maxResults")
+    Integer maxResults;
 }

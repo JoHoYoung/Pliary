@@ -6,9 +6,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class BaseResponse {
-    String statusMessage;
 
-    public BaseResponse(){
+    String statusMessage = "success";
+
+    public BaseResponse() {
         this.statusMessage = "success";
     }
 }

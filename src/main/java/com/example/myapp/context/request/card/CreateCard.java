@@ -1,5 +1,6 @@
 package com.example.myapp.context.request.card;
 
+import com.example.myapp.model.enumeration.PlantType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -20,8 +21,8 @@ public class CreateCard {
   private String krName;
   @JsonProperty("engName")
   private String engName;
-  @JsonProperty("typeId")
-  private int typeId;
+  @JsonProperty("plantType")
+  private PlantType plantType;
 
 }
 
